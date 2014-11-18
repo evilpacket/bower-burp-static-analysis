@@ -1,6 +1,8 @@
 # Overview
 This was the result of being nerd snipped by @tomsteele into scanning bower with the [burp suite](http://portswigger.net/burp/) static analyzer.
 
+Warning it's like 2.7 GB of json (I suggest using the output.nljson) if you want to tinker with the data. It's missing the raw req / res, but those probably aren't useful anyway.
+
 
 ## bower.json
 List of packages (git urls) that were pulled from bower
