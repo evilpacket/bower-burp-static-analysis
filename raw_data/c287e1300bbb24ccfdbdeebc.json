@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/kriszyp/xstyle/test/test.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cross-site scripting (DOM-based)",
+    "issueType": 2097936,
+    "severity": "High",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cross-site scripting vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the HTML document in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.<br><br>The attacker-supplied code can perform a wide variety of actions, such as stealing the victim's session token or login credentials, performing arbitrary actions on the victim's behalf, and logging their keystrokes.<br><br>Users can be induced to visit the attacker's crafted URL in various ways, similar to the usual attack delivery vectors for reflected cross-site scripting vulnerabilities. ",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cross-site scripting vulnerabilities is not to dynamically write data into the HTML document that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing script code into the document. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe. In other cases, it will be necessary to sanitize or encode the data. This can be a complex task, and depending on the context that the data is to be inserted may need to involve a combination of JavaScript escaping, HTML encoding, and URL encoding, in the appropriate sequence.",
+    "issueDetail": "The application may be vulnerable to DOM-based cross-site scripting. Data is read from <b>location.search</b> and written to <b>document.write()</b> via the following statement:<ul><li>document.write('&lt;link rel=\"stylesheet\" href=\"' + location.search.slice(1) + '.css\" /&gt;');</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/kriszyp/xstyle/test/test.html",
+                "path": "/kriszyp/xstyle/test/test.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9rcmlzenlwL3hzdHlsZS90ZXN0L3Rlc3QuaHRtbCBIVFRQLzEuMQ0KSG9zdDogbG9jYWxob3N0Ojk5OTkNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNDI1DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFN1biwgMDkgTm92IDIwMTQgMDM6NDE6NDQgR01UDQpMYXN0LU1vZGlmaWVkOiBTdW4sIDA5IE5vdiAyMDE0IDAzOjQxOjQzIEdNVA0KDQo8IURPQ1RZUEUgSFRNTD4KPGh0bWwgbGFuZz0iZW4tVVMiPgo8aGVhZD4KCTxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KCTx0aXRsZT5UZXN0IFhzdHlsZSBGdW5jdGlvbmFsaXR5PC90aXRsZT4KCTxsaW5rIHJlbD0iYXBwbGUtdG91Y2gtaWNvbiIgaHJlZj0idGVzdC5qcGciIC8+Cgk8c2NyaXB0PgoJCWRvY3VtZW50LndyaXRlKCc8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9IicgKyBsb2NhdGlvbi5zZWFyY2guc2xpY2UoMSkgKyAnLmNzcyIgLz4nKTsKCTwvc2NyaXB0PgoJPHNjcmlwdCBzcmM9Ii4uLy4uL2Rvam8vZG9qby5qcyIgZGF0YS1kb2pvLWNvbmZpZz0iYXN5bmM6dHJ1ZSwgZGVwczpbJ3hzdHlsZS9tYWluJ10iPjwvc2NyaXB0Pgo8L2hlYWQ+Cjxib2R5PgoJPGRpdiBpZD0iY29yZS10ZXN0Ij48L2Rpdj4KPC9ib2R5Pgo8L2h0bWw+Cg==",
+                "body": "PCFET0NUWVBFIEhUTUw+CjxodG1sIGxhbmc9ImVuLVVTIj4KPGhlYWQ+Cgk8bWV0YSBjaGFyc2V0PSJVVEYtOCI+Cgk8dGl0bGU+VGVzdCBYc3R5bGUgRnVuY3Rpb25hbGl0eTwvdGl0bGU+Cgk8bGluayByZWw9ImFwcGxlLXRvdWNoLWljb24iIGhyZWY9InRlc3QuanBnIiAvPgoJPHNjcmlwdD4KCQlkb2N1bWVudC53cml0ZSgnPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSInICsgbG9jYXRpb24uc2VhcmNoLnNsaWNlKDEpICsgJy5jc3MiIC8+Jyk7Cgk8L3NjcmlwdD4KCTxzY3JpcHQgc3JjPSIuLi8uLi9kb2pvL2Rvam8uanMiIGRhdGEtZG9qby1jb25maWc9ImFzeW5jOnRydWUsIGRlcHM6Wyd4c3R5bGUvbWFpbiddIj48L3NjcmlwdD4KPC9oZWFkPgo8Ym9keT4KCTxkaXYgaWQ9ImNvcmUtdGVzdCI+PC9kaXY+CjwvYm9keT4KPC9odG1sPgo=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Sun, 09 Nov 2014 03:41:43 GMT",
+                    "Content-Length": "425",
+                    "Date": "Sun, 09 Nov 2014 03:41:44 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

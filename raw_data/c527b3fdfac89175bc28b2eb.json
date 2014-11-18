@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/ngot/mil/src/index.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Open redirection (DOM-based)",
+    "issueType": 5243152,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based open redirection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the target of a redirection in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a redirection to an arbitrary external domain. This behavior can be leveraged to facilitate phishing attacks against users of the application. The ability to use an authentic application URL, targeting the correct domain with a valid SSL certificate (if SSL is used) lends credibility to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain.<br><br><b>Note:</b> If an attacker is able to control the start of the string that is passed to the redirection API, then it may be possible to escalate this vulnerability into a JavaScript injection attack, by using a URL with the javascript: pseudo-protocol to execute arbitrary script code when the URL is processed by the browser.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based open redirection vulnerabilities is not to dynamically set redirection targets using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a redirection target. In general, this is best achieved by using a whitelist of URLs that are permitted redirection targets, and strictly validating the target against this list before performing the redirection.",
+    "issueDetail": "The application may be vulnerable to DOM-based open redirection. Data is read from <b>location.search</b> and written to <b>location</b> via the following statements:<ul><li>var s = location.search;</li><li>location = location.pathname + '#' + s.substr(1);</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/ngot/mil/src/index.js",
+                "path": "/ngot/mil/src/index.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9uZ290L21pbC9zcmMvaW5kZXguanMgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjIwOA0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vamF2YXNjcmlwdA0KRGF0ZTogRnJpLCAwNyBOb3YgMjAxNCAwOTo1MToyOCBHTVQNCkxhc3QtTW9kaWZpZWQ6IEZyaSwgMDcgTm92IDIwMTQgMDk6NTE6MjggR01UDQoNCihmdW5jdGlvbiAodykgewoJdy5taWwgPSBmdW5jdGlvbiAobykgewoJCXZhciBvYmogPSB7CgkJCXVybDogW10sCgkJCWpzOiBbXSwKCQkJY3NzOiBbXQoJCX07CgkJLyoqCgkJICogIHBhcmFtIGlzIG51bGwgZXhpdCBsb2FkIGZ1bmN0aW9uCgkJICovCgkJaWYgKCFvKSByZXR1cm47CgkJLyoqCgkJICogcGFyc2UgdGhlIHBhcmFtcwoJCSAqLwoJCWZvciAodmFyIGsgaW4gb2JqKSB7CgkJCWlmIChvW2tdKSB7CgkJCQlzd2l0Y2ggKHR5cGVvZiBvW2tdKSB7CgkJCQkJY2FzZSAnc3RyaW5nJzoKCQkJCQkJb2JqW2tdID0gW29ba11dOwoJCQkJCQlicmVhazsKCQkJCQljYXNlICdvYmplY3QnOgoJCQkJCQlvYmpba10gPSBvW2tdOwoJCQkJCQlicmVhazsKCQkJCX0KCQkJfQoJCX0KCQkvKioKCQkgKiBpbnZva2UgbG9hZCBmdW5jdGlvbgoJCSAqLwoJCWxvYWQob2JqKTsKCX07CgoJZnVuY3Rpb24gbG9hZChvYmopIHsKCQl2YXIgcyA9IGxvY2F0aW9uLnNlYXJjaDsKCQlpZiAocyAhPT0gJycpIHsKCQkJbG9jYXRpb24gPSBsb2NhdGlvbi5wYXRobmFtZSArICcjJyArIHMuc3Vic3RyKDEpOwoJCQlyZXR1cm47CgkJfQoJCS8qKgoJCSAqIGxvYWQgc291cmNlIGFmdGVyIHRoZSBkb20gbG9hZCBjb21wbGV0ZS4KCQkgKi8KCQlpZiAoZG9jdW1lbnQuYm9keSkKCQkJbG9hZGVyKG9iaik7CgkJZWxzZQoJCQl3Lm9ubG9hZCA9IGxvYWRlcihvYmopOwoJfQoKCS8qKgoJICogcnVuIHRoZSBsb2FkIHRhc2sKCSAqLwoJZnVuY3Rpb24gbG9hZGVyKG9iaikgewoJCXZhciBkb21haW4gPSBvYmoudXJsID8gb2JqLnVybFswXSA6ICcnOwoJCXZhciBzY3JpcHRzID0gZG9jdW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ3NjcmlwdCcpOwoJCXZhciByID0gbmV3IFJlZ0V4cCgiaHR0cDovLyhbXi9dKykvIikuZXhlYyhzY3JpcHRzW3NjcmlwdHMubGVuZ3RoIC0gMV0uc3JjKTsKCgkJaWYgKCFkb21haW4pIHsKCQkJaWYgKHIpCgkJCQlkb21haW4gPSByWzFdOwoJCQllbHNlCgkJCQlkb21haW4gPSBsb2NhdGlvbi5ob3N0OwoJCX0KCgkJdmFyIGpzID0gb2JqLmpzOwoJCXZhciBjc3MgPSBvYmouY3NzOwoKCQl2YXIgYm9keSA9IGRvY3VtZW50LmJvZHkgfHwgZG9jdW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoJ2JvZHknKVswXSB8fCBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaGVhZCIpWzBdIHx8IGRvY3VtZW50LmRvY3VtZW50RWxlbWVudDsKCgkJZnVuY3Rpb24gcnVuX2xvYWQoKSB7CgkJCXZhciBzY3JpcHRfaWQgPSAwOwoJCQl2YXIgaWU5bGVzcyA9ICgiQWN0aXZlWE9iamVjdCIgaW4gdykgJiYgISgiYXRvYiIgaW4gdyk7CgoJCQlmdW5jdGlvbiBsb2FkX3NjcmlwdCgpIHsKCQkJCWlmIChzY3JpcHRfaWQgPCBqcy5sZW5ndGgpIHsKCQkJCQl2YXIgYyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoInNjcmlwdCIpOwoJCQkJCWMudHlwZSA9ICJ0ZXh0L2phdmFzY3JpcHQiOwoJCQkJCWlmIChjLnJlYWR5U3RhdGUpCgkJCQkJCWMub25yZWFkeXN0YXRlY2hhbmdlID0gZnVuY3Rpb24gKCkgewoJCQkJCQkJaWYgKHRoaXMucmVhZHlTdGF0ZSA9PSAnbG9hZGVkJykKCQkJCQkJCQlzZXRUaW1lb3V0KGxvYWRfc2NyaXB0LCAwKTsKCQkJCQkJfTsKCQkJCQllbHNlCgkJCQkJCWMub25sb2FkID0gbG9hZF9zY3JpcHQ7CgkJCQkJYy5zcmMgPSAnaHR0cDovLycgKyBkb21haW4gKyAiLyIgKyBqc1tzY3JpcHRfaWRdOwoJCQkJCWJvZHkuYXBwZW5kQ2hpbGQoYyk7CgkJCQkJc2NyaXB0X2lkKys7CgkJCQl9CgkJCX0KCgkJCWxvYWRfc2NyaXB0KCk7CgkJCWZvciAodmFyIHYgaW4gY3NzKSB7CgkJCQlpZiAoaWU5bGVzcyAmJiBjc3Nbdl0uaW5kZXhPZigicGhvbmUvIikgPiAtMSkKCQkJCQljb250aW51ZTsKCQkJCXZhciBjID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnbGluaycpOwoJCQkJYy50eXBlID0gJ3RleHQvY3NzJzsKCQkJCWMucmVsID0gJ3N0eWxlc2hlZXQnOwoJCQkJYy5ocmVmID0gJ2h0dHA6Ly8nICsgZG9tYWluICsgJy8nICsgY3NzW3ZdOwoJCQkJZG9jdW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoImhlYWQiKVswXS5hcHBlbmRDaGlsZChjKTsKCQkJfQoJCX0KCgkJaWYgKCdjb3Jkb3ZhJyBpbiB3KQoJCQlkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJkZXZpY2VyZWFkeSIsIHJ1bl9sb2FkLCBmYWxzZSk7CgkJZWxzZQoJCQlydW5fbG9hZCgpOwoJfQp9KSh3aW5kb3cpOw==",
+                "body": "KGZ1bmN0aW9uICh3KSB7Cgl3Lm1pbCA9IGZ1bmN0aW9uIChvKSB7CgkJdmFyIG9iaiA9IHsKCQkJdXJsOiBbXSwKCQkJanM6IFtdLAoJCQljc3M6IFtdCgkJfTsKCQkvKioKCQkgKiAgcGFyYW0gaXMgbnVsbCBleGl0IGxvYWQgZnVuY3Rpb24KCQkgKi8KCQlpZiAoIW8pIHJldHVybjsKCQkvKioKCQkgKiBwYXJzZSB0aGUgcGFyYW1zCgkJICovCgkJZm9yICh2YXIgayBpbiBvYmopIHsKCQkJaWYgKG9ba10pIHsKCQkJCXN3aXRjaCAodHlwZW9mIG9ba10pIHsKCQkJCQljYXNlICdzdHJpbmcnOgoJCQkJCQlvYmpba10gPSBbb1trXV07CgkJCQkJCWJyZWFrOwoJCQkJCWNhc2UgJ29iamVjdCc6CgkJCQkJCW9ialtrXSA9IG9ba107CgkJCQkJCWJyZWFrOwoJCQkJfQoJCQl9CgkJfQoJCS8qKgoJCSAqIGludm9rZSBsb2FkIGZ1bmN0aW9uCgkJICovCgkJbG9hZChvYmopOwoJfTsKCglmdW5jdGlvbiBsb2FkKG9iaikgewoJCXZhciBzID0gbG9jYXRpb24uc2VhcmNoOwoJCWlmIChzICE9PSAnJykgewoJCQlsb2NhdGlvbiA9IGxvY2F0aW9uLnBhdGhuYW1lICsgJyMnICsgcy5zdWJzdHIoMSk7CgkJCXJldHVybjsKCQl9CgkJLyoqCgkJICogbG9hZCBzb3VyY2UgYWZ0ZXIgdGhlIGRvbSBsb2FkIGNvbXBsZXRlLgoJCSAqLwoJCWlmIChkb2N1bWVudC5ib2R5KQoJCQlsb2FkZXIob2JqKTsKCQllbHNlCgkJCXcub25sb2FkID0gbG9hZGVyKG9iaik7Cgl9CgoJLyoqCgkgKiBydW4gdGhlIGxvYWQgdGFzawoJICovCglmdW5jdGlvbiBsb2FkZXIob2JqKSB7CgkJdmFyIGRvbWFpbiA9IG9iai51cmwgPyBvYmoudXJsWzBdIDogJyc7CgkJdmFyIHNjcmlwdHMgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgnc2NyaXB0Jyk7CgkJdmFyIHIgPSBuZXcgUmVnRXhwKCJodHRwOi8vKFteL10rKS8iKS5leGVjKHNjcmlwdHNbc2NyaXB0cy5sZW5ndGggLSAxXS5zcmMpOwoKCQlpZiAoIWRvbWFpbikgewoJCQlpZiAocikKCQkJCWRvbWFpbiA9IHJbMV07CgkJCWVsc2UKCQkJCWRvbWFpbiA9IGxvY2F0aW9uLmhvc3Q7CgkJfQoKCQl2YXIganMgPSBvYmouanM7CgkJdmFyIGNzcyA9IG9iai5jc3M7CgoJCXZhciBib2R5ID0gZG9jdW1lbnQuYm9keSB8fCBkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgnYm9keScpWzBdIHx8IGRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCJoZWFkIilbMF0gfHwgZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50OwoKCQlmdW5jdGlvbiBydW5fbG9hZCgpIHsKCQkJdmFyIHNjcmlwdF9pZCA9IDA7CgkJCXZhciBpZTlsZXNzID0gKCJBY3RpdmVYT2JqZWN0IiBpbiB3KSAmJiAhKCJhdG9iIiBpbiB3KTsKCgkJCWZ1bmN0aW9uIGxvYWRfc2NyaXB0KCkgewoJCQkJaWYgKHNjcmlwdF9pZCA8IGpzLmxlbmd0aCkgewoJCQkJCXZhciBjID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgic2NyaXB0Iik7CgkJCQkJYy50eXBlID0gInRleHQvamF2YXNjcmlwdCI7CgkJCQkJaWYgKGMucmVhZHlTdGF0ZSkKCQkJCQkJYy5vbnJlYWR5c3RhdGVjaGFuZ2UgPSBmdW5jdGlvbiAoKSB7CgkJCQkJCQlpZiAodGhpcy5yZWFkeVN0YXRlID09ICdsb2FkZWQnKQoJCQkJCQkJCXNldFRpbWVvdXQobG9hZF9zY3JpcHQsIDApOwoJCQkJCQl9OwoJCQkJCWVsc2UKCQkJCQkJYy5vbmxvYWQgPSBsb2FkX3NjcmlwdDsKCQkJCQljLnNyYyA9ICdodHRwOi8vJyArIGRvbWFpbiArICIvIiArIGpzW3NjcmlwdF9pZF07CgkJCQkJYm9keS5hcHBlbmRDaGlsZChjKTsKCQkJCQlzY3JpcHRfaWQrKzsKCQkJCX0KCQkJfQoKCQkJbG9hZF9zY3JpcHQoKTsKCQkJZm9yICh2YXIgdiBpbiBjc3MpIHsKCQkJCWlmIChpZTlsZXNzICYmIGNzc1t2XS5pbmRleE9mKCJwaG9uZS8iKSA+IC0xKQoJCQkJCWNvbnRpbnVlOwoJCQkJdmFyIGMgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdsaW5rJyk7CgkJCQljLnR5cGUgPSAndGV4dC9jc3MnOwoJCQkJYy5yZWwgPSAnc3R5bGVzaGVldCc7CgkJCQljLmhyZWYgPSAnaHR0cDovLycgKyBkb21haW4gKyAnLycgKyBjc3Nbdl07CgkJCQlkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgiaGVhZCIpWzBdLmFwcGVuZENoaWxkKGMpOwoJCQl9CgkJfQoKCQlpZiAoJ2NvcmRvdmEnIGluIHcpCgkJCWRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImRldmljZXJlYWR5IiwgcnVuX2xvYWQsIGZhbHNlKTsKCQllbHNlCgkJCXJ1bl9sb2FkKCk7Cgl9Cn0pKHdpbmRvdyk7",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 09:51:28 GMT",
+                    "Content-Length": "2208",
+                    "Date": "Fri, 07 Nov 2014 09:51:28 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

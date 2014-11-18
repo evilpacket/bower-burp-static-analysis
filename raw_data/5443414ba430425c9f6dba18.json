@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/drupal/drupal/core/modules/toolbar/js/escapeAdmin.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "HTML5 storage manipulation (DOM-based)",
+    "issueType": 5246720,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based HTML5 storage manipulation occurs when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and stores this data in the HTML5 storage of the web browser (either localStorage or sessionStorage). An attacker may be able to use this behavior to construct a URL which, if visited by another application user, will cause the user's browser to store attacker-controllable data.<br><br>This behavior does not in itself constitute a security vulnerability. However, if the application later reads the data back from storage and processes it in an unsafe way, then an attacker may be able to leverage the storage mechanism to deliver other DOM-based attacks, such as cross-site scripting and JavaScript injection.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>You should also review the ways in which the wider application uses data that is retrieved from HTML5 storage. If the data is never handled in an unsafe manner, then this behavior may not constitute any kind of vulnerability.<br><br>The most effective way to avoid DOM-based HTML5 storage manipulation is not to place in HTML5 storage any data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from being stored.",
+    "issueDetail": "The application may be vulnerable to DOM-based HTML5 storage manipulation. Data is read from <b>window.location</b> and written to <b>sessionStorage.setItem()</b> via the following statements:<ul><li>var windowLocation = window.location;</li><li>sessionStorage.setItem('escapeAdminPath', windowLocation);</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/drupal/drupal/core/modules/toolbar/js/escapeAdmin.js",
+                "path": "/drupal/drupal/core/modules/toolbar/js/escapeAdmin.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9kcnVwYWwvZHJ1cGFsL2NvcmUvbW9kdWxlcy90b29sYmFyL2pzL2VzY2FwZUFkbWluLmpzIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMTQyMQ0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vamF2YXNjcmlwdA0KRGF0ZTogVGh1LCAwNiBOb3YgMjAxNCAyMjoxNTowNyBHTVQNCkxhc3QtTW9kaWZpZWQ6IFRodSwgMDYgTm92IDIwMTQgMjI6MTQ6NTAgR01UDQoNCi8qKgogKiBAZmlsZQogKgogKiBSZXBsYWNlcyB0aGUgaG9tZSBsaW5rIGluIHRvb2xiYXIgd2l0aCBhIGJhY2sgdG8gc2l0ZSBsaW5rLgogKi8KKGZ1bmN0aW9uICgkLCBEcnVwYWwsIGRydXBhbFNldHRpbmdzKSB7CgogICJ1c2Ugc3RyaWN0IjsKCiAgdmFyIHBhdGhJbmZvID0gZHJ1cGFsU2V0dGluZ3MucGF0aDsKICB2YXIgZXNjYXBlQWRtaW5QYXRoID0gc2Vzc2lvblN0b3JhZ2UuZ2V0SXRlbSgnZXNjYXBlQWRtaW5QYXRoJyk7CiAgdmFyIHdpbmRvd0xvY2F0aW9uID0gd2luZG93LmxvY2F0aW9uOwoKICAvLyBTYXZlcyB0aGUgbGFzdCBub24tYWRtaW5pc3RyYXRpdmUgcGFnZSBpbiB0aGUgYnJvd3NlciB0byBiZSBhYmxlIHRvIGxpbmsgYmFjawogIC8vIHRvIGl0IHdoZW4gYnJvd3NpbmcgYWRtaW5pc3RyYXRpdmUgcGFnZXMuIElmIHRoZXJlIGlzIGEgZGVzdGluYXRpb24gcGFyYW1ldGVyCiAgLy8gdGhlcmUgaXMgbm90IG5lZWQgdG8gc2F2ZSB0aGUgY3VycmVudCBwYXRoIGJlY2F1c2UgdGhlIHBhZ2UgaXMgbG9hZGVkIHdpdGhpbgogIC8vIGFuIGV4aXN0aW5nICJ3b3JrZmxvdyIuCiAgaWYgKCFwYXRoSW5mby5jdXJyZW50UGF0aElzQWRtaW4gJiYgIS9kZXN0aW5hdGlvbj0vLnRlc3Qod2luZG93TG9jYXRpb24uc2VhcmNoKSkgewogICAgc2Vzc2lvblN0b3JhZ2Uuc2V0SXRlbSgnZXNjYXBlQWRtaW5QYXRoJywgd2luZG93TG9jYXRpb24pOwogIH0KCiAgLyoqCiAgICogUmVwbGFjZXMgdGhlICJIb21lIiBsaW5rIHdpdGggIkJhY2sgdG8gc2l0ZSIgbGluay4KICAgKgogICAqIEJhY2sgdG8gc2l0ZSBsaW5rIHBvaW50cyB0byB0aGUgbGFzdCBub24tYWRtaW5pc3RyYXRpdmUgcGFnZSB0aGUgdXNlciB2aXNpdGVkCiAgICogd2l0aGluIHRoZSBzYW1lIGJyb3dzZXIgdGFiLgogICAqLwogIERydXBhbC5iZWhhdmlvcnMuZXNjYXBlQWRtaW4gPSB7CiAgICBhdHRhY2g6IGZ1bmN0aW9uICgpIHsKICAgICAgdmFyICR0b29sYmFyRXNjYXBlID0gJCgnW2RhdGEtdG9vbGJhci1lc2NhcGUtYWRtaW5dJykub25jZSgnZXNjYXBlQWRtaW4nKTsKICAgICAgaWYgKCR0b29sYmFyRXNjYXBlLmxlbmd0aCAmJiBwYXRoSW5mby5jdXJyZW50UGF0aElzQWRtaW4pIHsKICAgICAgICBpZiAoZXNjYXBlQWRtaW5QYXRoICE9PSBudWxsKSB7CiAgICAgICAgICAkdG9vbGJhckVzY2FwZS5hdHRyKCdocmVmJywgZXNjYXBlQWRtaW5QYXRoKTsKICAgICAgICB9CiAgICAgICAgZWxzZSB7CiAgICAgICAgICAkdG9vbGJhckVzY2FwZS50ZXh0KERydXBhbC50KCdIb21lJykpOwogICAgICAgIH0KICAgICAgICAkdG9vbGJhckVzY2FwZS5jbG9zZXN0KCcudG9vbGJhci10YWInKS5yZW1vdmVDbGFzcygnaGlkZGVuJyk7CiAgICAgIH0KICAgIH0KICB9OwoKfSkoalF1ZXJ5LCBEcnVwYWwsIGRydXBhbFNldHRpbmdzKTsK",
+                "body": "LyoqCiAqIEBmaWxlCiAqCiAqIFJlcGxhY2VzIHRoZSBob21lIGxpbmsgaW4gdG9vbGJhciB3aXRoIGEgYmFjayB0byBzaXRlIGxpbmsuCiAqLwooZnVuY3Rpb24gKCQsIERydXBhbCwgZHJ1cGFsU2V0dGluZ3MpIHsKCiAgInVzZSBzdHJpY3QiOwoKICB2YXIgcGF0aEluZm8gPSBkcnVwYWxTZXR0aW5ncy5wYXRoOwogIHZhciBlc2NhcGVBZG1pblBhdGggPSBzZXNzaW9uU3RvcmFnZS5nZXRJdGVtKCdlc2NhcGVBZG1pblBhdGgnKTsKICB2YXIgd2luZG93TG9jYXRpb24gPSB3aW5kb3cubG9jYXRpb247CgogIC8vIFNhdmVzIHRoZSBsYXN0IG5vbi1hZG1pbmlzdHJhdGl2ZSBwYWdlIGluIHRoZSBicm93c2VyIHRvIGJlIGFibGUgdG8gbGluayBiYWNrCiAgLy8gdG8gaXQgd2hlbiBicm93c2luZyBhZG1pbmlzdHJhdGl2ZSBwYWdlcy4gSWYgdGhlcmUgaXMgYSBkZXN0aW5hdGlvbiBwYXJhbWV0ZXIKICAvLyB0aGVyZSBpcyBub3QgbmVlZCB0byBzYXZlIHRoZSBjdXJyZW50IHBhdGggYmVjYXVzZSB0aGUgcGFnZSBpcyBsb2FkZWQgd2l0aGluCiAgLy8gYW4gZXhpc3RpbmcgIndvcmtmbG93Ii4KICBpZiAoIXBhdGhJbmZvLmN1cnJlbnRQYXRoSXNBZG1pbiAmJiAhL2Rlc3RpbmF0aW9uPS8udGVzdCh3aW5kb3dMb2NhdGlvbi5zZWFyY2gpKSB7CiAgICBzZXNzaW9uU3RvcmFnZS5zZXRJdGVtKCdlc2NhcGVBZG1pblBhdGgnLCB3aW5kb3dMb2NhdGlvbik7CiAgfQoKICAvKioKICAgKiBSZXBsYWNlcyB0aGUgIkhvbWUiIGxpbmsgd2l0aCAiQmFjayB0byBzaXRlIiBsaW5rLgogICAqCiAgICogQmFjayB0byBzaXRlIGxpbmsgcG9pbnRzIHRvIHRoZSBsYXN0IG5vbi1hZG1pbmlzdHJhdGl2ZSBwYWdlIHRoZSB1c2VyIHZpc2l0ZWQKICAgKiB3aXRoaW4gdGhlIHNhbWUgYnJvd3NlciB0YWIuCiAgICovCiAgRHJ1cGFsLmJlaGF2aW9ycy5lc2NhcGVBZG1pbiA9IHsKICAgIGF0dGFjaDogZnVuY3Rpb24gKCkgewogICAgICB2YXIgJHRvb2xiYXJFc2NhcGUgPSAkKCdbZGF0YS10b29sYmFyLWVzY2FwZS1hZG1pbl0nKS5vbmNlKCdlc2NhcGVBZG1pbicpOwogICAgICBpZiAoJHRvb2xiYXJFc2NhcGUubGVuZ3RoICYmIHBhdGhJbmZvLmN1cnJlbnRQYXRoSXNBZG1pbikgewogICAgICAgIGlmIChlc2NhcGVBZG1pblBhdGggIT09IG51bGwpIHsKICAgICAgICAgICR0b29sYmFyRXNjYXBlLmF0dHIoJ2hyZWYnLCBlc2NhcGVBZG1pblBhdGgpOwogICAgICAgIH0KICAgICAgICBlbHNlIHsKICAgICAgICAgICR0b29sYmFyRXNjYXBlLnRleHQoRHJ1cGFsLnQoJ0hvbWUnKSk7CiAgICAgICAgfQogICAgICAgICR0b29sYmFyRXNjYXBlLmNsb3Nlc3QoJy50b29sYmFyLXRhYicpLnJlbW92ZUNsYXNzKCdoaWRkZW4nKTsKICAgICAgfQogICAgfQogIH07Cgp9KShqUXVlcnksIERydXBhbCwgZHJ1cGFsU2V0dGluZ3MpOwo=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 22:14:50 GMT",
+                    "Content-Length": "1421",
+                    "Date": "Thu, 06 Nov 2014 22:15:07 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

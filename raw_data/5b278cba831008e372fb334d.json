@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/genify/nej/res/nej_proxy_upload.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "HTML5 web message manipulation (DOM-based)",
+    "issueType": 5246464,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based HTML5 web message manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and sends this data within a web message to another document within the browser. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause the user's browser to send a web message containing data that is under the attacker's control.<br><br>The potential impact of the vulnerability depends on the destination document's handling of the incoming message. If the destination document trusts the sender not to transmit malicious data in the message, and handles the data in an unsafe manner, then the joint behavior of the two documents may allow an attacker to compromise the application user.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based HTML5 web message manipulation vulnerabilities is not to send a web message containing data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from compromising the user. This validation can be carried out by the document that sends the message, or by the document that receives the message, or both, depending on the trust relationship between the two documents.",
+    "issueDetail": "The application may be vulnerable to HTML5 web message manipulation. Data is read from <b>window.name</b> and written to <b>the 'postMessage()' function of an iframe element</b> via the following statements:<ul><li>var _result = 'NEJ-UPLOAD-RESULT:{\"key\":\"'+window.name+'\",\"result\":\"'+encodeURIComponent(result)+'\"}';</li><li>parent.postMessage(_result,'*');</li></ul><b>Note:</b> The name of the current window is a valid attack vector for DOM-based vulnerabilities. An attacker can directly control the name of the targeted application's window by using code on their own domain to load the targeted page using either window.open() or an iframe tag, and specifying the desired window name. ",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/genify/nej/res/nej_proxy_upload.html",
+                "path": "/genify/nej/res/nej_proxy_upload.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9nZW5pZnkvbmVqL3Jlcy9uZWpfcHJveHlfdXBsb2FkLmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNTIzDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IEZyaSwgMDcgTm92IDIwMTQgMTg6NDc6MDcgR01UDQpMYXN0LU1vZGlmaWVkOiBGcmksIDA3IE5vdiAyMDE0IDE4OjQ3OjA1IEdNVA0KDQo8aHRtbD48Ym9keT4KPCEtLSDlsIbkuIrkvKDnu5Pmnpzluo/liJfljJbkuLpKU09O5Liy5ZCO5aGr5YWlcmVzdWx05Lit5Y2z5Y+vIC0tPgo8c2NyaXB0PgogICAgd2luZG93LnJlc3VsdCA9ICd7InVybCI6Imh0dHA6Ly8xOTIuMTY4LjE0Ni44NDoxMTIyL3hoci8zLmpwZyJ9JzsKPC9zY3JpcHQ+CjxzY3JpcHQ+CiAgICB2YXIgX3Jlc3VsdCA9ICdORUotVVBMT0FELVJFU1VMVDp7ImtleSI6Iicrd2luZG93Lm5hbWUrJyIsInJlc3VsdCI6IicrZW5jb2RlVVJJQ29tcG9uZW50KHJlc3VsdCkrJyJ9JzsKICAgIGlmICh3aW5kb3cucG9zdE1lc3NhZ2UpewogICAgICAgIHBhcmVudC5wb3N0TWVzc2FnZShfcmVzdWx0LCcqJyk7CiAgICB9ZWxzZXsKICAgICAgICBfcmVzdWx0ID0gJyInK19yZXN1bHQucmVwbGFjZSgvIi9nLCdcXCInKSsnIic7CiAgICAgICAgcGFyZW50Lm5hbWUgPSBlc2NhcGUoJ01TR3xkYXRhPScrZW5jb2RlVVJJQ29tcG9uZW50KF9yZXN1bHQpKTsKICAgIH0KPC9zY3JpcHQ+CjwvYm9keT48L2h0bWw+",
+                "body": "PGh0bWw+PGJvZHk+CjwhLS0g5bCG5LiK5Lyg57uT5p6c5bqP5YiX5YyW5Li6SlNPTuS4suWQjuWhq+WFpXJlc3VsdOS4reWNs+WPryAtLT4KPHNjcmlwdD4KICAgIHdpbmRvdy5yZXN1bHQgPSAneyJ1cmwiOiJodHRwOi8vMTkyLjE2OC4xNDYuODQ6MTEyMi94aHIvMy5qcGcifSc7Cjwvc2NyaXB0Pgo8c2NyaXB0PgogICAgdmFyIF9yZXN1bHQgPSAnTkVKLVVQTE9BRC1SRVNVTFQ6eyJrZXkiOiInK3dpbmRvdy5uYW1lKyciLCJyZXN1bHQiOiInK2VuY29kZVVSSUNvbXBvbmVudChyZXN1bHQpKycifSc7CiAgICBpZiAod2luZG93LnBvc3RNZXNzYWdlKXsKICAgICAgICBwYXJlbnQucG9zdE1lc3NhZ2UoX3Jlc3VsdCwnKicpOwogICAgfWVsc2V7CiAgICAgICAgX3Jlc3VsdCA9ICciJytfcmVzdWx0LnJlcGxhY2UoLyIvZywnXFwiJykrJyInOwogICAgICAgIHBhcmVudC5uYW1lID0gZXNjYXBlKCdNU0d8ZGF0YT0nK2VuY29kZVVSSUNvbXBvbmVudChfcmVzdWx0KSk7CiAgICB9Cjwvc2NyaXB0Pgo8L2JvZHk+PC9odG1sPg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 18:47:05 GMT",
+                    "Content-Length": "523",
+                    "Date": "Fri, 07 Nov 2014 18:47:07 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

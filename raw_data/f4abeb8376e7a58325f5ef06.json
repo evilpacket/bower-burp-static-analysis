@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/benplum/Macaroon/test/test.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cookie manipulation (DOM-based)",
+    "issueType": 5245696,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cookie manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the value of a cookie in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will set an arbitrary value in the user's cookie.<br><br>The potential impact of the vulnerability depends on the role that the cookie plays within the application. If the cookie is used to control the behavior that results from certain user actions (for example, a 'production' versus 'demo' mode setting), then the attacker may be able to cause the user to perform unintended actions by manipulating the cookie's value. If the cookie is used to track the user's session, then the attacker may be able to perform a session fixation attack, in which they set the cookie's value to a valid token that they have obtained from the application, and then hijack the session during the victim user's subsequent interaction with the application.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cookie manipulation vulnerabilities is not to dynamically write to cookies using data that originated from any untrusted source. This behavior should never be implemented for cookies that have any role in controlling privileged actions or user sessions within the application.",
+    "issueDetail": "The application may be vulnerable to DOM-based cookie manipulation. Data is read from <b>location.pathname</b> and written to <b>document.cookie</b> via the following statements:<ul><li>var pathBits = location.pathname.split('/'),      pathCurrent = ' path=';</li><li>pathCurrent += ((pathCurrent.substr(-1) != '/') ? '/' : '') + pathBits[i];</li><li>document.cookie = name + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT;' + pathCurrent + ';';</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/benplum/Macaroon/test/test.html",
+                "path": "/benplum/Macaroon/test/test.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9iZW5wbHVtL01hY2Fyb29uL3Rlc3QvdGVzdC5odG1sIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMTU0Mg0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDA5OjEwOjAxIEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAwOToxMDowMSBHTVQNCg0KPCFET0NUWVBFIGh0bWw+CjxodG1sPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTx0aXRsZT5UZXN0PC90aXRsZT4KCQk8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Ii4uL2NvbXBvbmVudHMvcXVuaXQvcXVuaXQvcXVuaXQuY3NzIj4KCQk8c2NyaXB0IHNyYz0iLi4vY29tcG9uZW50cy9xdW5pdC9xdW5pdC9xdW5pdC5qcyI+PC9zY3JpcHQ+CgoJCTxzY3JpcHQgc3JjPSIuLi9jb21wb25lbnRzL2pxdWVyeS9kaXN0L2pxdWVyeS5taW4uanMiPjwvc2NyaXB0PgoKCQk8c2NyaXB0IHNyYz0iLi4vanF1ZXJ5LmZzLm1hY2Fyb29uLmpzIj48L3NjcmlwdD4KCTwvaGVhZD4KCTxib2R5PgoJCTxkaXYgaWQ9InF1bml0Ij48L2Rpdj4KCQk8ZGl2IGlkPSJxdW5pdC1maXh0dXJlIj48L2Rpdj4KCQk8c2NyaXB0PgoJCQlRVW5pdC5tb2R1bGUoIlRlc3RpbmciKTsKCgkJCVFVbml0LnRlc3QoIlNldCIsIGZ1bmN0aW9uKCBhc3NlcnQgKSB7CgkJCQllcmFzZUNvb2tpZSgiZm9vIik7CgoJCQkJJC5tYWNhcm9vbigiZm9vIiwgImJhciIpOwoKCQkJCXZhciBleGlzdHMgPSBkb2N1bWVudC5jb29raWUuaW5kZXhPZigiZm9vPWJhciIpID4gLTE7CgkJCQlhc3NlcnQub2soZXhpc3RzLCAiJ2Zvbycgd2FzIHNldCB0byAnYmFyJyIpOwoJCQl9KTsKCgkJCVFVbml0LnRlc3QoIkdldCIsIGZ1bmN0aW9uKCBhc3NlcnQgKSB7CgkJCQllcmFzZUNvb2tpZSgiZm9vIik7CgoJCQkJJC5tYWNhcm9vbigiZm9vIiwgImJhciIpOwoKCQkJCXZhciB2YWx1ZSA9ICQubWFjYXJvb24oImZvbyIpOwoJCQkJYXNzZXJ0LmVxdWFsKHZhbHVlLCAiYmFyIiwgIidmb28nIGlzIGVxdWFsIHRvICdiYXInIik7CgkJCX0pOwoKCQkJUVVuaXQudGVzdCgiRXJhc2UiLCBmdW5jdGlvbiggYXNzZXJ0ICkgewoJCQkJZXJhc2VDb29raWUoImZvbyIpOwoKCQkJCSQubWFjYXJvb24oImZvbyIsICJiYXIiKTsKCgkJCQkkLm1hY2Fyb29uKCJmb28iLCBudWxsKTsKCgkJCQl2YXIgZXhpc3RzID0gZG9jdW1lbnQuY29va2llLmluZGV4T2YoImZvbz1iYXIiKSA8IDA7CgkJCQlhc3NlcnQub2soZXhpc3RzLCAiJ2Zvbycgd2FzIGNsZWFyZWQiKTsKCQkJfSk7CgoJCQlmdW5jdGlvbiBlcmFzZUNvb2tpZShuYW1lKSB7CgkJCQl2YXIgcGF0aEJpdHMgPSBsb2NhdGlvbi5wYXRobmFtZS5zcGxpdCgnLycpLAoJCQkJCXBhdGhDdXJyZW50ID0gJyBwYXRoPSc7CgoJCQkJZG9jdW1lbnQuY29va2llID0gbmFtZSArICc9OyBleHBpcmVzPVRodSwgMDEtSmFuLTE5NzAgMDA6MDA6MDEgR01UOyc7CgoJCQkJZm9yICh2YXIgaSA9IDA7IGkgPCBwYXRoQml0cy5sZW5ndGg7IGkrKykgewoJCQkJCXBhdGhDdXJyZW50ICs9ICgocGF0aEN1cnJlbnQuc3Vic3RyKC0xKSAhPSAnLycpID8gJy8nIDogJycpICsgcGF0aEJpdHNbaV07CgkJCQkJZG9jdW1lbnQuY29va2llID0gbmFtZSArICc9OyBleHBpcmVzPVRodSwgMDEtSmFuLTE5NzAgMDA6MDA6MDEgR01UOycgKyBwYXRoQ3VycmVudCArICc7JzsKCQkJCX0KCQkJfQoJCTwvc2NyaXB0PgoJPC9ib2R5Pgo8L2h0bWw+",
+                "body": "PCFET0NUWVBFIGh0bWw+CjxodG1sPgoJPGhlYWQ+CgkJPG1ldGEgY2hhcnNldD0idXRmLTgiPgoJCTx0aXRsZT5UZXN0PC90aXRsZT4KCQk8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Ii4uL2NvbXBvbmVudHMvcXVuaXQvcXVuaXQvcXVuaXQuY3NzIj4KCQk8c2NyaXB0IHNyYz0iLi4vY29tcG9uZW50cy9xdW5pdC9xdW5pdC9xdW5pdC5qcyI+PC9zY3JpcHQ+CgoJCTxzY3JpcHQgc3JjPSIuLi9jb21wb25lbnRzL2pxdWVyeS9kaXN0L2pxdWVyeS5taW4uanMiPjwvc2NyaXB0PgoKCQk8c2NyaXB0IHNyYz0iLi4vanF1ZXJ5LmZzLm1hY2Fyb29uLmpzIj48L3NjcmlwdD4KCTwvaGVhZD4KCTxib2R5PgoJCTxkaXYgaWQ9InF1bml0Ij48L2Rpdj4KCQk8ZGl2IGlkPSJxdW5pdC1maXh0dXJlIj48L2Rpdj4KCQk8c2NyaXB0PgoJCQlRVW5pdC5tb2R1bGUoIlRlc3RpbmciKTsKCgkJCVFVbml0LnRlc3QoIlNldCIsIGZ1bmN0aW9uKCBhc3NlcnQgKSB7CgkJCQllcmFzZUNvb2tpZSgiZm9vIik7CgoJCQkJJC5tYWNhcm9vbigiZm9vIiwgImJhciIpOwoKCQkJCXZhciBleGlzdHMgPSBkb2N1bWVudC5jb29raWUuaW5kZXhPZigiZm9vPWJhciIpID4gLTE7CgkJCQlhc3NlcnQub2soZXhpc3RzLCAiJ2Zvbycgd2FzIHNldCB0byAnYmFyJyIpOwoJCQl9KTsKCgkJCVFVbml0LnRlc3QoIkdldCIsIGZ1bmN0aW9uKCBhc3NlcnQgKSB7CgkJCQllcmFzZUNvb2tpZSgiZm9vIik7CgoJCQkJJC5tYWNhcm9vbigiZm9vIiwgImJhciIpOwoKCQkJCXZhciB2YWx1ZSA9ICQubWFjYXJvb24oImZvbyIpOwoJCQkJYXNzZXJ0LmVxdWFsKHZhbHVlLCAiYmFyIiwgIidmb28nIGlzIGVxdWFsIHRvICdiYXInIik7CgkJCX0pOwoKCQkJUVVuaXQudGVzdCgiRXJhc2UiLCBmdW5jdGlvbiggYXNzZXJ0ICkgewoJCQkJZXJhc2VDb29raWUoImZvbyIpOwoKCQkJCSQubWFjYXJvb24oImZvbyIsICJiYXIiKTsKCgkJCQkkLm1hY2Fyb29uKCJmb28iLCBudWxsKTsKCgkJCQl2YXIgZXhpc3RzID0gZG9jdW1lbnQuY29va2llLmluZGV4T2YoImZvbz1iYXIiKSA8IDA7CgkJCQlhc3NlcnQub2soZXhpc3RzLCAiJ2Zvbycgd2FzIGNsZWFyZWQiKTsKCQkJfSk7CgoJCQlmdW5jdGlvbiBlcmFzZUNvb2tpZShuYW1lKSB7CgkJCQl2YXIgcGF0aEJpdHMgPSBsb2NhdGlvbi5wYXRobmFtZS5zcGxpdCgnLycpLAoJCQkJCXBhdGhDdXJyZW50ID0gJyBwYXRoPSc7CgoJCQkJZG9jdW1lbnQuY29va2llID0gbmFtZSArICc9OyBleHBpcmVzPVRodSwgMDEtSmFuLTE5NzAgMDA6MDA6MDEgR01UOyc7CgoJCQkJZm9yICh2YXIgaSA9IDA7IGkgPCBwYXRoQml0cy5sZW5ndGg7IGkrKykgewoJCQkJCXBhdGhDdXJyZW50ICs9ICgocGF0aEN1cnJlbnQuc3Vic3RyKC0xKSAhPSAnLycpID8gJy8nIDogJycpICsgcGF0aEJpdHNbaV07CgkJCQkJZG9jdW1lbnQuY29va2llID0gbmFtZSArICc9OyBleHBpcmVzPVRodSwgMDEtSmFuLTE5NzAgMDA6MDA6MDEgR01UOycgKyBwYXRoQ3VycmVudCArICc7JzsKCQkJCX0KCQkJfQoJCTwvc2NyaXB0PgoJPC9ib2R5Pgo8L2h0bWw+",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 09:10:01 GMT",
+                    "Content-Length": "1542",
+                    "Date": "Fri, 07 Nov 2014 09:10:01 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

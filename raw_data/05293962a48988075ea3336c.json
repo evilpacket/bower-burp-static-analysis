@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/quirkey/sammy/test/exceptional_spec.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Denial of service (DOM-based)",
+    "issueType": 5246208,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based denial of service vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and passes this data to a problematic platform API in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a denial of service condition on the user's computer when the relevant API is invoked. Depending on the nature of the API, the invocation may cause the user's computer to consume excessive amounts of CPU or disk space.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based denial of service vulnerabilities is not to dynamically pass data into problematic platform APIs that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from causing a denial of service condition. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe.",
+    "issueDetail": "The application may be vulnerable to DOM-based denial of service. Data is read from <b>window.location.href</b> and written to <b>the RegExp() constructor</b> via the following statement:<ul><li>expect(window.Exceptional.errors[0].url).to.match(new RegExp(window.location.href));</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/quirkey/sammy/test/exceptional_spec.js",
+                "path": "/quirkey/sammy/test/exceptional_spec.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9xdWlya2V5L3NhbW15L3Rlc3QvZXhjZXB0aW9uYWxfc3BlYy5qcyBIVFRQLzEuMQ0KSG9zdDogbG9jYWxob3N0Ojk5OTkNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMTcxOA0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vamF2YXNjcmlwdA0KRGF0ZTogU2F0LCAwOCBOb3YgMjAxNCAwMzo0ODoyMiBHTVQNCkxhc3QtTW9kaWZpZWQ6IFNhdCwgMDggTm92IDIwMTQgMDM6NDg6MjEgR01UDQoNCi8vIGEgbW9jayBFeGNlcHRpb25hbAovLyBAc2VlIGh0dHBzOi8vZ2l0aHViLmNvbS9jb250cmFzdC9leGNlcHRpb25hbC1qcy9ibG9iL21hc3Rlci9wdWJsaWMvZXhjZXB0aW9uYWwuanMgZm9yIHRoZSByZWFsIGRlYWwKd2luZG93LkV4Y2VwdGlvbmFsID0gewogIGVycm9yczogW10sCiAgaGFuZGxlOiBmdW5jdGlvbihtc2csIHVybCwgbGluZSkgewogICAgdGhpcy5lcnJvcnMucHVzaCh7CiAgICAgIG1lc3NhZ2U6IG1zZywKICAgICAgdXJsOiAgICAgdXJsLAogICAgICBsaW5lOiAgICBsaW5lCiAgICB9KTsKICB9Cn07CgpkZXNjcmliZSgnRXhjZXB0aW9uYWwnLCBmdW5jdGlvbigpIHsKICB2YXIgYXBwOwoKICBiZWZvcmVFYWNoKGZ1bmN0aW9uKCkgewogICAgJCgnI21haW4nKS5odG1sKCc8Zm9ybSBpZD0ibXlmb3JtIiBtZXRob2Q9InBvc3QiIGFjdGlvbj0iIy9oYW5kbGVfbXlfZm9ybSI+PC9mb3JtPicpOwogICAgYXBwID0gbmV3IFNhbW15LkFwcGxpY2F0aW9uKGZ1bmN0aW9uKCkgewogICAgICB0aGlzLmVsZW1lbnRfc2VsZWN0b3IgPSAnI21haW4nOwogICAgICB0aGlzLnJhaXNlX2Vycm9ycyA9IGZhbHNlOwogICAgICB0aGlzLnVzZShTYW1teS5FeGNlcHRpb25hbCk7CiAgICAgIHRoaXMuZ2V0KCcjLycsIGZ1bmN0aW9uKCkgewogICAgICAgIHRoaXMudHJpZ2dlcignZG9uZScpOwogICAgICB9KTsKICAgIH0pOwogICAgYXBwLnJ1bignIy8nKTsKICB9KTsKCiAgaXQoJ2RvZXMgbm90IHNlbmQgYW4gZXJyb3IgdG8gRXhjZXB0aW9uYWwgd2hlbiBub25lIGlzIHRocm93bicsIGZ1bmN0aW9uKGRvbmUpIHsKICAgIGFwcC5iaW5kKCdkb25lJywgZnVuY3Rpb24oKSB7CiAgICAgIGV4cGVjdCh3aW5kb3cuRXhjZXB0aW9uYWwuZXJyb3JzKS50by5iZS5lbXB0eSgpOwogICAgICBhcHAudW5sb2FkKCk7CiAgICAgIGRvbmUoKTsKICAgIH0pOwogICAgYXBwLnBvc3QoJyMvaGFuZGxlX215X2Zvcm0nLCBmdW5jdGlvbigpIHsKICAgICAgdGhpcy5yZWRpcmVjdCgnIy8nKTsKICAgIH0pOwogICAgJCgnI215Zm9ybScpLnN1Ym1pdCgpOwogIH0pOwoKICBpdCgnc2VuZHMgYW4gZXJyb3IgdG8gRXhjZXB0aW9uYWwgaWYgb25lIGlzIHRocm93bicsIGZ1bmN0aW9uKGRvbmUpIHsKICAgIGFwcC5iaW5kKCdlcnJvcicsIGZ1bmN0aW9uKGUpIHsKICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpOwogICAgICBlLnN0b3BQcm9wYWdhdGlvbigpOwogICAgICBpZihlLnN0b3BJbW1lZGlhdGVQcm9wYWdhdGlvbikgewogICAgICAgIGUuc3RvcEltbWVkaWF0ZVByb3BhZ2F0aW9uKCk7CiAgICAgIH0KCiAgICAgIGV4cGVjdCh3aW5kb3cuRXhjZXB0aW9uYWwuZXJyb3JzKS50by5oYXZlLmxlbmd0aCgxKTsKICAgICAgZXhwZWN0KHdpbmRvdy5FeGNlcHRpb25hbC5lcnJvcnNbMF0ubWVzc2FnZSkudG8ubWF0Y2goL0NvbW11bmljYXRpb25zIGVycm9yLyk7CiAgICAgIGV4cGVjdCh3aW5kb3cuRXhjZXB0aW9uYWwuZXJyb3JzWzBdLnVybCkudG8ubWF0Y2gobmV3IFJlZ0V4cCh3aW5kb3cubG9jYXRpb24uaHJlZikpOwoKICAgICAgYXBwLnVubG9hZCgpOwogICAgICBkb25lKCk7CiAgICB9KTsKCiAgICBhcHAucG9zdCgnIy9oYW5kbGVfbXlfZm9ybScsIGZ1bmN0aW9uKCkgewogICAgICB0aHJvdyBuZXcgRXJyb3IoJ0NvbW11bmljYXRpb25zIGVycm9yLicpOwogICAgfSk7CgogICAgJCgnI215Zm9ybScpLnN1Ym1pdCgpOwogIH0pOwp9KTsK",
+                "body": "Ly8gYSBtb2NrIEV4Y2VwdGlvbmFsCi8vIEBzZWUgaHR0cHM6Ly9naXRodWIuY29tL2NvbnRyYXN0L2V4Y2VwdGlvbmFsLWpzL2Jsb2IvbWFzdGVyL3B1YmxpYy9leGNlcHRpb25hbC5qcyBmb3IgdGhlIHJlYWwgZGVhbAp3aW5kb3cuRXhjZXB0aW9uYWwgPSB7CiAgZXJyb3JzOiBbXSwKICBoYW5kbGU6IGZ1bmN0aW9uKG1zZywgdXJsLCBsaW5lKSB7CiAgICB0aGlzLmVycm9ycy5wdXNoKHsKICAgICAgbWVzc2FnZTogbXNnLAogICAgICB1cmw6ICAgICB1cmwsCiAgICAgIGxpbmU6ICAgIGxpbmUKICAgIH0pOwogIH0KfTsKCmRlc2NyaWJlKCdFeGNlcHRpb25hbCcsIGZ1bmN0aW9uKCkgewogIHZhciBhcHA7CgogIGJlZm9yZUVhY2goZnVuY3Rpb24oKSB7CiAgICAkKCcjbWFpbicpLmh0bWwoJzxmb3JtIGlkPSJteWZvcm0iIG1ldGhvZD0icG9zdCIgYWN0aW9uPSIjL2hhbmRsZV9teV9mb3JtIj48L2Zvcm0+Jyk7CiAgICBhcHAgPSBuZXcgU2FtbXkuQXBwbGljYXRpb24oZnVuY3Rpb24oKSB7CiAgICAgIHRoaXMuZWxlbWVudF9zZWxlY3RvciA9ICcjbWFpbic7CiAgICAgIHRoaXMucmFpc2VfZXJyb3JzID0gZmFsc2U7CiAgICAgIHRoaXMudXNlKFNhbW15LkV4Y2VwdGlvbmFsKTsKICAgICAgdGhpcy5nZXQoJyMvJywgZnVuY3Rpb24oKSB7CiAgICAgICAgdGhpcy50cmlnZ2VyKCdkb25lJyk7CiAgICAgIH0pOwogICAgfSk7CiAgICBhcHAucnVuKCcjLycpOwogIH0pOwoKICBpdCgnZG9lcyBub3Qgc2VuZCBhbiBlcnJvciB0byBFeGNlcHRpb25hbCB3aGVuIG5vbmUgaXMgdGhyb3duJywgZnVuY3Rpb24oZG9uZSkgewogICAgYXBwLmJpbmQoJ2RvbmUnLCBmdW5jdGlvbigpIHsKICAgICAgZXhwZWN0KHdpbmRvdy5FeGNlcHRpb25hbC5lcnJvcnMpLnRvLmJlLmVtcHR5KCk7CiAgICAgIGFwcC51bmxvYWQoKTsKICAgICAgZG9uZSgpOwogICAgfSk7CiAgICBhcHAucG9zdCgnIy9oYW5kbGVfbXlfZm9ybScsIGZ1bmN0aW9uKCkgewogICAgICB0aGlzLnJlZGlyZWN0KCcjLycpOwogICAgfSk7CiAgICAkKCcjbXlmb3JtJykuc3VibWl0KCk7CiAgfSk7CgogIGl0KCdzZW5kcyBhbiBlcnJvciB0byBFeGNlcHRpb25hbCBpZiBvbmUgaXMgdGhyb3duJywgZnVuY3Rpb24oZG9uZSkgewogICAgYXBwLmJpbmQoJ2Vycm9yJywgZnVuY3Rpb24oZSkgewogICAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICAgIGUuc3RvcFByb3BhZ2F0aW9uKCk7CiAgICAgIGlmKGUuc3RvcEltbWVkaWF0ZVByb3BhZ2F0aW9uKSB7CiAgICAgICAgZS5zdG9wSW1tZWRpYXRlUHJvcGFnYXRpb24oKTsKICAgICAgfQoKICAgICAgZXhwZWN0KHdpbmRvdy5FeGNlcHRpb25hbC5lcnJvcnMpLnRvLmhhdmUubGVuZ3RoKDEpOwogICAgICBleHBlY3Qod2luZG93LkV4Y2VwdGlvbmFsLmVycm9yc1swXS5tZXNzYWdlKS50by5tYXRjaCgvQ29tbXVuaWNhdGlvbnMgZXJyb3IvKTsKICAgICAgZXhwZWN0KHdpbmRvdy5FeGNlcHRpb25hbC5lcnJvcnNbMF0udXJsKS50by5tYXRjaChuZXcgUmVnRXhwKHdpbmRvdy5sb2NhdGlvbi5ocmVmKSk7CgogICAgICBhcHAudW5sb2FkKCk7CiAgICAgIGRvbmUoKTsKICAgIH0pOwoKICAgIGFwcC5wb3N0KCcjL2hhbmRsZV9teV9mb3JtJywgZnVuY3Rpb24oKSB7CiAgICAgIHRocm93IG5ldyBFcnJvcignQ29tbXVuaWNhdGlvbnMgZXJyb3IuJyk7CiAgICB9KTsKCiAgICAkKCcjbXlmb3JtJykuc3VibWl0KCk7CiAgfSk7Cn0pOwo=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Sat, 08 Nov 2014 03:48:21 GMT",
+                    "Content-Length": "1718",
+                    "Date": "Sat, 08 Nov 2014 03:48:22 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

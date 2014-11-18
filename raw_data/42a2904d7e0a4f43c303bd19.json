@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/marklagendijk/ui-router.stateHelper/statehelper.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "DOM data manipulation (DOM-based)",
+    "issueType": 5247488,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based DOM data manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a data field within the DOM that is used within the visible UI or client-side application logic. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the appearance or behavior of the client-side UI. An attacker may be able to leverage this to perform virtual defacement of the application, or possibly to induce the user to perform unintended actions.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based DOM data manipulation vulnerabilities is not to dynamically write to DOM data fields any data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from being stored. In general, this is best achieved by using a whitelist of permitted values.",
+    "issueDetail": "The application may be vulnerable to DOM-based DOM data manipulation. Data is read from <b>parent.name</b> and written to <b>the 'name' property of a DOM element</b> via the following statement:<ul><li>state.name = state.parent.name + '.' + state.name;</li></ul><b>Note:</b> The name of the current window is a valid attack vector for DOM-based vulnerabilities. An attacker can directly control the name of the targeted application's window by using code on their own domain to load the targeted page using either window.open() or an iframe tag, and specifying the desired window name. ",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/marklagendijk/ui-router.stateHelper/statehelper.js",
+                "path": "/marklagendijk/ui-router.stateHelper/statehelper.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9tYXJrbGFnZW5kaWprL3VpLXJvdXRlci5zdGF0ZUhlbHBlci9zdGF0ZWhlbHBlci5qcyBIVFRQLzEuMQ0KSG9zdDogbG9jYWxob3N0Ojk5OTkNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMTkxMg0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vamF2YXNjcmlwdA0KRGF0ZTogVGh1LCAwNiBOb3YgMjAxNCAwOTowNzozMSBHTVQNCkxhc3QtTW9kaWZpZWQ6IFRodSwgMDYgTm92IDIwMTQgMDk6MDc6MzAgR01UDQoNCi8qKgogKiBBIGhlbHBlciBtb2R1bGUgZm9yIEFuZ3VsYXJVSSBSb3V0ZXIsIHdoaWNoIGFsbG93cyB5b3UgdG8gZGVmaW5lIHlvdXIgc3RhdGVzIGFzIGFuIG9iamVjdCB0cmVlLgogKiBAYXV0aG9yIE1hcmsgTGFnZW5kaWprIDxtYXJrQGxhZ2VuZGlqay5pbmZvPgogKiBAbGljZW5zZSBNSVQKICovCmFuZ3VsYXIubW9kdWxlKCd1aS5yb3V0ZXIuc3RhdGVIZWxwZXInLCBbICd1aS5yb3V0ZXInIF0pCiAgICAucHJvdmlkZXIoJ3N0YXRlSGVscGVyJywgZnVuY3Rpb24oJHN0YXRlUHJvdmlkZXIpewogICAgICAgIHZhciBzZWxmID0gdGhpczsKCiAgICAgICAgLyoqCiAgICAgICAgICogUmVjdXJzaXZlbHkgc2V0cyB0aGUgc3RhdGVzIHVzaW5nICRzdGF0ZVByb3ZpZGVyLnN0YXRlLgogICAgICAgICAqIENoaWxkIHN0YXRlcyBhcmUgZGVmaW5lZCB2aWEgYSBgY2hpbGRyZW5gIHByb3BlcnR5LgogICAgICAgICAqCiAgICAgICAgICogMS4gUmVjdXJzaXZlbHkgY2FsbHMgaXRzZWxmIGZvciBhbGwgZGVzY2VuZGFudCBzdGF0ZXMsIGJ5IHRyYXZlcnNpbmcgdGhlIGBjaGlsZHJlbmAgcHJvcGVydGllcy4KICAgICAgICAgKiAyLiBDb252ZXJ0cyBhbGwgdGhlIHN0YXRlIG5hbWVzIHRvIGRvdCBub3RhdGlvbiwgb2YgdGhlIGZvcm0gYGdyYW5kZmF0aGVyLmZhdGhlci5zdGF0ZWAuCiAgICAgICAgICogMy4gU2V0cyBgcGFyZW50YCBwcm9wZXJ0eSBvZiB0aGUgZGVzY2VuZGFudCBzdGF0ZXMuCiAgICAgICAgICoKICAgICAgICAgKiBAcGFyYW0ge09iamVjdH0gc3RhdGUgLSBBIHJlZ3VsYXIgdWkucm91dGVyIHN0YXRlIG9iamVjdC4KICAgICAgICAgKiBAcGFyYW0ge0FycmF5fSBbc3RhdGUuY2hpbGRyZW5dIC0gQW4gb3B0aW9uYWwgYXJyYXkgb2YgY2hpbGQgc3RhdGVzLgogICAgICAgICAqIEBwYXJhbSB7Qm9vbGVhbn0ga2VlcE9yaWdpbmFsTmFtZXMgLSBBbiBvcHRpb25hbCBmbGFnIHRoYXQgcHJldmVudHMgY29udmVyc2lvbiBvZiBuYW1lcyB0byBkb3Qgbm90YXRpb24gaWYgdHJ1ZS4KICAgICAgICAgKi8KICAgICAgICB0aGlzLnN0YXRlID0gZnVuY3Rpb24oc3RhdGUsIGtlZXBPcmlnaW5hbE5hbWVzKXsKICAgICAgICAgICAgaWYoIWtlZXBPcmlnaW5hbE5hbWVzKXsKICAgICAgICAgICAgICAgIGZpeFN0YXRlTmFtZShzdGF0ZSk7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgJHN0YXRlUHJvdmlkZXIuc3RhdGUoc3RhdGUpOwoKICAgICAgICAgICAgaWYoc3RhdGUuY2hpbGRyZW4gJiYgc3RhdGUuY2hpbGRyZW4ubGVuZ3RoKXsKICAgICAgICAgICAgICAgIHN0YXRlLmNoaWxkcmVuLmZvckVhY2goZnVuY3Rpb24oY2hpbGRTdGF0ZSl7CiAgICAgICAgICAgICAgICAgICAgY2hpbGRTdGF0ZS5wYXJlbnQgPSBzdGF0ZTsKICAgICAgICAgICAgICAgICAgICBzZWxmLnNldE5lc3RlZFN0YXRlKGNoaWxkU3RhdGUsIGtlZXBPcmlnaW5hbE5hbWVzKTsKICAgICAgICAgICAgICAgIH0pOwogICAgICAgICAgICB9CgogICAgICAgICAgICByZXR1cm4gc2VsZjsKICAgICAgICB9OwoKICAgICAgICB0aGlzLnNldE5lc3RlZFN0YXRlID0gdGhpcy5zdGF0ZTsKCiAgICAgICAgc2VsZi4kZ2V0ID0gYW5ndWxhci5ub29wOwoKICAgICAgICAvKioKICAgICAgICAgKiBDb252ZXJ0cyB0aGUgbmFtZSBvZiBhIHN0YXRlIHRvIGRvdCBub3RhdGlvbiwgb2YgdGhlIGZvcm0gYGdyYW5kZmF0aGVyLmZhdGhlci5zdGF0ZWAuCiAgICAgICAgICogQHBhcmFtIHN0YXRlCiAgICAgICAgICovCiAgICAgICAgZnVuY3Rpb24gZml4U3RhdGVOYW1lKHN0YXRlKXsKICAgICAgICAgICAgaWYoc3RhdGUucGFyZW50KXsKICAgICAgICAgICAgICAgIHN0YXRlLm5hbWUgPSBzdGF0ZS5wYXJlbnQubmFtZSArICcuJyArIHN0YXRlLm5hbWU7CiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9KTs=",
+                "body": "LyoqCiAqIEEgaGVscGVyIG1vZHVsZSBmb3IgQW5ndWxhclVJIFJvdXRlciwgd2hpY2ggYWxsb3dzIHlvdSB0byBkZWZpbmUgeW91ciBzdGF0ZXMgYXMgYW4gb2JqZWN0IHRyZWUuCiAqIEBhdXRob3IgTWFyayBMYWdlbmRpamsgPG1hcmtAbGFnZW5kaWprLmluZm8+CiAqIEBsaWNlbnNlIE1JVAogKi8KYW5ndWxhci5tb2R1bGUoJ3VpLnJvdXRlci5zdGF0ZUhlbHBlcicsIFsgJ3VpLnJvdXRlcicgXSkKICAgIC5wcm92aWRlcignc3RhdGVIZWxwZXInLCBmdW5jdGlvbigkc3RhdGVQcm92aWRlcil7CiAgICAgICAgdmFyIHNlbGYgPSB0aGlzOwoKICAgICAgICAvKioKICAgICAgICAgKiBSZWN1cnNpdmVseSBzZXRzIHRoZSBzdGF0ZXMgdXNpbmcgJHN0YXRlUHJvdmlkZXIuc3RhdGUuCiAgICAgICAgICogQ2hpbGQgc3RhdGVzIGFyZSBkZWZpbmVkIHZpYSBhIGBjaGlsZHJlbmAgcHJvcGVydHkuCiAgICAgICAgICoKICAgICAgICAgKiAxLiBSZWN1cnNpdmVseSBjYWxscyBpdHNlbGYgZm9yIGFsbCBkZXNjZW5kYW50IHN0YXRlcywgYnkgdHJhdmVyc2luZyB0aGUgYGNoaWxkcmVuYCBwcm9wZXJ0aWVzLgogICAgICAgICAqIDIuIENvbnZlcnRzIGFsbCB0aGUgc3RhdGUgbmFtZXMgdG8gZG90IG5vdGF0aW9uLCBvZiB0aGUgZm9ybSBgZ3JhbmRmYXRoZXIuZmF0aGVyLnN0YXRlYC4KICAgICAgICAgKiAzLiBTZXRzIGBwYXJlbnRgIHByb3BlcnR5IG9mIHRoZSBkZXNjZW5kYW50IHN0YXRlcy4KICAgICAgICAgKgogICAgICAgICAqIEBwYXJhbSB7T2JqZWN0fSBzdGF0ZSAtIEEgcmVndWxhciB1aS5yb3V0ZXIgc3RhdGUgb2JqZWN0LgogICAgICAgICAqIEBwYXJhbSB7QXJyYXl9IFtzdGF0ZS5jaGlsZHJlbl0gLSBBbiBvcHRpb25hbCBhcnJheSBvZiBjaGlsZCBzdGF0ZXMuCiAgICAgICAgICogQHBhcmFtIHtCb29sZWFufSBrZWVwT3JpZ2luYWxOYW1lcyAtIEFuIG9wdGlvbmFsIGZsYWcgdGhhdCBwcmV2ZW50cyBjb252ZXJzaW9uIG9mIG5hbWVzIHRvIGRvdCBub3RhdGlvbiBpZiB0cnVlLgogICAgICAgICAqLwogICAgICAgIHRoaXMuc3RhdGUgPSBmdW5jdGlvbihzdGF0ZSwga2VlcE9yaWdpbmFsTmFtZXMpewogICAgICAgICAgICBpZigha2VlcE9yaWdpbmFsTmFtZXMpewogICAgICAgICAgICAgICAgZml4U3RhdGVOYW1lKHN0YXRlKTsKICAgICAgICAgICAgfQogICAgICAgICAgICAkc3RhdGVQcm92aWRlci5zdGF0ZShzdGF0ZSk7CgogICAgICAgICAgICBpZihzdGF0ZS5jaGlsZHJlbiAmJiBzdGF0ZS5jaGlsZHJlbi5sZW5ndGgpewogICAgICAgICAgICAgICAgc3RhdGUuY2hpbGRyZW4uZm9yRWFjaChmdW5jdGlvbihjaGlsZFN0YXRlKXsKICAgICAgICAgICAgICAgICAgICBjaGlsZFN0YXRlLnBhcmVudCA9IHN0YXRlOwogICAgICAgICAgICAgICAgICAgIHNlbGYuc2V0TmVzdGVkU3RhdGUoY2hpbGRTdGF0ZSwga2VlcE9yaWdpbmFsTmFtZXMpOwogICAgICAgICAgICAgICAgfSk7CiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIHJldHVybiBzZWxmOwogICAgICAgIH07CgogICAgICAgIHRoaXMuc2V0TmVzdGVkU3RhdGUgPSB0aGlzLnN0YXRlOwoKICAgICAgICBzZWxmLiRnZXQgPSBhbmd1bGFyLm5vb3A7CgogICAgICAgIC8qKgogICAgICAgICAqIENvbnZlcnRzIHRoZSBuYW1lIG9mIGEgc3RhdGUgdG8gZG90IG5vdGF0aW9uLCBvZiB0aGUgZm9ybSBgZ3JhbmRmYXRoZXIuZmF0aGVyLnN0YXRlYC4KICAgICAgICAgKiBAcGFyYW0gc3RhdGUKICAgICAgICAgKi8KICAgICAgICBmdW5jdGlvbiBmaXhTdGF0ZU5hbWUoc3RhdGUpewogICAgICAgICAgICBpZihzdGF0ZS5wYXJlbnQpewogICAgICAgICAgICAgICAgc3RhdGUubmFtZSA9IHN0YXRlLnBhcmVudC5uYW1lICsgJy4nICsgc3RhdGUubmFtZTsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0pOw==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 09:07:30 GMT",
+                    "Content-Length": "1912",
+                    "Date": "Thu, 06 Nov 2014 09:07:31 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

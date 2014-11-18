@@ -1,0 +1,60 @@
+{
+    "url": "http://localhost:9999/mapbox/mapbox.js/docs/api/",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Open redirection (DOM-based)",
+    "issueType": 5243152,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based open redirection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the target of a redirection in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a redirection to an arbitrary external domain. This behavior can be leveraged to facilitate phishing attacks against users of the application. The ability to use an authentic application URL, targeting the correct domain with a valid SSL certificate (if SSL is used) lends credibility to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain.<br><br><b>Note:</b> If an attacker is able to control the start of the string that is passed to the redirection API, then it may be possible to escalate this vulnerability into a JavaScript injection attack, by using a URL with the javascript: pseudo-protocol to execute arbitrary script code when the URL is processed by the browser.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based open redirection vulnerabilities is not to dynamically set redirection targets using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a redirection target. In general, this is best achieved by using a whitelist of URLs that are permitted redirection targets, and strictly validating the target against this list before performing the redirection.",
+    "issueDetail": "The application may be vulnerable to DOM-based open redirection. Data is read from <b>window.location.hash</b> and written to <b>window.location.href</b> via the following statement:<ul><li>window.location.href = redirect + window.location.hash;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/mapbox/mapbox.js/docs/api/",
+                "path": "/mapbox/mapbox.js/docs/api/",
+                "httpVersion": "HTTP/0.0",
+                "method": "GET",
+                "headers": {
+                    "Referer": "http://localhost:9999/mapbox/mapbox.js/docs/api",
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9tYXBib3gvbWFwYm94LmpzL2RvY3MvYXBpLyBIVFRQLzAuMA0KSG9zdDogbG9jYWxob3N0Ojk5OTkNClJlZmVyZXI6IGh0dHA6Ly9sb2NhbGhvc3Q6OTk5OS9tYXBib3gvbWFwYm94LmpzL2RvY3MvYXBpDQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNDQ0DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IEZyaSwgMDcgTm92IDIwMTQgMDk6MTU6MjQgR01UDQpMYXN0LU1vZGlmaWVkOiBGcmksIDA3IE5vdiAyMDE0IDA5OjE1OjIwIEdNVA0KDQotLS0KLS0tCjwhRE9DVFlQRSBodG1sPgo8aHRtbD4KICA8aGVhZD48L2hlYWQ+CiAgPGJvZHk+CiAgICAgIDxzY3JpcHQ+CiAgICAgICAgICB2YXIgcmVkaXJlY3QgPSAne3tzaXRlLmJhc2V1cmx9fS9hcGkve3tzaXRlLm1hcGJveGpzfX0vJzsKICAgICAgICAgIGlmICh3aW5kb3cubG9jYXRpb24gJiYgd2luZG93LmxvY2F0aW9uLmhhc2gpIHsKICAgICAgICAgICAgICB3aW5kb3cubG9jYXRpb24uaHJlZiA9IHJlZGlyZWN0ICsgd2luZG93LmxvY2F0aW9uLmhhc2g7CiAgICAgICAgICB9IGVsc2UgeyB3aW5kb3cubG9jYXRpb24uaHJlZiA9IHJlZGlyZWN0IH0KICAgICAgPC9zY3JpcHQ+CiAgICAgIDxhIGhyZWY9J3t7c2l0ZS5iYXNldXJsfX0vYXBpL3t7c2l0ZS5tYXBib3hqc319Lyc+aWYgbm90IHJlZGlyZWN0ZWQsIGNsaWNrIGhlcmUuPC9hPgogIDwvYm9keT4KPC9odG1sPgo=",
+                "body": "LS0tCi0tLQo8IURPQ1RZUEUgaHRtbD4KPGh0bWw+CiAgPGhlYWQ+PC9oZWFkPgogIDxib2R5PgogICAgICA8c2NyaXB0PgogICAgICAgICAgdmFyIHJlZGlyZWN0ID0gJ3t7c2l0ZS5iYXNldXJsfX0vYXBpL3t7c2l0ZS5tYXBib3hqc319Lyc7CiAgICAgICAgICBpZiAod2luZG93LmxvY2F0aW9uICYmIHdpbmRvdy5sb2NhdGlvbi5oYXNoKSB7CiAgICAgICAgICAgICAgd2luZG93LmxvY2F0aW9uLmhyZWYgPSByZWRpcmVjdCArIHdpbmRvdy5sb2NhdGlvbi5oYXNoOwogICAgICAgICAgfSBlbHNlIHsgd2luZG93LmxvY2F0aW9uLmhyZWYgPSByZWRpcmVjdCB9CiAgICAgIDwvc2NyaXB0PgogICAgICA8YSBocmVmPSd7e3NpdGUuYmFzZXVybH19L2FwaS97e3NpdGUubWFwYm94anN9fS8nPmlmIG5vdCByZWRpcmVjdGVkLCBjbGljayBoZXJlLjwvYT4KICA8L2JvZHk+CjwvaHRtbD4K",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 09:15:20 GMT",
+                    "Content-Length": "444",
+                    "Date": "Fri, 07 Nov 2014 09:15:24 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

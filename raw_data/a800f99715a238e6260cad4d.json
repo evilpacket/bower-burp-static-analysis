@@ -1,0 +1,60 @@
+{
+    "url": "http://localhost:9999/uttesh/nggentle/example/",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cross-site scripting (DOM-based)",
+    "issueType": 2097936,
+    "severity": "High",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cross-site scripting vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the HTML document in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.<br><br>The attacker-supplied code can perform a wide variety of actions, such as stealing the victim's session token or login credentials, performing arbitrary actions on the victim's behalf, and logging their keystrokes.<br><br>Users can be induced to visit the attacker's crafted URL in various ways, similar to the usual attack delivery vectors for reflected cross-site scripting vulnerabilities. ",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cross-site scripting vulnerabilities is not to dynamically write data into the HTML document that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing script code into the document. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe. In other cases, it will be necessary to sanitize or encode the data. This can be a complex task, and depending on the context that the data is to be inserted may need to involve a combination of JavaScript escaping, HTML encoding, and URL encoding, in the appropriate sequence.",
+    "issueDetail": "The application may be vulnerable to DOM-based cross-site scripting. Data is read from <b>document.location</b> and written to <b>document.write()</b> via the following statement:<ul><li>document.write('&lt;base href=\"' + document.location + '\" /&gt;');</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/uttesh/nggentle/example/",
+                "path": "/uttesh/nggentle/example/",
+                "httpVersion": "HTTP/0.0",
+                "method": "GET",
+                "headers": {
+                    "Referer": "http://localhost:9999/uttesh/nggentle/example",
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC91dHRlc2gvbmdnZW50bGUvZXhhbXBsZS8gSFRUUC8wLjANCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQpSZWZlcmVyOiBodHRwOi8vbG9jYWxob3N0Ojk5OTkvdXR0ZXNoL25nZ2VudGxlL2V4YW1wbGUNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNzM5DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IEZyaSwgMDcgTm92IDIwMTQgMTk6MDc6NDkgR01UDQpMYXN0LU1vZGlmaWVkOiBGcmksIDA3IE5vdiAyMDE0IDE5OjA3OjQ4IEdNVA0KDQo8IURPQ1RZUEUgaHRtbD4KPGh0bWwgbmctYXBwPSJuZ2dlbnRsZSI+CgogICAgPGhlYWQ+CiAgICAgICAgPG1ldGEgY2hhcnNldD0idXRmLTgiIC8+CiAgICAgICAgPHRpdGxlPkFuZ3VsYXJKUyBuZ2dlbnRsZTwvdGl0bGU+CiAgICAgICAgPHNjcmlwdD5kb2N1bWVudC53cml0ZSgnPGJhc2UgaHJlZj0iJyArIGRvY3VtZW50LmxvY2F0aW9uICsgJyIgLz4nKTs8L3NjcmlwdD4KPCEtLSAgICAgICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJzdHlsZS5jc3MiIC8+LS0+CiAgICAgICAgPHNjcmlwdCBkYXRhLXJlcXVpcmU9ImFuZ3VsYXIuanNAMS4wLngiIHNyYz0iaHR0cHM6Ly9hamF4Lmdvb2dsZWFwaXMuY29tL2FqYXgvbGlicy9hbmd1bGFyanMvMS4yLjEyL2FuZ3VsYXIubWluLmpzIiBkYXRhLXNlbXZlcj0iMS4wLjgiPjwvc2NyaXB0PgogICAgICAgIDxzY3JpcHQgc3JjPSJodHRwOi8vY29kZS5hbmd1bGFyanMub3JnLzEuMC4zL2FuZ3VsYXItc2FuaXRpemUubWluLmpzIj48L3NjcmlwdD4KICAgICAgICA8c2NyaXB0IHNyYz0iYXBwLmpzIj48L3NjcmlwdD4KICAgIDwvaGVhZD4KCiAgICA8Ym9keSBuZy1jb250cm9sbGVyPSJmaWx0ZXJDdHJsIj4KICAgICAgICA8dGV4dGFyZWEgbmctbW9kZWw9InR4dCIgc3R5bGU9IiB3aWR0aDo0MDBweDtoZWlnaHQ6MjAwcHg7Ij48L3RleHRhcmVhPgogICAgPGdlbnRsZSBuZy1tb2RlbD0idHh0Ij48L2dlbnRsZT4KCjwvYm9keT4KCjwvaHRtbD4K",
+                "body": "PCFET0NUWVBFIGh0bWw+CjxodG1sIG5nLWFwcD0ibmdnZW50bGUiPgoKICAgIDxoZWFkPgogICAgICAgIDxtZXRhIGNoYXJzZXQ9InV0Zi04IiAvPgogICAgICAgIDx0aXRsZT5Bbmd1bGFySlMgbmdnZW50bGU8L3RpdGxlPgogICAgICAgIDxzY3JpcHQ+ZG9jdW1lbnQud3JpdGUoJzxiYXNlIGhyZWY9IicgKyBkb2N1bWVudC5sb2NhdGlvbiArICciIC8+Jyk7PC9zY3JpcHQ+CjwhLS0gICAgICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0ic3R5bGUuY3NzIiAvPi0tPgogICAgICAgIDxzY3JpcHQgZGF0YS1yZXF1aXJlPSJhbmd1bGFyLmpzQDEuMC54IiBzcmM9Imh0dHBzOi8vYWpheC5nb29nbGVhcGlzLmNvbS9hamF4L2xpYnMvYW5ndWxhcmpzLzEuMi4xMi9hbmd1bGFyLm1pbi5qcyIgZGF0YS1zZW12ZXI9IjEuMC44Ij48L3NjcmlwdD4KICAgICAgICA8c2NyaXB0IHNyYz0iaHR0cDovL2NvZGUuYW5ndWxhcmpzLm9yZy8xLjAuMy9hbmd1bGFyLXNhbml0aXplLm1pbi5qcyI+PC9zY3JpcHQ+CiAgICAgICAgPHNjcmlwdCBzcmM9ImFwcC5qcyI+PC9zY3JpcHQ+CiAgICA8L2hlYWQ+CgogICAgPGJvZHkgbmctY29udHJvbGxlcj0iZmlsdGVyQ3RybCI+CiAgICAgICAgPHRleHRhcmVhIG5nLW1vZGVsPSJ0eHQiIHN0eWxlPSIgd2lkdGg6NDAwcHg7aGVpZ2h0OjIwMHB4OyI+PC90ZXh0YXJlYT4KICAgIDxnZW50bGUgbmctbW9kZWw9InR4dCI+PC9nZW50bGU+Cgo8L2JvZHk+Cgo8L2h0bWw+Cg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 19:07:48 GMT",
+                    "Content-Length": "739",
+                    "Date": "Fri, 07 Nov 2014 19:07:49 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

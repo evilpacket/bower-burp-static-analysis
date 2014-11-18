@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/dojo/dojo/tests/_base/loader/i18n-exhaustive/i18n-test/unit.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Open redirection (DOM-based)",
+    "issueType": 5243152,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based open redirection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the target of a redirection in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a redirection to an arbitrary external domain. This behavior can be leveraged to facilitate phishing attacks against users of the application. The ability to use an authentic application URL, targeting the correct domain with a valid SSL certificate (if SSL is used) lends credibility to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain.<br><br><b>Note:</b> If an attacker is able to control the start of the string that is passed to the redirection API, then it may be possible to escalate this vulnerability into a JavaScript injection attack, by using a URL with the javascript: pseudo-protocol to execute arbitrary script code when the URL is processed by the browser.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based open redirection vulnerabilities is not to dynamically set redirection targets using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a redirection target. In general, this is best achieved by using a whitelist of URLs that are permitted redirection targets, and strictly validating the target against this list before performing the redirection.",
+    "issueDetail": "The application may be vulnerable to DOM-based open redirection. Data is read from <b>location.search</b> and written to <b>the 'source' property of a DOM element</b> via the following statements:<ul><li>var hashInfo = location.search.substring(1),    options = hashInfo.split(\",\");</li><li>dojoLocati...= options[3 ] </li><li>node.src = (/^http/.test(dojoLocation) ? dojoLocation :  \"../\" + dojoLocation) + \"/dojo.js\";</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/dojo/dojo/tests/_base/loader/i18n-exhaustive/i18n-test/unit.html",
+                "path": "/dojo/dojo/tests/_base/loader/i18n-exhaustive/i18n-test/unit.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9kb2pvL2Rvam8vdGVzdHMvX2Jhc2UvbG9hZGVyL2kxOG4tZXhoYXVzdGl2ZS9pMThuLXRlc3QvdW5pdC5odG1sIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjQzMw0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQpEYXRlOiBUaHUsIDA2IE5vdiAyMDE0IDIxOjQ5OjU5IEdNVA0KTGFzdC1Nb2RpZmllZDogVGh1LCAwNiBOb3YgMjAxNCAyMTo0OTo1NyBHTVQNCg0KPGh0bWw+CjxoZWFkPgoJPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCQlzcGFuLnBhc3Mge2JhY2tncm91bmQtY29sb3I6Z3JlZW59CgkJc3Bhbi5mYWlsIHtiYWNrZ3JvdW5kLWNvbG9yOnJlZH0KCTwvc3R5bGU+CQo8L2hlYWQ+Cjxib2R5PgoJPHAgaWQ9InN0YXR1cyI+cnVubmluZzwvcD4KCTxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij4KCgkJLy8jMSwsc3JjLC4vZG9qbyIsc3JjLC4vZHRrLWkxOG4tdGVzdAoKCQkoZnVuY3Rpb24oKXsKCQl2YXIgaGFzaEluZm8gPSBsb2NhdGlvbi5zZWFyY2guc3Vic3RyaW5nKDEpLAoJCQlvcHRpb25zID0gaGFzaEluZm8uc3BsaXQoIiwiKTsKCQkJYXN5bmMgPSBvcHRpb25zWzBdPT0iYXN5bmMiID8gdHJ1ZSA6IHVuZGVmaW5lZCwKCQkJbG9jYWxlID0gb3B0aW9uc1sxXSwKCQkJZG9qb1R5cGUgPSBvcHRpb25zWzJdLAoJCQlkb2pvTG9jYXRpb24gPSBvcHRpb25zWzNdLAoJCQlpMThuVGVzdFR5cGUgPSBvcHRpb25zWzRdLAoJCQlpMThuVGVzdExvY2F0aW9uID0gb3B0aW9uc1s1XSwKCQkJdGVzdElkID0gImFzeW5jOiAiICsgYXN5bmMgKyAiLCBsb2NhbGU6ICIgKyBsb2NhbGUgKyAiLCBkb2pvOiAiICsgZG9qb1R5cGUgKyAiLCBpMThuVGVzdDogIiArIGkxOG5UZXN0VHlwZSArICIoIiArIGhhc2hJbmZvICsgIikiLAoJCQl0ZXN0S2luZCA9IG9wdGlvbnNbNl07CgoJCWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzdGF0dXMiKS5pbm5lckhUTUwgKz0gaGFzaEluZm87CgoJCWZ1bmN0aW9uIHJlcG9ydChyZXN1bHQpewoJCQlyZXF1aXJlKFsiZG9oIl0sIGZ1bmN0aW9uKGRvaCl7CgkJCQlkb2gucmVnaXN0ZXIodGVzdElkLCBmdW5jdGlvbih0KXsKCQkJCQl0LmlzKHJlc3VsdCwgdHJ1ZSk7CQkJCgkJCQl9KTsKCQkJCWRvaC5ydW4oKTsKCQkJfSk7CgoJCQl2YXIgdGV4dDsKCQkJaWYocmVzdWx0PT09dHJ1ZSl7CgkJCQl0ZXh0ID0gIjxzcGFuIGNsYXNzPSdwYXNzJz5QQVNTPC9zcGFuPjogIiArIHRlc3RJZDsKCQkJfWVsc2V7CgkJCQl0ZXh0ID0gIjxzcGFuIGNsYXNzPSdmYWlsJz5GQUlMPC9zcGFuPjogIiArIHRlc3RJZCArICI8YnI+IiArIHJlc3VsdDsKCQkJfQoJCQlkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhdHVzIikuaW5uZXJIVE1MID0gdGV4dDsKCQl9CQoKCQlkb2pvQ29uZmlnID0gewoJCQl0ZXN0Q29uZmlnOm9wdGlvbnMsCgkJCWFzeW5jOmFzeW5jLAoJCQlsb2NhbGU6bG9jYWxlLAoJCQliYXNlVXJsOiIuLiIsCgkJCXBhY2thZ2VzOlt7CgkJCQluYW1lOiJkb2pvIiwKCQkJCWxvY2F0aW9uOmRvam9Mb2NhdGlvbgoJCQl9LHsKCQkJCW5hbWU6ImRvaCIsCgkJCQlsb2NhdGlvbjoiLi91dGlsL2RvaCIKCQkJfSx7CgkJCQluYW1lOiJpMThuVGVzdCIsCgkJCQlsb2NhdGlvbjppMThuVGVzdExvY2F0aW9uCgkJCX1dLAoJCQljYWxsYmFjazpmdW5jdGlvbigpewoJCQkJc3dpdGNoKHRlc3RLaW5kKXsKCQkJCQljYXNlICJsZWdhY3kiOgoJCQkJCQlpZigvbGVnYWN5LWJ1aWx0Ly50ZXN0KGkxOG5UZXN0VHlwZSkgJiYgL2xheWVyLy50ZXN0KGkxOG5UZXN0VHlwZSkpewoJCQkJCQkJLy8gZW5zdXJlIHRoZSAxLjcrIGkxOG4gcGx1Z2luIGlzIG9uIGJvYXJkIGJlZm9yZSB0cnlpbmcgdG8gbG9hZCBhIGxlZ2FjeS1idWlsdCBtb2R1bGUgYXMgYSBsYXllcgoJCQkJCQkJcmVxdWlyZShbImRvam8vaTE4biJdLCBmdW5jdGlvbigpewoJCQkJCQkJCXJlcXVpcmUoWyJpMThuVGVzdC9sZWdhY3lNb2R1bGUiXSwgZnVuY3Rpb24oKXsKCQkJCQkJCQkJcmVwb3J0KGkxOG5UZXN0LmxlZ2FjeU1vZHVsZSgpKTsKCQkJCQkJCQl9KTsKCQkJCQkJCX0pOwoJCQkJCQl9ZWxzZXsKCQkJCQkJCXJlcXVpcmUoWyJpMThuVGVzdC9sZWdhY3lNb2R1bGUiXSwgZnVuY3Rpb24oKXsKCQkJCQkJCQlyZXBvcnQoaTE4blRlc3QubGVnYWN5TW9kdWxlKCkpOwoJCQkJCQkJfSk7CgkJCQkJCX0KCQkJCQkJYnJlYWs7CgoJCQkJCWNhc2UgImFtZCI6CgkJCQkJCXJlcXVpcmUoWyJpMThuVGVzdC9hbWRNb2R1bGUiXSwgZnVuY3Rpb24oYW1kTW9kdWxlKXsKCQkJCQkJCXJlcG9ydChhbWRNb2R1bGUucmVzdWx0KTsKCQkJCQkJfSk7CgkJCQkJCWJyZWFrOwoJCQkJfQoJCQl9CgkJfTsKCQl2YXIgbm9kZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoInNjcmlwdCIpOwoJCW5vZGUudHlwZSA9ICJ0ZXh0L2phdmFzY3JpcHQiOwoJCW5vZGUuY2hhcnNldCA9ICJ1dGYtOCI7CgkJbm9kZS5zcmMgPSAoL15odHRwLy50ZXN0KGRvam9Mb2NhdGlvbikgPyBkb2pvTG9jYXRpb24gOiAgIi4uLyIgKyBkb2pvTG9jYXRpb24pICsgIi9kb2pvLmpzIjsKY29uc29sZS5sb2cobm9kZS5zcmMpOwoJCWRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCJoZWFkIilbMF0uYXBwZW5kQ2hpbGQobm9kZSk7CgkJfSkoKTsKCTwvc2NyaXB0Pgo8L2JvZHk+CjwvaHRtbD4K",
+                "body": "PGh0bWw+CjxoZWFkPgoJPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCQlzcGFuLnBhc3Mge2JhY2tncm91bmQtY29sb3I6Z3JlZW59CgkJc3Bhbi5mYWlsIHtiYWNrZ3JvdW5kLWNvbG9yOnJlZH0KCTwvc3R5bGU+CQo8L2hlYWQ+Cjxib2R5PgoJPHAgaWQ9InN0YXR1cyI+cnVubmluZzwvcD4KCTxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij4KCgkJLy8jMSwsc3JjLC4vZG9qbyIsc3JjLC4vZHRrLWkxOG4tdGVzdAoKCQkoZnVuY3Rpb24oKXsKCQl2YXIgaGFzaEluZm8gPSBsb2NhdGlvbi5zZWFyY2guc3Vic3RyaW5nKDEpLAoJCQlvcHRpb25zID0gaGFzaEluZm8uc3BsaXQoIiwiKTsKCQkJYXN5bmMgPSBvcHRpb25zWzBdPT0iYXN5bmMiID8gdHJ1ZSA6IHVuZGVmaW5lZCwKCQkJbG9jYWxlID0gb3B0aW9uc1sxXSwKCQkJZG9qb1R5cGUgPSBvcHRpb25zWzJdLAoJCQlkb2pvTG9jYXRpb24gPSBvcHRpb25zWzNdLAoJCQlpMThuVGVzdFR5cGUgPSBvcHRpb25zWzRdLAoJCQlpMThuVGVzdExvY2F0aW9uID0gb3B0aW9uc1s1XSwKCQkJdGVzdElkID0gImFzeW5jOiAiICsgYXN5bmMgKyAiLCBsb2NhbGU6ICIgKyBsb2NhbGUgKyAiLCBkb2pvOiAiICsgZG9qb1R5cGUgKyAiLCBpMThuVGVzdDogIiArIGkxOG5UZXN0VHlwZSArICIoIiArIGhhc2hJbmZvICsgIikiLAoJCQl0ZXN0S2luZCA9IG9wdGlvbnNbNl07CgoJCWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzdGF0dXMiKS5pbm5lckhUTUwgKz0gaGFzaEluZm87CgoJCWZ1bmN0aW9uIHJlcG9ydChyZXN1bHQpewoJCQlyZXF1aXJlKFsiZG9oIl0sIGZ1bmN0aW9uKGRvaCl7CgkJCQlkb2gucmVnaXN0ZXIodGVzdElkLCBmdW5jdGlvbih0KXsKCQkJCQl0LmlzKHJlc3VsdCwgdHJ1ZSk7CQkJCgkJCQl9KTsKCQkJCWRvaC5ydW4oKTsKCQkJfSk7CgoJCQl2YXIgdGV4dDsKCQkJaWYocmVzdWx0PT09dHJ1ZSl7CgkJCQl0ZXh0ID0gIjxzcGFuIGNsYXNzPSdwYXNzJz5QQVNTPC9zcGFuPjogIiArIHRlc3RJZDsKCQkJfWVsc2V7CgkJCQl0ZXh0ID0gIjxzcGFuIGNsYXNzPSdmYWlsJz5GQUlMPC9zcGFuPjogIiArIHRlc3RJZCArICI8YnI+IiArIHJlc3VsdDsKCQkJfQoJCQlkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhdHVzIikuaW5uZXJIVE1MID0gdGV4dDsKCQl9CQoKCQlkb2pvQ29uZmlnID0gewoJCQl0ZXN0Q29uZmlnOm9wdGlvbnMsCgkJCWFzeW5jOmFzeW5jLAoJCQlsb2NhbGU6bG9jYWxlLAoJCQliYXNlVXJsOiIuLiIsCgkJCXBhY2thZ2VzOlt7CgkJCQluYW1lOiJkb2pvIiwKCQkJCWxvY2F0aW9uOmRvam9Mb2NhdGlvbgoJCQl9LHsKCQkJCW5hbWU6ImRvaCIsCgkJCQlsb2NhdGlvbjoiLi91dGlsL2RvaCIKCQkJfSx7CgkJCQluYW1lOiJpMThuVGVzdCIsCgkJCQlsb2NhdGlvbjppMThuVGVzdExvY2F0aW9uCgkJCX1dLAoJCQljYWxsYmFjazpmdW5jdGlvbigpewoJCQkJc3dpdGNoKHRlc3RLaW5kKXsKCQkJCQljYXNlICJsZWdhY3kiOgoJCQkJCQlpZigvbGVnYWN5LWJ1aWx0Ly50ZXN0KGkxOG5UZXN0VHlwZSkgJiYgL2xheWVyLy50ZXN0KGkxOG5UZXN0VHlwZSkpewoJCQkJCQkJLy8gZW5zdXJlIHRoZSAxLjcrIGkxOG4gcGx1Z2luIGlzIG9uIGJvYXJkIGJlZm9yZSB0cnlpbmcgdG8gbG9hZCBhIGxlZ2FjeS1idWlsdCBtb2R1bGUgYXMgYSBsYXllcgoJCQkJCQkJcmVxdWlyZShbImRvam8vaTE4biJdLCBmdW5jdGlvbigpewoJCQkJCQkJCXJlcXVpcmUoWyJpMThuVGVzdC9sZWdhY3lNb2R1bGUiXSwgZnVuY3Rpb24oKXsKCQkJCQkJCQkJcmVwb3J0KGkxOG5UZXN0LmxlZ2FjeU1vZHVsZSgpKTsKCQkJCQkJCQl9KTsKCQkJCQkJCX0pOwoJCQkJCQl9ZWxzZXsKCQkJCQkJCXJlcXVpcmUoWyJpMThuVGVzdC9sZWdhY3lNb2R1bGUiXSwgZnVuY3Rpb24oKXsKCQkJCQkJCQlyZXBvcnQoaTE4blRlc3QubGVnYWN5TW9kdWxlKCkpOwoJCQkJCQkJfSk7CgkJCQkJCX0KCQkJCQkJYnJlYWs7CgoJCQkJCWNhc2UgImFtZCI6CgkJCQkJCXJlcXVpcmUoWyJpMThuVGVzdC9hbWRNb2R1bGUiXSwgZnVuY3Rpb24oYW1kTW9kdWxlKXsKCQkJCQkJCXJlcG9ydChhbWRNb2R1bGUucmVzdWx0KTsKCQkJCQkJfSk7CgkJCQkJCWJyZWFrOwoJCQkJfQoJCQl9CgkJfTsKCQl2YXIgbm9kZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoInNjcmlwdCIpOwoJCW5vZGUudHlwZSA9ICJ0ZXh0L2phdmFzY3JpcHQiOwoJCW5vZGUuY2hhcnNldCA9ICJ1dGYtOCI7CgkJbm9kZS5zcmMgPSAoL15odHRwLy50ZXN0KGRvam9Mb2NhdGlvbikgPyBkb2pvTG9jYXRpb24gOiAgIi4uLyIgKyBkb2pvTG9jYXRpb24pICsgIi9kb2pvLmpzIjsKY29uc29sZS5sb2cobm9kZS5zcmMpOwoJCWRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCJoZWFkIilbMF0uYXBwZW5kQ2hpbGQobm9kZSk7CgkJfSkoKTsKCTwvc2NyaXB0Pgo8L2JvZHk+CjwvaHRtbD4K",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 21:49:57 GMT",
+                    "Content-Length": "2433",
+                    "Date": "Thu, 06 Nov 2014 21:49:59 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

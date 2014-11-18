@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/angular-translate/angular-translate/docs/html/nav.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Open redirection (DOM-based)",
+    "issueType": 5243152,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based open redirection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the target of a redirection in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a redirection to an arbitrary external domain. This behavior can be leveraged to facilitate phishing attacks against users of the application. The ability to use an authentic application URL, targeting the correct domain with a valid SSL certificate (if SSL is used) lends credibility to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain.<br><br><b>Note:</b> If an attacker is able to control the start of the string that is passed to the redirection API, then it may be possible to escalate this vulnerability into a JavaScript injection attack, by using a URL with the javascript: pseudo-protocol to execute arbitrary script code when the URL is processed by the browser.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based open redirection vulnerabilities is not to dynamically set redirection targets using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a redirection target. In general, this is best achieved by using a whitelist of URLs that are permitted redirection targets, and strictly validating the target against this list before performing the redirection.",
+    "issueDetail": "The application may be vulnerable to DOM-based open redirection. Data is read from <b>window.location.hash</b> and written to <b>window.location</b> via the following statements:<ul><li>return 'http://angular-translate.github.io/docs/' + locale + '/' + window.location.hash;</li><li>window.location = langLink('en');</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/angular-translate/angular-translate/docs/html/nav.html",
+                "path": "/angular-translate/angular-translate/docs/html/nav.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9hbmd1bGFyLXRyYW5zbGF0ZS9hbmd1bGFyLXRyYW5zbGF0ZS9kb2NzL2h0bWwvbmF2Lmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMTQxMQ0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQpEYXRlOiBTdW4sIDA5IE5vdiAyMDE0IDAwOjU5OjI3IEdNVA0KTGFzdC1Nb2RpZmllZDogU3VuLCAwOSBOb3YgMjAxNCAwMDo1OToyNiBHTVQNCg0KPHNjcmlwdD4KZnVuY3Rpb24gbGFuZ0xpbmsobG9jYWxlKSB7CiAgcmV0dXJuICdodHRwOi8vYW5ndWxhci10cmFuc2xhdGUuZ2l0aHViLmlvL2RvY3MvJyArIGxvY2FsZSArICcvJyArIHdpbmRvdy5sb2NhdGlvbi5oYXNoOwp9Cjwvc2NyaXB0PgoKPHVsIGNsYXNzPSJuYXYgcHVsbC1yaWdodCI+CiAgPGxpPgogIDxhIGhyZWY9Imh0dHA6Ly9hbmd1bGFyLXRyYW5zbGF0ZS5naXRodWIuaW8vZG9jcy9wbGF0by8iPjxpIGNsYXNzPSJpY29uLXNpZ25hbCI+PC9pPiBQbGF0byBSZXBvcnQ8L2E+CiAgPC9saT4KICA8bGk+CiAgICA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vYW5ndWxhci10cmFuc2xhdGUvYW5ndWxhci10cmFuc2xhdGUiPgogICAgICA8aSBjbGFzcz0iaWNvbi1naXRodWItc2lnbiI+PC9pPiBWaWV3IG9uIEdpdEh1YgogICAgPC9hPgogIDwvbGk+CiAgPGxpIGNsYXNzPSJkcm9wZG93biI+CiAgPGEgaHJlZj0iIyIgY2xhc3M9ImRyb3Bkb3duLXRvZ2dsZSI+PGkgY2xhc3M9Imljb24tYWxpZ24tanVzdGlmeSI+PC9pPiBMYW5ndWFnZTwvYT4KICAgIDx1bCBjbGFzcz0iZHJvcGRvd24tbWVudSI+CiAgICAgIDxsaT48YSBocmVmPSIiIG9uQ2xpY2s9IndpbmRvdy5sb2NhdGlvbiA9IGxhbmdMaW5rKCdlbicpOyI+PGltZyBzcmM9ImltZy9mbGFncy9lbi5wbmciPiBFbmdsaXNoPC9hPjwvbGk+CiAgICAgIDxsaT48YSBocmVmPSIiIG9uQ2xpY2s9IndpbmRvdy5sb2NhdGlvbiA9IGxhbmdMaW5rKCdydScpOyI+PGltZyBzcmM9ImltZy9mbGFncy9ydS5wbmciPiBSdXNzaWFuPC9hPjwvbGk+CiAgICAgIDxsaT48YSBocmVmPSIiIG9uQ2xpY2s9IndpbmRvdy5sb2NhdGlvbiA9IGxhbmdMaW5rKCdkZScpOyI+PGltZyBzcmM9ImltZy9mbGFncy9kZS5wbmciPiBHZXJtYW48L2E+PC9saT4KICAgICAgPGxpPjxhIGhyZWY9IiIgb25DbGljaz0id2luZG93LmxvY2F0aW9uID0gbGFuZ0xpbmsoJ3VrJyk7Ij48aW1nIHNyYz0iaW1nL2ZsYWdzL3VrLnBuZyI+IFVrcmFpbmlhbjwvYT48L2xpPgogICAgICA8bGk+PGEgaHJlZj0iIiBvbkNsaWNrPSJ3aW5kb3cubG9jYXRpb24gPSBsYW5nTGluaygnemgtY24nKTsiPjxpbWcgc3JjPSJpbWcvZmxhZ3Mvemhjbi5wbmciPiBTaW1wbGlmaWVkIENoaW5lc2U8L2E+PC9saT4KICAgICAgPGxpPjxhIGhyZWY9IiIgb25DbGljaz0id2luZG93LmxvY2F0aW9uID0gbGFuZ0xpbmsoJ3poLXR3Jyk7Ij48aW1nIHNyYz0iaW1nL2ZsYWdzL3podHcucG5nIj4gVHJhZGl0aW9uYWwgQ2hpbmVzZTwvYT48L2xpPgogICAgICA8bGk+PGEgaHJlZj0iIiBvbkNsaWNrPSJ3aW5kb3cubG9jYXRpb24gPSBsYW5nTGluaygnZnInKTsiPjxpbWcgc3JjPSJpbWcvZmxhZ3MvZnIucG5nIj4gRnJlbmNoPC9hPjwvbGk+CiAgICA8L3VsPgogIDwvbGk+CjwvdWw+Cg==",
+                "body": "PHNjcmlwdD4KZnVuY3Rpb24gbGFuZ0xpbmsobG9jYWxlKSB7CiAgcmV0dXJuICdodHRwOi8vYW5ndWxhci10cmFuc2xhdGUuZ2l0aHViLmlvL2RvY3MvJyArIGxvY2FsZSArICcvJyArIHdpbmRvdy5sb2NhdGlvbi5oYXNoOwp9Cjwvc2NyaXB0PgoKPHVsIGNsYXNzPSJuYXYgcHVsbC1yaWdodCI+CiAgPGxpPgogIDxhIGhyZWY9Imh0dHA6Ly9hbmd1bGFyLXRyYW5zbGF0ZS5naXRodWIuaW8vZG9jcy9wbGF0by8iPjxpIGNsYXNzPSJpY29uLXNpZ25hbCI+PC9pPiBQbGF0byBSZXBvcnQ8L2E+CiAgPC9saT4KICA8bGk+CiAgICA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vYW5ndWxhci10cmFuc2xhdGUvYW5ndWxhci10cmFuc2xhdGUiPgogICAgICA8aSBjbGFzcz0iaWNvbi1naXRodWItc2lnbiI+PC9pPiBWaWV3IG9uIEdpdEh1YgogICAgPC9hPgogIDwvbGk+CiAgPGxpIGNsYXNzPSJkcm9wZG93biI+CiAgPGEgaHJlZj0iIyIgY2xhc3M9ImRyb3Bkb3duLXRvZ2dsZSI+PGkgY2xhc3M9Imljb24tYWxpZ24tanVzdGlmeSI+PC9pPiBMYW5ndWFnZTwvYT4KICAgIDx1bCBjbGFzcz0iZHJvcGRvd24tbWVudSI+CiAgICAgIDxsaT48YSBocmVmPSIiIG9uQ2xpY2s9IndpbmRvdy5sb2NhdGlvbiA9IGxhbmdMaW5rKCdlbicpOyI+PGltZyBzcmM9ImltZy9mbGFncy9lbi5wbmciPiBFbmdsaXNoPC9hPjwvbGk+CiAgICAgIDxsaT48YSBocmVmPSIiIG9uQ2xpY2s9IndpbmRvdy5sb2NhdGlvbiA9IGxhbmdMaW5rKCdydScpOyI+PGltZyBzcmM9ImltZy9mbGFncy9ydS5wbmciPiBSdXNzaWFuPC9hPjwvbGk+CiAgICAgIDxsaT48YSBocmVmPSIiIG9uQ2xpY2s9IndpbmRvdy5sb2NhdGlvbiA9IGxhbmdMaW5rKCdkZScpOyI+PGltZyBzcmM9ImltZy9mbGFncy9kZS5wbmciPiBHZXJtYW48L2E+PC9saT4KICAgICAgPGxpPjxhIGhyZWY9IiIgb25DbGljaz0id2luZG93LmxvY2F0aW9uID0gbGFuZ0xpbmsoJ3VrJyk7Ij48aW1nIHNyYz0iaW1nL2ZsYWdzL3VrLnBuZyI+IFVrcmFpbmlhbjwvYT48L2xpPgogICAgICA8bGk+PGEgaHJlZj0iIiBvbkNsaWNrPSJ3aW5kb3cubG9jYXRpb24gPSBsYW5nTGluaygnemgtY24nKTsiPjxpbWcgc3JjPSJpbWcvZmxhZ3Mvemhjbi5wbmciPiBTaW1wbGlmaWVkIENoaW5lc2U8L2E+PC9saT4KICAgICAgPGxpPjxhIGhyZWY9IiIgb25DbGljaz0id2luZG93LmxvY2F0aW9uID0gbGFuZ0xpbmsoJ3poLXR3Jyk7Ij48aW1nIHNyYz0iaW1nL2ZsYWdzL3podHcucG5nIj4gVHJhZGl0aW9uYWwgQ2hpbmVzZTwvYT48L2xpPgogICAgICA8bGk+PGEgaHJlZj0iIiBvbkNsaWNrPSJ3aW5kb3cubG9jYXRpb24gPSBsYW5nTGluaygnZnInKTsiPjxpbWcgc3JjPSJpbWcvZmxhZ3MvZnIucG5nIj4gRnJlbmNoPC9hPjwvbGk+CiAgICA8L3VsPgogIDwvbGk+CjwvdWw+Cg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Sun, 09 Nov 2014 00:59:26 GMT",
+                    "Content-Length": "1411",
+                    "Date": "Sun, 09 Nov 2014 00:59:27 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

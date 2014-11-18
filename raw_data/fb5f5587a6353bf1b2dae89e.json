@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/AnalyticalGraphicsInc/cesium/Tools/jsdoc/cesium_template/tmpl/layout.tmpl",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Link manipulation (DOM-based)",
+    "issueType": 5246976,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based link manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a navigation target within the current page, such as a clickable link or the submission URL of a form. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the target of links within the response. An attacker may be able to leverage this to perform various attacks, including:<ul><li>Causing the user to redirect to an arbitrary external URL, to facilitate a phishing attack.</li><li>Causing the user to submit sensitive form data to a server controlled by the attacker.</li><li>Causing the user to perform an unintended action within the application, by changing the file or query string associated with a link.</li><li>Bypassing browser anti-XSS defenses by injecting on-site links containing XSS exploits, since browser anti-XSS defenses typically do not operate on on-site links.</li></ul>",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based link manipulation vulnerabilities is not to dynamically set the target URLs of links or forms using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a link target. In general, this is best achieved by using a whitelist of URLs that are permitted link targets, and strictly validating the target against this list before setting the link target.",
+    "issueDetail": "The application may be vulnerable to DOM-based link manipulation. Data is read from <b>window.location.href</b> and written to <b>the 'href' property of a DOM element</b> via the following statement:<ul><li>ele.href = window.location.href;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/AnalyticalGraphicsInc/cesium/Tools/jsdoc/cesium_template/tmpl/layout.tmpl",
+                "path": "/AnalyticalGraphicsInc/cesium/Tools/jsdoc/cesium_template/tmpl/layout.tmpl",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9BbmFseXRpY2FsR3JhcGhpY3NJbmMvY2VzaXVtL1Rvb2xzL2pzZG9jL2Nlc2l1bV90ZW1wbGF0ZS90bXBsL2xheW91dC50bXBsIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjAxNQ0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQpEYXRlOiBUaHUsIDA2IE5vdiAyMDE0IDE0OjU0OjAxIEdNVA0KTGFzdC1Nb2RpZmllZDogVGh1LCAwNiBOb3YgMjAxNCAxNDo1MzoyNiBHTVQNCg0KPCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJ1dGYtOCI+CiAgICA8bWV0YSBodHRwLWVxdWl2PSJYLVVBLUNvbXBhdGlibGUiIGNvbnRlbnQ9IklFPUVkZ2UsY2hyb21lPTEiPgogICAgPHRpdGxlPjw/anM9ICh0aXRsZSA/ICh0aXRsZSArICcgLSAnKSA6ICcnKSArICdDZXNpdW0gRG9jdW1lbnRhdGlvbicgPz48L3RpdGxlPgoKICAgIDwhLS1baWYgbHQgSUUgOV0+CiAgICAgIDxzY3JpcHQgc3JjPSJqYXZhc2NyaXB0L2h0bWw1LmpzIj48L3NjcmlwdD4KICAgIDwhW2VuZGlmXS0tPgogICAgPGxpbmsgaHJlZj0ic3R5bGVzL2pzZG9jLWRlZmF1bHQuY3NzIiByZWw9InN0eWxlc2hlZXQiPgogICAgPGxpbmsgaHJlZj0ic3R5bGVzL3ByaXNtLmNzcyIgcmVsPSJzdHlsZXNoZWV0Ij4KPC9oZWFkPgo8Ym9keT4KCjxkaXYgaWQ9ImJrZ2QiPgoKPGRpdiBjbGFzcz0ibmF2Ij4KICAgIDxkaXYgY2xhc3M9Im1lbnUiPgogICAgICAgIDxhIGhyZWY9ImluZGV4Lmh0bWwiPjxpbWcgaWQ9ImNlc2l1bS1sb2dvIiBzcmM9ImltYWdlcy9DZXNpdW1Mb2dvLmpwZyIgY2xhc3M9Im1lbnVMb2dvIj48L2E+CiAgICAgICAgPGRpdiBjbGFzcz0iZGl2aWRlciI+PC9kaXY+CgogICAgICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBjbGFzcz0iY2xhc3NGaWx0ZXIiIGlkPSJDbGFzc0ZpbHRlciIgcGxhY2Vob2xkZXI9IkZpbHRlciI+CgogICAgICAgIDw/anM9IHRoaXMubmF2ID8+CiAgICA8L2Rpdj4KPC9kaXY+Cgo8ZGl2IGNsYXNzPSJuYXYgbmF2U3RhdGljIj48L2Rpdj4KCjxkaXYgaWQ9Im1haW4iPgoKICAgIDxoMSBjbGFzcz0icGFnZS10aXRsZSI+PD9qcz0gdGl0bGUgPz48L2gxPgoKICAgIDw/anM9IGNvbnRlbnQgPz4KCiAgICA8Zm9vdGVyPgogICAgICAgIERvY3VtZW50YXRpb24gZ2VuZXJhdGVkIGJ5IDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9qc2RvYzMvanNkb2MiPkpTRG9jIDw/anM9IGVudi52ZXJzaW9uLm51bWJlciA/PjwvYT4KICAgIDwvZm9vdGVyPgo8L2Rpdj4KCjwvZGl2PgoKPGJyIGNsZWFyPSJib3RoIj4KCjxzY3JpcHQ+CmlmICh3aW5kb3cuZnJhbWVFbGVtZW50KSB7CiAgICBkb2N1bWVudC5ib2R5LmNsYXNzTmFtZSA9ICdlbWJlZGRlZCc7CgogICAgdmFyIGVsZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2EnKTsKICAgIGVsZS5jbGFzc05hbWUgPSAncG9wb3V0JzsKICAgIGVsZS50YXJnZXQgPSAnX2JsYW5rJzsKICAgIGVsZS5ocmVmID0gd2luZG93LmxvY2F0aW9uLmhyZWY7CiAgICBlbGUudGl0bGUgPSAnUG9wIG91dCc7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbWFpbicpLmFwcGVuZENoaWxkKGVsZSk7CgogICAgZWxlID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnYScpOwogICAgZWxlLmNsYXNzTmFtZSA9ICdiYWNrJzsKICAgIGVsZS5ocmVmID0gJ2luZGV4Lmh0bWwnOwogICAgZWxlLnRpdGxlID0gJ0hvbWUnOwogICAgZWxlLnRhcmdldCA9ICdfc2VsZic7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbWFpbicpLmFwcGVuZENoaWxkKGVsZSk7Cn0gZWxzZSB7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnYmtnZCcpLmNsYXNzTmFtZSA9ICdzaG93LWJrZ2QnOwp9CgovLyBTZXQgdGFyZ2V0cyBvbiBleHRlcm5hbCBsaW5rcy4gIFNhbmRjYXN0bGUgYW5kIEdpdEh1YiBzaG91bGRuJ3QgYmUgZW1iZWRkZWQgaW4gYW55IGlmcmFtZS4KQXJyYXkucHJvdG90eXBlLmZvckVhY2guY2FsbChkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgnYScpLCBmdW5jdGlvbihhKSB7CiAgICBpZiAoL15odHRwcz86L2kudGVzdChhLmdldEF0dHJpYnV0ZSgnaHJlZicpKSkgewogICAgICAgIGEudGFyZ2V0PSdfYmxhbmsnOwogICAgfQp9KTsKPC9zY3JpcHQ+Cgo8c2NyaXB0IHNyYz0iamF2YXNjcmlwdC9wcmlzbS5qcyI+PC9zY3JpcHQ+CjxzY3JpcHQgc3JjPSJqYXZhc2NyaXB0L2Nlc2l1bURvYy5qcyI+PC9zY3JpcHQ+Cgo8L2JvZHk+CjwvaHRtbD4=",
+                "body": "PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CiAgICA8bWV0YSBjaGFyc2V0PSJ1dGYtOCI+CiAgICA8bWV0YSBodHRwLWVxdWl2PSJYLVVBLUNvbXBhdGlibGUiIGNvbnRlbnQ9IklFPUVkZ2UsY2hyb21lPTEiPgogICAgPHRpdGxlPjw/anM9ICh0aXRsZSA/ICh0aXRsZSArICcgLSAnKSA6ICcnKSArICdDZXNpdW0gRG9jdW1lbnRhdGlvbicgPz48L3RpdGxlPgoKICAgIDwhLS1baWYgbHQgSUUgOV0+CiAgICAgIDxzY3JpcHQgc3JjPSJqYXZhc2NyaXB0L2h0bWw1LmpzIj48L3NjcmlwdD4KICAgIDwhW2VuZGlmXS0tPgogICAgPGxpbmsgaHJlZj0ic3R5bGVzL2pzZG9jLWRlZmF1bHQuY3NzIiByZWw9InN0eWxlc2hlZXQiPgogICAgPGxpbmsgaHJlZj0ic3R5bGVzL3ByaXNtLmNzcyIgcmVsPSJzdHlsZXNoZWV0Ij4KPC9oZWFkPgo8Ym9keT4KCjxkaXYgaWQ9ImJrZ2QiPgoKPGRpdiBjbGFzcz0ibmF2Ij4KICAgIDxkaXYgY2xhc3M9Im1lbnUiPgogICAgICAgIDxhIGhyZWY9ImluZGV4Lmh0bWwiPjxpbWcgaWQ9ImNlc2l1bS1sb2dvIiBzcmM9ImltYWdlcy9DZXNpdW1Mb2dvLmpwZyIgY2xhc3M9Im1lbnVMb2dvIj48L2E+CiAgICAgICAgPGRpdiBjbGFzcz0iZGl2aWRlciI+PC9kaXY+CgogICAgICAgIDxpbnB1dCB0eXBlPSJ0ZXh0IiBjbGFzcz0iY2xhc3NGaWx0ZXIiIGlkPSJDbGFzc0ZpbHRlciIgcGxhY2Vob2xkZXI9IkZpbHRlciI+CgogICAgICAgIDw/anM9IHRoaXMubmF2ID8+CiAgICA8L2Rpdj4KPC9kaXY+Cgo8ZGl2IGNsYXNzPSJuYXYgbmF2U3RhdGljIj48L2Rpdj4KCjxkaXYgaWQ9Im1haW4iPgoKICAgIDxoMSBjbGFzcz0icGFnZS10aXRsZSI+PD9qcz0gdGl0bGUgPz48L2gxPgoKICAgIDw/anM9IGNvbnRlbnQgPz4KCiAgICA8Zm9vdGVyPgogICAgICAgIERvY3VtZW50YXRpb24gZ2VuZXJhdGVkIGJ5IDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9qc2RvYzMvanNkb2MiPkpTRG9jIDw/anM9IGVudi52ZXJzaW9uLm51bWJlciA/PjwvYT4KICAgIDwvZm9vdGVyPgo8L2Rpdj4KCjwvZGl2PgoKPGJyIGNsZWFyPSJib3RoIj4KCjxzY3JpcHQ+CmlmICh3aW5kb3cuZnJhbWVFbGVtZW50KSB7CiAgICBkb2N1bWVudC5ib2R5LmNsYXNzTmFtZSA9ICdlbWJlZGRlZCc7CgogICAgdmFyIGVsZSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2EnKTsKICAgIGVsZS5jbGFzc05hbWUgPSAncG9wb3V0JzsKICAgIGVsZS50YXJnZXQgPSAnX2JsYW5rJzsKICAgIGVsZS5ocmVmID0gd2luZG93LmxvY2F0aW9uLmhyZWY7CiAgICBlbGUudGl0bGUgPSAnUG9wIG91dCc7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbWFpbicpLmFwcGVuZENoaWxkKGVsZSk7CgogICAgZWxlID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnYScpOwogICAgZWxlLmNsYXNzTmFtZSA9ICdiYWNrJzsKICAgIGVsZS5ocmVmID0gJ2luZGV4Lmh0bWwnOwogICAgZWxlLnRpdGxlID0gJ0hvbWUnOwogICAgZWxlLnRhcmdldCA9ICdfc2VsZic7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbWFpbicpLmFwcGVuZENoaWxkKGVsZSk7Cn0gZWxzZSB7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnYmtnZCcpLmNsYXNzTmFtZSA9ICdzaG93LWJrZ2QnOwp9CgovLyBTZXQgdGFyZ2V0cyBvbiBleHRlcm5hbCBsaW5rcy4gIFNhbmRjYXN0bGUgYW5kIEdpdEh1YiBzaG91bGRuJ3QgYmUgZW1iZWRkZWQgaW4gYW55IGlmcmFtZS4KQXJyYXkucHJvdG90eXBlLmZvckVhY2guY2FsbChkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgnYScpLCBmdW5jdGlvbihhKSB7CiAgICBpZiAoL15odHRwcz86L2kudGVzdChhLmdldEF0dHJpYnV0ZSgnaHJlZicpKSkgewogICAgICAgIGEudGFyZ2V0PSdfYmxhbmsnOwogICAgfQp9KTsKPC9zY3JpcHQ+Cgo8c2NyaXB0IHNyYz0iamF2YXNjcmlwdC9wcmlzbS5qcyI+PC9zY3JpcHQ+CjxzY3JpcHQgc3JjPSJqYXZhc2NyaXB0L2Nlc2l1bURvYy5qcyI+PC9zY3JpcHQ+Cgo8L2JvZHk+CjwvaHRtbD4=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 14:53:26 GMT",
+                    "Content-Length": "2015",
+                    "Date": "Thu, 06 Nov 2014 14:54:01 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/ariya/phantomjs/test/ghostdriver-test/fixtures/common/proxy/page2.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Link manipulation (DOM-based)",
+    "issueType": 5246976,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based link manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a navigation target within the current page, such as a clickable link or the submission URL of a form. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the target of links within the response. An attacker may be able to leverage this to perform various attacks, including:<ul><li>Causing the user to redirect to an arbitrary external URL, to facilitate a phishing attack.</li><li>Causing the user to submit sensitive form data to a server controlled by the attacker.</li><li>Causing the user to perform an unintended action within the application, by changing the file or query string associated with a link.</li><li>Bypassing browser anti-XSS defenses by injecting on-site links containing XSS exploits, since browser anti-XSS defenses typically do not operate on on-site links.</li></ul>",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based link manipulation vulnerabilities is not to dynamically set the target URLs of links or forms using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a link target. In general, this is best achieved by using a whitelist of URLs that are permitted link targets, and strictly validating the target against this list before setting the link target.",
+    "issueDetail": "The application may be vulnerable to DOM-based link manipulation. Data is read from <b>document.location.search</b> and written to <b>the 'href' property of a DOM element</b> via the following statements:<ul><li>var match = document.location.search.match(/next=(.*)/);</li><li>next = decodeURIComponent(match[1]);</li><li>link.href = next;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/ariya/phantomjs/test/ghostdriver-test/fixtures/common/proxy/page2.html",
+                "path": "/ariya/phantomjs/test/ghostdriver-test/fixtures/common/proxy/page2.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9hcml5YS9waGFudG9tanMvdGVzdC9naG9zdGRyaXZlci10ZXN0L2ZpeHR1cmVzL2NvbW1vbi9wcm94eS9wYWdlMi5odG1sIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogODIyDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IEZyaSwgMDcgTm92IDIwMTQgMjE6NTE6MTcgR01UDQpMYXN0LU1vZGlmaWVkOiBGcmksIDA3IE5vdiAyMDE0IDIxOjUwOjAwIEdNVA0KDQo8IURPQ1RZUEUgaHRtbD4KPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7Y2hhcnNldD1VVEYtOCI+CjxtZXRhIGh0dHAtZXF1aXY9IlgtVUEtQ29tcGF0aWJsZSIgY29udGVudD0iSUU9ZWRnZSI+Cjx0aXRsZT5QYWdlIDI8L3RpdGxlPgpUaGlzIHBhZ2UgaXMgYSBtaWRkbGUgbWFuIGZvciByZWZlcnJlciB0ZXN0cy4KVGhpcyBwYWdlIHdpbGwgaW5jbHVkZSBhIGxpbmsgdG8gYSAibmV4dCIgcGFnZSBpZiB0aGUgPGNvZGU+bmV4dDwvY29kZT4gcXVlcnkKcGFyYW1ldGVyLCBvciB0aGUgPGNvZGU+ZG9jdW1lbnQucmVmZXJyZXI8L2NvZGU+IGlzIHNldC4KPHA+PGlucHV0IHR5cGU9ImJ1dHRvbiIgaWQ9ImZvcndhcmQiIHZhbHVlPSJGb3J3YXJkIiBvbmNsaWNrPSJoaXN0b3J5LmdvKDEpIi8+CjxzY3JpcHQ+CiAgdmFyIG1hdGNoID0gZG9jdW1lbnQubG9jYXRpb24uc2VhcmNoLm1hdGNoKC9uZXh0PSguKikvKTsKICB2YXIgbmV4dCA9IGRvY3VtZW50LnJlZmVycmVyIHx8ICcnOwogIGlmIChtYXRjaCAmJiBtYXRjaC5sZW5ndGggPT0gMikgewogICAgbmV4dCA9IGRlY29kZVVSSUNvbXBvbmVudChtYXRjaFsxXSk7CiAgfQoKICBpZiAobmV4dCkgewogICAgdmFyIGxpbmsgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdhJyk7CiAgICBsaW5rLmlubmVyVGV4dCA9ICdOZXh0ISc7CiAgICBsaW5rLnRleHRDb250ZW50ID0gJ05leHQhJzsKICAgIGxpbmsuaWQgPSAnbmV4dCc7CiAgICBsaW5rLmhyZWYgPSBuZXh0OwogICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChsaW5rKTsKICB9Cjwvc2NyaXB0Pgo=",
+                "body": "PCFET0NUWVBFIGh0bWw+CjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0idGV4dC9odG1sO2NoYXJzZXQ9VVRGLTgiPgo8bWV0YSBodHRwLWVxdWl2PSJYLVVBLUNvbXBhdGlibGUiIGNvbnRlbnQ9IklFPWVkZ2UiPgo8dGl0bGU+UGFnZSAyPC90aXRsZT4KVGhpcyBwYWdlIGlzIGEgbWlkZGxlIG1hbiBmb3IgcmVmZXJyZXIgdGVzdHMuClRoaXMgcGFnZSB3aWxsIGluY2x1ZGUgYSBsaW5rIHRvIGEgIm5leHQiIHBhZ2UgaWYgdGhlIDxjb2RlPm5leHQ8L2NvZGU+IHF1ZXJ5CnBhcmFtZXRlciwgb3IgdGhlIDxjb2RlPmRvY3VtZW50LnJlZmVycmVyPC9jb2RlPiBpcyBzZXQuCjxwPjxpbnB1dCB0eXBlPSJidXR0b24iIGlkPSJmb3J3YXJkIiB2YWx1ZT0iRm9yd2FyZCIgb25jbGljaz0iaGlzdG9yeS5nbygxKSIvPgo8c2NyaXB0PgogIHZhciBtYXRjaCA9IGRvY3VtZW50LmxvY2F0aW9uLnNlYXJjaC5tYXRjaCgvbmV4dD0oLiopLyk7CiAgdmFyIG5leHQgPSBkb2N1bWVudC5yZWZlcnJlciB8fCAnJzsKICBpZiAobWF0Y2ggJiYgbWF0Y2gubGVuZ3RoID09IDIpIHsKICAgIG5leHQgPSBkZWNvZGVVUklDb21wb25lbnQobWF0Y2hbMV0pOwogIH0KCiAgaWYgKG5leHQpIHsKICAgIHZhciBsaW5rID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnYScpOwogICAgbGluay5pbm5lclRleHQgPSAnTmV4dCEnOwogICAgbGluay50ZXh0Q29udGVudCA9ICdOZXh0ISc7CiAgICBsaW5rLmlkID0gJ25leHQnOwogICAgbGluay5ocmVmID0gbmV4dDsKICAgIGRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQobGluayk7CiAgfQo8L3NjcmlwdD4K",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 21:50:00 GMT",
+                    "Content-Length": "822",
+                    "Date": "Fri, 07 Nov 2014 21:51:17 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

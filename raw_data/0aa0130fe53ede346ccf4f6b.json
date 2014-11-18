@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/oyvindkinsey/easyXDM/src/flash/test/domb.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "HTML5 web message manipulation (DOM-based)",
+    "issueType": 5246464,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based HTML5 web message manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and sends this data within a web message to another document within the browser. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause the user's browser to send a web message containing data that is under the attacker's control.<br><br>The potential impact of the vulnerability depends on the destination document's handling of the incoming message. If the destination document trusts the sender not to transmit malicious data in the message, and handles the data in an unsafe manner, then the joint behavior of the two documents may allow an attacker to compromise the application user.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based HTML5 web message manipulation vulnerabilities is not to send a web message containing data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from compromising the user. This validation can be carried out by the document that sends the message, or by the document that receives the message, or both, depending on the trust relationship between the two documents.",
+    "issueDetail": "The application may be vulnerable to HTML5 web message manipulation. Data is read from <b>location.hash</b> and written to <b>the 'postMessage()' function of an iframe element</b> via the following statements:<ul><li>var channelId = location.hash.substring(1);</li><li>swf.postMessage(\"easyXDM_channel\" + channelId, document.getElementById(\"txtIn\").value, \"http://xdm1.local\");</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/oyvindkinsey/easyXDM/src/flash/test/domb.html",
+                "path": "/oyvindkinsey/easyXDM/src/flash/test/domb.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9veXZpbmRraW5zZXkvZWFzeVhETS9zcmMvZmxhc2gvdGVzdC9kb21iLmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjM0OA0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQpEYXRlOiBUaHUsIDA2IE5vdiAyMDE0IDIyOjIzOjEyIEdNVA0KTGFzdC1Nb2RpZmllZDogVGh1LCAwNiBOb3YgMjAxNCAyMjoyMzoxMSBHTVQNCg0KPCFkb2N0eXBlIGh0bWw+DQo8aHRtbD4NCiAgICA8aGVhZD4NCiAgICAgICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7Y2hhcnNldD1VVEYtOCIgLz4NCiAgICAgICAgPG1ldGEgaHR0cC1lcXVpdj0iWC1VQS1Db21wYXRpYmxlIiBjb250ZW50PSJJRT03Ij4NCiAgICAgICAgPHRpdGxlPkZsYXNoPC90aXRsZT4NCiAgICAgICAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vYWpheC5nb29nbGVhcGlzLmNvbS9hamF4L2xpYnMvc3dmb2JqZWN0LzIuMi9zd2ZvYmplY3QuanMiIHR5cGU9InRleHQvamF2YXNjcmlwdCI+DQogICAgICAgIDwvc2NyaXB0Pg0KICAgICAgICA8c3R5bGU+DQogICAgICAgICAgICBib2R5IHsNCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBibHVlOw0KICAgICAgICAgICAgfQ0KICAgICAgICA8L3N0eWxlPg0KICAgIDwvaGVhZD4NCiAgICA8Ym9keT4NCiAgICAgICAgRE9NQjxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0idHh0SW4iIHZhbHVlPSJhYSIvPg0KICAgICAgICA8YnV0dG9uIG9uY2xpY2s9InNlbmQoKSI+DQogICAgICAgICAgICBzZW5kDQogICAgICAgIDwvYnV0dG9uPg0KICAgICAgICA8ZGl2IGlkPSJvdXRwdXQiPg0KICAgICAgICA8L2Rpdj4NCiAgICAgICAgPGRpdiBpZD0iYWx0Q29udGVudCI+DQogICAgICAgIDwvZGl2Pg0KICAgICAgICA8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+DQogICAgICAgICAgICB2YXIgc3dmOw0KICAgICAgICAgICAgDQogICAgICAgICAgICB2YXIgY2hhbm5lbElkID0gbG9jYXRpb24uaGFzaC5zdWJzdHJpbmcoMSk7DQogICAgICAgICAgICBsb2coImNoYW5uZWxJZCBmcm9tIGhhc2g9IiArIGNoYW5uZWxJZCk7DQogICAgICAgICAgICBmdW5jdGlvbiBpbml0KCl7DQogICAgICAgICAgICAgICAgY29uc29sZS5sb2coImluaXQgIiArIGNoYW5uZWxJZCk7DQogICAgICAgICAgICAgICAgc3dmID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoYXR0cmlidXRlcy5pZCk7DQogICAgICAgICAgICAgICAgc3dmLmNyZWF0ZUNoYW5uZWwoImVhc3lYRE1fY2hhbm5lbCIgKyBjaGFubmVsSWQsICJodHRwOi8veGRtMS5sb2NhbCIsIGZhbHNlLCAiZm9vW1wib25NZXNzYWdlXCJdIiwgImtleSIpOw0KICAgICAgICAgICAgfQ0KICAgICAgICAgICAgDQogICAgICAgICAgICB2YXIgZm9vID0gew0KICAgICAgICAgICAgICAgIG9uTWVzc2FnZTogZnVuY3Rpb24obXNnLCBvcmlnaW4pew0KICAgICAgICAgICAgICAgICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgib3V0cHV0IikuYXBwZW5kQ2hpbGQoZG9jdW1lbnQuY3JlYXRlVGV4dE5vZGUobXNnICsgIi1mb286IiArIG9yaWdpbikpOw0KICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICB9Ow0KICAgICAgICAgICAgDQogICAgICAgICAgICBmdW5jdGlvbiBsb2cobXNnKXsNCiAgICAgICAgICAgICAgICBjb25zb2xlLmxvZyhsb2NhdGlvbi5ob3N0ICsgIjogIiArIG1zZyk7DQogICAgICAgICAgICB9DQogICAgICAgICAgICANCiAgICAgICAgICAgIGZ1bmN0aW9uIHNlbmQoKXsNCiAgICAgICAgICAgICAgICBzd2YucG9zdE1lc3NhZ2UoImVhc3lYRE1fY2hhbm5lbCIgKyBjaGFubmVsSWQsIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ0eHRJbiIpLnZhbHVlLCAiaHR0cDovL3hkbTEubG9jYWwiKTsNCiAgICAgICAgICAgIH0NCiAgICAgICAgICAgIA0KICAgICAgICAgICAgDQogICAgICAgICAgICB2YXIgZmxhc2h2YXJzID0gew0KICAgICAgICAgICAgICAgIGluaXQ6ICJpbml0Ig0KICAgICAgICAgICAgfTsNCiAgICAgICAgICAgIHZhciBwYXJhbXMgPSB7DQogICAgICAgICAgICAgICAgbWVudTogImZhbHNlIiwNCiAgICAgICAgICAgICAgICBzY2FsZTogIm5vU2NhbGUiLA0KICAgICAgICAgICAgICAgIGFsbG93RnVsbHNjcmVlbjogInRydWUiLA0KICAgICAgICAgICAgICAgIGFsbG93U2NyaXB0QWNjZXNzOiAiYWx3YXlzIiwNCiAgICAgICAgICAgICAgICBiZ2NvbG9yOiAiI0ZGRkZGRiINCiAgICAgICAgICAgIH07DQogICAgICAgICAgICB2YXIgYXR0cmlidXRlcyA9IHsNCiAgICAgICAgICAgICAgICBpZDogIm5ldGVhc3l4ZG1mbGFzaCINCiAgICAgICAgICAgIH07DQogICAgICAgICAgICBzd2ZvYmplY3QuZW1iZWRTV0YoIi4uLy4uLy4uL3Rvb2xzL2Vhc3l4ZG0uc3dmIiwgImFsdENvbnRlbnQiLCAiMTAiLCAiMTAiLCAiOC4wLjAiLCAiZXhwcmVzc0luc3RhbGwuc3dmIiwgZmxhc2h2YXJzLCBwYXJhbXMsIGF0dHJpYnV0ZXMpOw0KICAgICAgICA8L3NjcmlwdD4NCiAgICA8L2JvZHk+DQo8L2h0bWw+DQo=",
+                "body": "PCFkb2N0eXBlIGh0bWw+DQo8aHRtbD4NCiAgICA8aGVhZD4NCiAgICAgICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7Y2hhcnNldD1VVEYtOCIgLz4NCiAgICAgICAgPG1ldGEgaHR0cC1lcXVpdj0iWC1VQS1Db21wYXRpYmxlIiBjb250ZW50PSJJRT03Ij4NCiAgICAgICAgPHRpdGxlPkZsYXNoPC90aXRsZT4NCiAgICAgICAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vYWpheC5nb29nbGVhcGlzLmNvbS9hamF4L2xpYnMvc3dmb2JqZWN0LzIuMi9zd2ZvYmplY3QuanMiIHR5cGU9InRleHQvamF2YXNjcmlwdCI+DQogICAgICAgIDwvc2NyaXB0Pg0KICAgICAgICA8c3R5bGU+DQogICAgICAgICAgICBib2R5IHsNCiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBibHVlOw0KICAgICAgICAgICAgfQ0KICAgICAgICA8L3N0eWxlPg0KICAgIDwvaGVhZD4NCiAgICA8Ym9keT4NCiAgICAgICAgRE9NQjxpbnB1dCB0eXBlPSJ0ZXh0IiBpZD0idHh0SW4iIHZhbHVlPSJhYSIvPg0KICAgICAgICA8YnV0dG9uIG9uY2xpY2s9InNlbmQoKSI+DQogICAgICAgICAgICBzZW5kDQogICAgICAgIDwvYnV0dG9uPg0KICAgICAgICA8ZGl2IGlkPSJvdXRwdXQiPg0KICAgICAgICA8L2Rpdj4NCiAgICAgICAgPGRpdiBpZD0iYWx0Q29udGVudCI+DQogICAgICAgIDwvZGl2Pg0KICAgICAgICA8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+DQogICAgICAgICAgICB2YXIgc3dmOw0KICAgICAgICAgICAgDQogICAgICAgICAgICB2YXIgY2hhbm5lbElkID0gbG9jYXRpb24uaGFzaC5zdWJzdHJpbmcoMSk7DQogICAgICAgICAgICBsb2coImNoYW5uZWxJZCBmcm9tIGhhc2g9IiArIGNoYW5uZWxJZCk7DQogICAgICAgICAgICBmdW5jdGlvbiBpbml0KCl7DQogICAgICAgICAgICAgICAgY29uc29sZS5sb2coImluaXQgIiArIGNoYW5uZWxJZCk7DQogICAgICAgICAgICAgICAgc3dmID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoYXR0cmlidXRlcy5pZCk7DQogICAgICAgICAgICAgICAgc3dmLmNyZWF0ZUNoYW5uZWwoImVhc3lYRE1fY2hhbm5lbCIgKyBjaGFubmVsSWQsICJodHRwOi8veGRtMS5sb2NhbCIsIGZhbHNlLCAiZm9vW1wib25NZXNzYWdlXCJdIiwgImtleSIpOw0KICAgICAgICAgICAgfQ0KICAgICAgICAgICAgDQogICAgICAgICAgICB2YXIgZm9vID0gew0KICAgICAgICAgICAgICAgIG9uTWVzc2FnZTogZnVuY3Rpb24obXNnLCBvcmlnaW4pew0KICAgICAgICAgICAgICAgICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgib3V0cHV0IikuYXBwZW5kQ2hpbGQoZG9jdW1lbnQuY3JlYXRlVGV4dE5vZGUobXNnICsgIi1mb286IiArIG9yaWdpbikpOw0KICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICB9Ow0KICAgICAgICAgICAgDQogICAgICAgICAgICBmdW5jdGlvbiBsb2cobXNnKXsNCiAgICAgICAgICAgICAgICBjb25zb2xlLmxvZyhsb2NhdGlvbi5ob3N0ICsgIjogIiArIG1zZyk7DQogICAgICAgICAgICB9DQogICAgICAgICAgICANCiAgICAgICAgICAgIGZ1bmN0aW9uIHNlbmQoKXsNCiAgICAgICAgICAgICAgICBzd2YucG9zdE1lc3NhZ2UoImVhc3lYRE1fY2hhbm5lbCIgKyBjaGFubmVsSWQsIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ0eHRJbiIpLnZhbHVlLCAiaHR0cDovL3hkbTEubG9jYWwiKTsNCiAgICAgICAgICAgIH0NCiAgICAgICAgICAgIA0KICAgICAgICAgICAgDQogICAgICAgICAgICB2YXIgZmxhc2h2YXJzID0gew0KICAgICAgICAgICAgICAgIGluaXQ6ICJpbml0Ig0KICAgICAgICAgICAgfTsNCiAgICAgICAgICAgIHZhciBwYXJhbXMgPSB7DQogICAgICAgICAgICAgICAgbWVudTogImZhbHNlIiwNCiAgICAgICAgICAgICAgICBzY2FsZTogIm5vU2NhbGUiLA0KICAgICAgICAgICAgICAgIGFsbG93RnVsbHNjcmVlbjogInRydWUiLA0KICAgICAgICAgICAgICAgIGFsbG93U2NyaXB0QWNjZXNzOiAiYWx3YXlzIiwNCiAgICAgICAgICAgICAgICBiZ2NvbG9yOiAiI0ZGRkZGRiINCiAgICAgICAgICAgIH07DQogICAgICAgICAgICB2YXIgYXR0cmlidXRlcyA9IHsNCiAgICAgICAgICAgICAgICBpZDogIm5ldGVhc3l4ZG1mbGFzaCINCiAgICAgICAgICAgIH07DQogICAgICAgICAgICBzd2ZvYmplY3QuZW1iZWRTV0YoIi4uLy4uLy4uL3Rvb2xzL2Vhc3l4ZG0uc3dmIiwgImFsdENvbnRlbnQiLCAiMTAiLCAiMTAiLCAiOC4wLjAiLCAiZXhwcmVzc0luc3RhbGwuc3dmIiwgZmxhc2h2YXJzLCBwYXJhbXMsIGF0dHJpYnV0ZXMpOw0KICAgICAgICA8L3NjcmlwdD4NCiAgICA8L2JvZHk+DQo8L2h0bWw+DQo=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 22:23:11 GMT",
+                    "Content-Length": "2348",
+                    "Date": "Thu, 06 Nov 2014 22:23:12 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/mixxen/cesiumjs/Source/Core/isCrossOriginUrl.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Link manipulation (DOM-based)",
+    "issueType": 5246976,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based link manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a navigation target within the current page, such as a clickable link or the submission URL of a form. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the target of links within the response. An attacker may be able to leverage this to perform various attacks, including:<ul><li>Causing the user to redirect to an arbitrary external URL, to facilitate a phishing attack.</li><li>Causing the user to submit sensitive form data to a server controlled by the attacker.</li><li>Causing the user to perform an unintended action within the application, by changing the file or query string associated with a link.</li><li>Bypassing browser anti-XSS defenses by injecting on-site links containing XSS exploits, since browser anti-XSS defenses typically do not operate on on-site links.</li></ul>",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based link manipulation vulnerabilities is not to dynamically set the target URLs of links or forms using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a link target. In general, this is best achieved by using a whitelist of URLs that are permitted link targets, and strictly validating the target against this list before setting the link target.",
+    "issueDetail": "The application may be vulnerable to DOM-based link manipulation. Data is read from <b>window.location.href</b> and written to <b>the 'href' property of a DOM element</b> via the following statement:<ul><li>a.href = window.location.href;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/mixxen/cesiumjs/Source/Core/isCrossOriginUrl.js",
+                "path": "/mixxen/cesiumjs/Source/Core/isCrossOriginUrl.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9taXh4ZW4vY2VzaXVtanMvU291cmNlL0NvcmUvaXNDcm9zc09yaWdpblVybC5qcyBIVFRQLzEuMQ0KSG9zdDogbG9jYWxob3N0Ojk5OTkNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogOTI0DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qYXZhc2NyaXB0DQpEYXRlOiBUaHUsIDA2IE5vdiAyMDE0IDE0OjU0OjUyIEdNVA0KTGFzdC1Nb2RpZmllZDogVGh1LCAwNiBOb3YgMjAxNCAxNDo1NDoyNSBHTVQNCg0KLypnbG9iYWwgZGVmaW5lKi8NCmRlZmluZShbDQogICAgICAgICcuL2RlZmluZWQnDQogICAgXSwgZnVuY3Rpb24oDQogICAgICAgIGRlZmluZWQpIHsNCiAgICAidXNlIHN0cmljdCI7DQoNCiAgICB2YXIgYTsNCg0KICAgIC8qKg0KICAgICAqIEdpdmVuIGEgVVJMLCBkZXRlcm1pbmUgd2hldGhlciB0aGF0IFVSTCBpcyBjb25zaWRlcmVkIGNyb3NzLW9yaWdpbiB0byB0aGUgY3VycmVudCBwYWdlLg0KICAgICAqDQogICAgICogQHByaXZhdGUNCiAgICAgKi8NCiAgICB2YXIgaXNDcm9zc09yaWdpblVybCA9IGZ1bmN0aW9uKHVybCkgew0KICAgICAgICBpZiAoIWRlZmluZWQoYSkpIHsNCiAgICAgICAgICAgIGEgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdhJyk7DQogICAgICAgIH0NCg0KICAgICAgICAvLyBjb3B5IHdpbmRvdyBsb2NhdGlvbiBpbnRvIHRoZSBhbmNob3IgdG8gZ2V0IGNvbnNpc3RlbnQgcmVzdWx0cw0KICAgICAgICAvLyB3aGVuIHRoZSBwb3J0IGlzIGRlZmF1bHQgZm9yIHRoZSBwcm90b2NvbCAoZS5nLiA4MCBmb3IgSFRUUCkNCiAgICAgICAgYS5ocmVmID0gd2luZG93LmxvY2F0aW9uLmhyZWY7DQoNCiAgICAgICAgLy8gaG9zdCBpbmNsdWRlcyBib3RoIGhvc3RuYW1lIGFuZCBwb3J0IGlmIHRoZSBwb3J0IGlzIG5vdCBzdGFuZGFyZA0KICAgICAgICB2YXIgaG9zdCA9IGEuaG9zdDsNCiAgICAgICAgdmFyIHByb3RvY29sID0gYS5wcm90b2NvbDsNCg0KICAgICAgICBhLmhyZWYgPSB1cmw7DQogICAgICAgIGEuaHJlZiA9IGEuaHJlZjsgLy8gSUUgb25seSBhYnNvbHV0aXplcyBocmVmIG9uIGdldCwgbm90IHNldA0KDQogICAgICAgIHJldHVybiBwcm90b2NvbCAhPT0gYS5wcm90b2NvbCB8fCBob3N0ICE9PSBhLmhvc3Q7DQogICAgfTsNCg0KICAgIHJldHVybiBpc0Nyb3NzT3JpZ2luVXJsOw0KfSk7",
+                "body": "LypnbG9iYWwgZGVmaW5lKi8NCmRlZmluZShbDQogICAgICAgICcuL2RlZmluZWQnDQogICAgXSwgZnVuY3Rpb24oDQogICAgICAgIGRlZmluZWQpIHsNCiAgICAidXNlIHN0cmljdCI7DQoNCiAgICB2YXIgYTsNCg0KICAgIC8qKg0KICAgICAqIEdpdmVuIGEgVVJMLCBkZXRlcm1pbmUgd2hldGhlciB0aGF0IFVSTCBpcyBjb25zaWRlcmVkIGNyb3NzLW9yaWdpbiB0byB0aGUgY3VycmVudCBwYWdlLg0KICAgICAqDQogICAgICogQHByaXZhdGUNCiAgICAgKi8NCiAgICB2YXIgaXNDcm9zc09yaWdpblVybCA9IGZ1bmN0aW9uKHVybCkgew0KICAgICAgICBpZiAoIWRlZmluZWQoYSkpIHsNCiAgICAgICAgICAgIGEgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdhJyk7DQogICAgICAgIH0NCg0KICAgICAgICAvLyBjb3B5IHdpbmRvdyBsb2NhdGlvbiBpbnRvIHRoZSBhbmNob3IgdG8gZ2V0IGNvbnNpc3RlbnQgcmVzdWx0cw0KICAgICAgICAvLyB3aGVuIHRoZSBwb3J0IGlzIGRlZmF1bHQgZm9yIHRoZSBwcm90b2NvbCAoZS5nLiA4MCBmb3IgSFRUUCkNCiAgICAgICAgYS5ocmVmID0gd2luZG93LmxvY2F0aW9uLmhyZWY7DQoNCiAgICAgICAgLy8gaG9zdCBpbmNsdWRlcyBib3RoIGhvc3RuYW1lIGFuZCBwb3J0IGlmIHRoZSBwb3J0IGlzIG5vdCBzdGFuZGFyZA0KICAgICAgICB2YXIgaG9zdCA9IGEuaG9zdDsNCiAgICAgICAgdmFyIHByb3RvY29sID0gYS5wcm90b2NvbDsNCg0KICAgICAgICBhLmhyZWYgPSB1cmw7DQogICAgICAgIGEuaHJlZiA9IGEuaHJlZjsgLy8gSUUgb25seSBhYnNvbHV0aXplcyBocmVmIG9uIGdldCwgbm90IHNldA0KDQogICAgICAgIHJldHVybiBwcm90b2NvbCAhPT0gYS5wcm90b2NvbCB8fCBob3N0ICE9PSBhLmhvc3Q7DQogICAgfTsNCg0KICAgIHJldHVybiBpc0Nyb3NzT3JpZ2luVXJsOw0KfSk7",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 14:54:25 GMT",
+                    "Content-Length": "924",
+                    "Date": "Thu, 06 Nov 2014 14:54:52 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

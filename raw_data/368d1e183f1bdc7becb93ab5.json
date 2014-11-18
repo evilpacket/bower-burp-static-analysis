@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/BigstickCarpet/swagger-suite-ui/dist/o2c.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Client-side JSON injection (DOM-based)",
+    "issueType": 2098032,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based JSON injection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and incorporates this into a string that is parsed as a JSON data structure and then processed by the application. An attacker may be able to use this behavior to construct a URL which, if visited by another application user, will cause arbitrary JSON data to be processed. Depending on the purpose for which this data is used, it may be possible to subvert the application's logic, or cause unintended actions on behalf of the user.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based JSON injection vulnerabilities is not to parse as JSON any string containing data that originated from an untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from modifying the JSON structure in inappropriate ways. This may involve strict validation of specific items to ensure they do not contain any characters that may interfere with the structure of the JSON when it is parsed.",
+    "issueDetail": "The application may be vulnerable to DOM-based client-side JSON injection. Data is read from <b>location.hash</b> and written to <b>JSON.parse()</b> via the following statements:<ul><li>qp = location.hash.substring(1);</li><li>JSON.parse('{\"' + qp ...URIC...(value)  } ) </li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/BigstickCarpet/swagger-suite-ui/dist/o2c.html",
+                "path": "/BigstickCarpet/swagger-suite-ui/dist/o2c.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9CaWdzdGlja0NhcnBldC9zd2FnZ2VyLXN1aXRlLXVpL2Rpc3QvbzJjLmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMzYwDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFNhdCwgMDggTm92IDIwMTQgMTU6MDc6NTIgR01UDQpMYXN0LU1vZGlmaWVkOiBTYXQsIDA4IE5vdiAyMDE0IDE1OjA3OjUyIEdNVA0KDQo8c2NyaXB0Pgp2YXIgcXAgPSBudWxsOwppZih3aW5kb3cubG9jYXRpb24uaGFzaCkgewogIHFwID0gbG9jYXRpb24uaGFzaC5zdWJzdHJpbmcoMSk7Cn0KZWxzZSB7CiAgcXAgPSBsb2NhdGlvbi5zZWFyY2guc3Vic3RyaW5nKDEpOwp9CnFwID0gcXAgPyBKU09OLnBhcnNlKCd7IicgKyBxcC5yZXBsYWNlKC8mL2csICciLCInKS5yZXBsYWNlKC89L2csJyI6IicpICsgJyJ9JywKICBmdW5jdGlvbihrZXksIHZhbHVlKSB7CiAgICByZXR1cm4ga2V5PT09IiI/dmFsdWU6ZGVjb2RlVVJJQ29tcG9uZW50KHZhbHVlKSB9CiAgKTp7fQp3aW5kb3cub3BlbmVyLm9uT0F1dGhDb21wbGV0ZShxcCk7CndpbmRvdy5jbG9zZSgpOwo8L3NjcmlwdD4=",
+                "body": "PHNjcmlwdD4KdmFyIHFwID0gbnVsbDsKaWYod2luZG93LmxvY2F0aW9uLmhhc2gpIHsKICBxcCA9IGxvY2F0aW9uLmhhc2guc3Vic3RyaW5nKDEpOwp9CmVsc2UgewogIHFwID0gbG9jYXRpb24uc2VhcmNoLnN1YnN0cmluZygxKTsKfQpxcCA9IHFwID8gSlNPTi5wYXJzZSgneyInICsgcXAucmVwbGFjZSgvJi9nLCAnIiwiJykucmVwbGFjZSgvPS9nLCciOiInKSArICcifScsCiAgZnVuY3Rpb24oa2V5LCB2YWx1ZSkgewogICAgcmV0dXJuIGtleT09PSIiP3ZhbHVlOmRlY29kZVVSSUNvbXBvbmVudCh2YWx1ZSkgfQogICk6e30Kd2luZG93Lm9wZW5lci5vbk9BdXRoQ29tcGxldGUocXApOwp3aW5kb3cuY2xvc2UoKTsKPC9zY3JpcHQ+",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Sat, 08 Nov 2014 15:07:52 GMT",
+                    "Content-Length": "360",
+                    "Date": "Sat, 08 Nov 2014 15:07:52 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

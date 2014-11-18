@@ -1,0 +1,60 @@
+{
+    "url": "http://localhost:9999/pc035860/ngQueue/example/task_runner/",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cross-site scripting (DOM-based)",
+    "issueType": 2097936,
+    "severity": "High",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cross-site scripting vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the HTML document in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.<br><br>The attacker-supplied code can perform a wide variety of actions, such as stealing the victim's session token or login credentials, performing arbitrary actions on the victim's behalf, and logging their keystrokes.<br><br>Users can be induced to visit the attacker's crafted URL in various ways, similar to the usual attack delivery vectors for reflected cross-site scripting vulnerabilities. ",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cross-site scripting vulnerabilities is not to dynamically write data into the HTML document that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing script code into the document. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe. In other cases, it will be necessary to sanitize or encode the data. This can be a complex task, and depending on the context that the data is to be inserted may need to involve a combination of JavaScript escaping, HTML encoding, and URL encoding, in the appropriate sequence.",
+    "issueDetail": "The application may be vulnerable to DOM-based cross-site scripting. Data is read from <b>document.location</b> and written to <b>document.write()</b> via the following statement:<ul><li>document.write('&lt;base href=\"' + document.location + '\" /&gt;');</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/pc035860/ngQueue/example/task_runner/",
+                "path": "/pc035860/ngQueue/example/task_runner/",
+                "httpVersion": "HTTP/0.0",
+                "method": "GET",
+                "headers": {
+                    "Referer": "http://localhost:9999/pc035860/ngQueue/example/task_runner",
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9wYzAzNTg2MC9uZ1F1ZXVlL2V4YW1wbGUvdGFza19ydW5uZXIvIEhUVFAvMC4wDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KUmVmZXJlcjogaHR0cDovL2xvY2FsaG9zdDo5OTk5L3BjMDM1ODYwL25nUXVldWUvZXhhbXBsZS90YXNrX3J1bm5lcg0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjQzMg0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDE5OjE5OjMyIEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAxOToxOTozMiBHTVQNCg0KPCFET0NUWVBFIGh0bWw+CjxodG1sIG5nLWFwcD0icGx1bmtlciI+CgogIDxoZWFkPgogICAgPG1ldGEgY2hhcnNldD0idXRmLTgiIC8+CiAgICA8dGl0bGU+QW5ndWxhckpTIFBsdW5rZXI8L3RpdGxlPgogICAgPGxpbmsgZGF0YS1yZXF1aXJlPSJib290c3RyYXAtY3NzQCoiIGRhdGEtc2VtdmVyPSIzLjAuMC1yYzIiIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cDovL25ldGRuYS5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjAuMC1yYzIvY3NzL2Jvb3RzdHJhcC5taW4uY3NzIiAvPgogICAgPHNjcmlwdD5kb2N1bWVudC53cml0ZSgnPGJhc2UgaHJlZj0iJyArIGRvY3VtZW50LmxvY2F0aW9uICsgJyIgLz4nKTs8L3NjcmlwdD4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0ic3R5bGUuY3NzIiAvPgogICAgPHNjcmlwdCBkYXRhLXJlcXVpcmU9ImFuZ3VsYXIuanNAMS4xLngiIHNyYz0iaHR0cHM6Ly9hamF4Lmdvb2dsZWFwaXMuY29tL2FqYXgvbGlicy9hbmd1bGFyanMvMS4xLjUvYW5ndWxhci5qcyIgZGF0YS1zZW12ZXI9IjEuMS41Ij48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSIuLi9saWIvbmdRdWV1ZS5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iYXBwLmpzIj48L3NjcmlwdD4KICA8L2hlYWQ+CgogIDxib2R5IG5nLWNvbnRyb2xsZXI9Ik1haW5DdHJsIiBuZy1pbml0PSJhc3luY0RlbGF5ID0gMzAwIj4KICAgIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9wYzAzNTg2MC9uZ1F1ZXVlIj4KICAgICAgPGltZyBzdHlsZT0icG9zaXRpb246IGFic29sdXRlOyB0b3A6IDA7IHJpZ2h0OiAwOyBib3JkZXI6IDA7IiBzcmM9Imh0dHBzOi8vczMuYW1hem9uYXdzLmNvbS9naXRodWIvcmliYm9ucy9mb3JrbWVfcmlnaHRfZ3JheV82ZDZkNmQucG5nIiBhbHQ9IkZvcmsgbWUgb24gR2l0SHViIiAvPgogICAgPC9hPgogICAgPGRpdiBjbGFzcz0iY29udGFpbmVyIj4KICAgICAgPGgzPm5nUXVldWUgZGVtbzwvaDM+CiAgICAgIDxiciAvPgogICAgICA8ZGl2IGNsYXNzPSJyb3ciPgogICAgICAgIDxkaXYgY2xhc3M9ImNvbC14cy0zIHRleHQtY2VudGVyIj4KICAgICAgICAgIDxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1wcmltYXJ5IiBuZy1jbGljaz0iZW5xdWV1ZVN5bmMoKSI+ZW5xdWV1ZSBzeW5jPC9idXR0b24+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0iY29sLXhzLTMgdGV4dC1jZW50ZXIiPgogICAgICAgICAgPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJidG4gYnRuLXN1Y2Nlc3MiIG5nLWNsaWNrPSJlbnF1ZXVlQXN5bmMoKSI+ZW5xdWV1ZSBhc3luYzwvYnV0dG9uPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3M9ImNvbC14cy0zIHRleHQtY2VudGVyIj4KICAgICAgICAgIDxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kYW5nZXIiIG5nLWNsaWNrPSJlbnF1ZXVlUmFuZG9tKDEwKSI+cmFuZG9tIHggMTA8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzPSJjb2wteHMtMyB0ZXh0LWNlbnRlciI+CiAgICAgICAgICA8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9ImJ0biBidG4tZGFuZ2VyIiBuZy1jbGljaz0icmVtb3ZlQWxsKCkiPnJlbW92ZSBhbGw8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICAgIDxociAvPgogICAgICA8ZGl2IGNsYXNzPSJ2aWV3LXF1ZXVlIj4KICAgICAgICA8ZGl2IGNsYXNzPSJyb3ciIG5nLXJlcGVhdD0iaXRlbSBpbiB2cSIgbmctYW5pbWF0ZT0ie2VudGVyOiAnbmctZW50ZXInLCBsZWF2ZTogJ25nLWxlYXZlJ30iPgogICAgICAgICAgPGRpdiBjbGFzcz0iY29sLXhzLTIgdGV4dC1yaWdodCI+e3sgaXRlbVswXSB9fTwvZGl2PgogICAgICAgICAgPGRpdiBjbGFzcz0iY29sLXhzLTEwIHRleHQtbGVmdCI+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJsYWJlbCIgbmctY2xhc3M9Insnc3luYyc6ICdsYWJlbC1wcmltYXJ5JywgJ2FzeW5jJzogJ2xhYmVsLXN1Y2Nlc3MnfVtpdGVtWzFdXSI+e3sgaXRlbVsxXSB9fTwvc3Bhbj4KICAgICAgICAgICAgPHNwYW4gbmctaWY9Iml0ZW1bMl0iPgogICAgICAgICAgICAgIDxzbWFsbCBjbGFzcz0iY291bnRkb3duLXRleHQiPgogICAgICAgICAgICAgICAgPHNwYW4gbmctaGlkZT0iaXRlbVszXSI+e3sgaXRlbVsyXSB9fTwvc3Bhbj4KICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJhY3RpdmUiIG5nLWlmPSJpdGVtWzNdIiB1aS1jb3VudGRvd249Int7IGl0ZW1bMl0gfX0iPjwvc3Bhbj4KICAgICAgICAgICAgICAgIG1zCiAgICAgICAgICAgICAgPC9zbWFsbD4KICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgPC9ib2R5PgoKPC9odG1sPgo=",
+                "body": "PCFET0NUWVBFIGh0bWw+CjxodG1sIG5nLWFwcD0icGx1bmtlciI+CgogIDxoZWFkPgogICAgPG1ldGEgY2hhcnNldD0idXRmLTgiIC8+CiAgICA8dGl0bGU+QW5ndWxhckpTIFBsdW5rZXI8L3RpdGxlPgogICAgPGxpbmsgZGF0YS1yZXF1aXJlPSJib290c3RyYXAtY3NzQCoiIGRhdGEtc2VtdmVyPSIzLjAuMC1yYzIiIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cDovL25ldGRuYS5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjAuMC1yYzIvY3NzL2Jvb3RzdHJhcC5taW4uY3NzIiAvPgogICAgPHNjcmlwdD5kb2N1bWVudC53cml0ZSgnPGJhc2UgaHJlZj0iJyArIGRvY3VtZW50LmxvY2F0aW9uICsgJyIgLz4nKTs8L3NjcmlwdD4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0ic3R5bGUuY3NzIiAvPgogICAgPHNjcmlwdCBkYXRhLXJlcXVpcmU9ImFuZ3VsYXIuanNAMS4xLngiIHNyYz0iaHR0cHM6Ly9hamF4Lmdvb2dsZWFwaXMuY29tL2FqYXgvbGlicy9hbmd1bGFyanMvMS4xLjUvYW5ndWxhci5qcyIgZGF0YS1zZW12ZXI9IjEuMS41Ij48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSIuLi9saWIvbmdRdWV1ZS5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iYXBwLmpzIj48L3NjcmlwdD4KICA8L2hlYWQ+CgogIDxib2R5IG5nLWNvbnRyb2xsZXI9Ik1haW5DdHJsIiBuZy1pbml0PSJhc3luY0RlbGF5ID0gMzAwIj4KICAgIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9wYzAzNTg2MC9uZ1F1ZXVlIj4KICAgICAgPGltZyBzdHlsZT0icG9zaXRpb246IGFic29sdXRlOyB0b3A6IDA7IHJpZ2h0OiAwOyBib3JkZXI6IDA7IiBzcmM9Imh0dHBzOi8vczMuYW1hem9uYXdzLmNvbS9naXRodWIvcmliYm9ucy9mb3JrbWVfcmlnaHRfZ3JheV82ZDZkNmQucG5nIiBhbHQ9IkZvcmsgbWUgb24gR2l0SHViIiAvPgogICAgPC9hPgogICAgPGRpdiBjbGFzcz0iY29udGFpbmVyIj4KICAgICAgPGgzPm5nUXVldWUgZGVtbzwvaDM+CiAgICAgIDxiciAvPgogICAgICA8ZGl2IGNsYXNzPSJyb3ciPgogICAgICAgIDxkaXYgY2xhc3M9ImNvbC14cy0zIHRleHQtY2VudGVyIj4KICAgICAgICAgIDxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1wcmltYXJ5IiBuZy1jbGljaz0iZW5xdWV1ZVN5bmMoKSI+ZW5xdWV1ZSBzeW5jPC9idXR0b24+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0iY29sLXhzLTMgdGV4dC1jZW50ZXIiPgogICAgICAgICAgPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJidG4gYnRuLXN1Y2Nlc3MiIG5nLWNsaWNrPSJlbnF1ZXVlQXN5bmMoKSI+ZW5xdWV1ZSBhc3luYzwvYnV0dG9uPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3M9ImNvbC14cy0zIHRleHQtY2VudGVyIj4KICAgICAgICAgIDxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iYnRuIGJ0bi1kYW5nZXIiIG5nLWNsaWNrPSJlbnF1ZXVlUmFuZG9tKDEwKSI+cmFuZG9tIHggMTA8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzPSJjb2wteHMtMyB0ZXh0LWNlbnRlciI+CiAgICAgICAgICA8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9ImJ0biBidG4tZGFuZ2VyIiBuZy1jbGljaz0icmVtb3ZlQWxsKCkiPnJlbW92ZSBhbGw8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICAgIDxociAvPgogICAgICA8ZGl2IGNsYXNzPSJ2aWV3LXF1ZXVlIj4KICAgICAgICA8ZGl2IGNsYXNzPSJyb3ciIG5nLXJlcGVhdD0iaXRlbSBpbiB2cSIgbmctYW5pbWF0ZT0ie2VudGVyOiAnbmctZW50ZXInLCBsZWF2ZTogJ25nLWxlYXZlJ30iPgogICAgICAgICAgPGRpdiBjbGFzcz0iY29sLXhzLTIgdGV4dC1yaWdodCI+e3sgaXRlbVswXSB9fTwvZGl2PgogICAgICAgICAgPGRpdiBjbGFzcz0iY29sLXhzLTEwIHRleHQtbGVmdCI+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJsYWJlbCIgbmctY2xhc3M9Insnc3luYyc6ICdsYWJlbC1wcmltYXJ5JywgJ2FzeW5jJzogJ2xhYmVsLXN1Y2Nlc3MnfVtpdGVtWzFdXSI+e3sgaXRlbVsxXSB9fTwvc3Bhbj4KICAgICAgICAgICAgPHNwYW4gbmctaWY9Iml0ZW1bMl0iPgogICAgICAgICAgICAgIDxzbWFsbCBjbGFzcz0iY291bnRkb3duLXRleHQiPgogICAgICAgICAgICAgICAgPHNwYW4gbmctaGlkZT0iaXRlbVszXSI+e3sgaXRlbVsyXSB9fTwvc3Bhbj4KICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJhY3RpdmUiIG5nLWlmPSJpdGVtWzNdIiB1aS1jb3VudGRvd249Int7IGl0ZW1bMl0gfX0iPjwvc3Bhbj4KICAgICAgICAgICAgICAgIG1zCiAgICAgICAgICAgICAgPC9zbWFsbD4KICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgPC9ib2R5PgoKPC9odG1sPgo=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 19:19:32 GMT",
+                    "Content-Length": "2432",
+                    "Date": "Fri, 07 Nov 2014 19:19:32 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

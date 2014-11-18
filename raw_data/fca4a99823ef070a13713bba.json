@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/Yann29/bower-ol3-gamma4/closure-library/closure/goog/net/iframeio_different_base_test.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cross-site scripting (DOM-based)",
+    "issueType": 2097936,
+    "severity": "High",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cross-site scripting vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the HTML document in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.<br><br>The attacker-supplied code can perform a wide variety of actions, such as stealing the victim's session token or login credentials, performing arbitrary actions on the victim's behalf, and logging their keystrokes.<br><br>Users can be induced to visit the attacker's crafted URL in various ways, similar to the usual attack delivery vectors for reflected cross-site scripting vulnerabilities. ",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cross-site scripting vulnerabilities is not to dynamically write data into the HTML document that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing script code into the document. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe. In other cases, it will be necessary to sanitize or encode the data. This can be a complex task, and depending on the context that the data is to be inserted may need to involve a combination of JavaScript escaping, HTML encoding, and URL encoding, in the appropriate sequence.",
+    "issueDetail": "The application may be vulnerable to DOM-based cross-site scripting. Data is read from <b>window.location.href</b> and written to <b>document.write()</b> via the following statements:<ul><li>var href = window.location.href;</li><li>var newHref = href.replace(/net.*/, '');</li><li>document.write('&lt;base href=\"' + newHref + '\"&gt;');</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/Yann29/bower-ol3-gamma4/closure-library/closure/goog/net/iframeio_different_base_test.html",
+                "path": "/Yann29/bower-ol3-gamma4/closure-library/closure/goog/net/iframeio_different_base_test.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9ZYW5uMjkvYm93ZXItb2wzLWdhbW1hNC9jbG9zdXJlLWxpYnJhcnkvY2xvc3VyZS9nb29nL25ldC9pZnJhbWVpb19kaWZmZXJlbnRfYmFzZV90ZXN0Lmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNzM0DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IEZyaSwgMDcgTm92IDIwMTQgMjE6MjA6MTMgR01UDQpMYXN0LU1vZGlmaWVkOiBGcmksIDA3IE5vdiAyMDE0IDIxOjIwOjAyIEdNVA0KDQo8aHRtbD4KPCEtLQpDb3B5cmlnaHQgMjAxMSBUaGUgQ2xvc3VyZSBMaWJyYXJ5IEF1dGhvcnMuIEFsbCBSaWdodHMgUmVzZXJ2ZWQuCgpVc2Ugb2YgdGhpcyBzb3VyY2UgY29kZSBpcyBnb3Zlcm5lZCBieSB0aGUgQXBhY2hlIExpY2Vuc2UsIFZlcnNpb24gMi4wLgpTZWUgdGhlIENPUFlJTkcgZmlsZSBmb3IgZGV0YWlscy4KLS0+CiA8aGVhZD4KICA8dGl0bGU+CiAgIENsb3N1cmUgVW5pdCBUZXN0cyAtIGdvb2cubmV0LklmcmFtZUlvICh3aXRoIGRpZmZlcmVudCBiYXNlIFVSTCkKICA8L3RpdGxlPgogIDxzY3JpcHQ+CiAgICAvLyBXZSB1c2UgYSBkaWZmZXJlbnQgYmFzZSB0byByZXByb2R1Y2UgdGhlIGNvbmRpdGlvbnMgb2YgY3JidWcuY29tLzY2OTg3CiAgICB2YXIgaHJlZiA9IHdpbmRvdy5sb2NhdGlvbi5ocmVmOwogICAgdmFyIG5ld0hyZWYgPSBocmVmLnJlcGxhY2UoL25ldC4qLywgJycpOwogICAgZG9jdW1lbnQud3JpdGUoJzxiYXNlIGhyZWY9IicgKyBuZXdIcmVmICsgJyI+Jyk7CgogICAgdmFyIGJhc2VTY3JpcHQgPSAnYmFzZS5qcyc7CiAgICBkb2N1bWVudC53cml0ZSgnPHNjcmlwdCBzcmM9IicgKyBiYXNlU2NyaXB0ICsgJyI+PFwvc2NyaXB0PicpOwogIDwvc2NyaXB0PgogIDxzY3JpcHQ+CiAgICBnb29nLnJlcXVpcmUoJ2dvb2cubmV0LmlmcmFtZUlvRGlmZmVyZW50QmFzZVRlc3QnKTsKICA8L3NjcmlwdD4KIDwvaGVhZD4KIDxib2R5PgogPC9ib2R5Pgo8L2h0bWw+Cg==",
+                "body": "PGh0bWw+CjwhLS0KQ29weXJpZ2h0IDIwMTEgVGhlIENsb3N1cmUgTGlicmFyeSBBdXRob3JzLiBBbGwgUmlnaHRzIFJlc2VydmVkLgoKVXNlIG9mIHRoaXMgc291cmNlIGNvZGUgaXMgZ292ZXJuZWQgYnkgdGhlIEFwYWNoZSBMaWNlbnNlLCBWZXJzaW9uIDIuMC4KU2VlIHRoZSBDT1BZSU5HIGZpbGUgZm9yIGRldGFpbHMuCi0tPgogPGhlYWQ+CiAgPHRpdGxlPgogICBDbG9zdXJlIFVuaXQgVGVzdHMgLSBnb29nLm5ldC5JZnJhbWVJbyAod2l0aCBkaWZmZXJlbnQgYmFzZSBVUkwpCiAgPC90aXRsZT4KICA8c2NyaXB0PgogICAgLy8gV2UgdXNlIGEgZGlmZmVyZW50IGJhc2UgdG8gcmVwcm9kdWNlIHRoZSBjb25kaXRpb25zIG9mIGNyYnVnLmNvbS82Njk4NwogICAgdmFyIGhyZWYgPSB3aW5kb3cubG9jYXRpb24uaHJlZjsKICAgIHZhciBuZXdIcmVmID0gaHJlZi5yZXBsYWNlKC9uZXQuKi8sICcnKTsKICAgIGRvY3VtZW50LndyaXRlKCc8YmFzZSBocmVmPSInICsgbmV3SHJlZiArICciPicpOwoKICAgIHZhciBiYXNlU2NyaXB0ID0gJ2Jhc2UuanMnOwogICAgZG9jdW1lbnQud3JpdGUoJzxzY3JpcHQgc3JjPSInICsgYmFzZVNjcmlwdCArICciPjxcL3NjcmlwdD4nKTsKICA8L3NjcmlwdD4KICA8c2NyaXB0PgogICAgZ29vZy5yZXF1aXJlKCdnb29nLm5ldC5pZnJhbWVJb0RpZmZlcmVudEJhc2VUZXN0Jyk7CiAgPC9zY3JpcHQ+CiA8L2hlYWQ+CiA8Ym9keT4KIDwvYm9keT4KPC9odG1sPgo=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 21:20:02 GMT",
+                    "Content-Length": "734",
+                    "Date": "Fri, 07 Nov 2014 21:20:13 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

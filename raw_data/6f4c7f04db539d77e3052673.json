@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/ariatemplates/ariatemplates/test/beta.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Open redirection (DOM-based)",
+    "issueType": 5243152,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based open redirection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the target of a redirection in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a redirection to an arbitrary external domain. This behavior can be leveraged to facilitate phishing attacks against users of the application. The ability to use an authentic application URL, targeting the correct domain with a valid SSL certificate (if SSL is used) lends credibility to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain.<br><br><b>Note:</b> If an attacker is able to control the start of the string that is passed to the redirection API, then it may be possible to escalate this vulnerability into a JavaScript injection attack, by using a URL with the javascript: pseudo-protocol to execute arbitrary script code when the URL is processed by the browser.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based open redirection vulnerabilities is not to dynamically set redirection targets using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a redirection target. In general, this is best achieved by using a whitelist of URLs that are permitted redirection targets, and strictly validating the target against this list before performing the redirection.",
+    "issueDetail": "The application may be vulnerable to DOM-based open redirection. Data is read from <b>document.location.href</b> and written to <b>document.location.href</b> via the following statements:<ul><li>var newLocation = document.location.href.replace(\"beta.html\", \"test.htm\");</li><li>document.location.href = newLocation;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/ariatemplates/ariatemplates/test/beta.html",
+                "path": "/ariatemplates/ariatemplates/test/beta.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9hcmlhdGVtcGxhdGVzL2FyaWF0ZW1wbGF0ZXMvdGVzdC9iZXRhLmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMzQ1DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFRodSwgMDYgTm92IDIwMTQgMDk6MzQ6MDQgR01UDQpMYXN0LU1vZGlmaWVkOiBUaHUsIDA2IE5vdiAyMDE0IDA5OjMzOjU3IEdNVA0KDQo8IURPQ1RZUEUgaHRtbD4KPGh0bWw+PGhlYWQ+PHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiPgogICAgLy8gVGhpcyBmaWxlIGlzIGhlcmUgZm9yIGhpc3RvcmljYWwgcmVhc29ucwogICAgdmFyIG5ld0xvY2F0aW9uID0gZG9jdW1lbnQubG9jYXRpb24uaHJlZi5yZXBsYWNlKCJiZXRhLmh0bWwiLCAidGVzdC5odG0iKTsKICAgIGlmIChuZXdMb2NhdGlvbi5pbmRleE9mKCJkZXY9dHJ1ZSIpID09IC0xKSB7CiAgICAgICAgbmV3TG9jYXRpb24gKz0gIiZkZXY9ZmFsc2UiOwogICAgfQogICAgZG9jdW1lbnQubG9jYXRpb24uaHJlZiA9IG5ld0xvY2F0aW9uOwo8L3NjcmlwdD48L2hlYWQ+PC9odG1sPgo=",
+                "body": "PCFET0NUWVBFIGh0bWw+CjxodG1sPjxoZWFkPjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij4KICAgIC8vIFRoaXMgZmlsZSBpcyBoZXJlIGZvciBoaXN0b3JpY2FsIHJlYXNvbnMKICAgIHZhciBuZXdMb2NhdGlvbiA9IGRvY3VtZW50LmxvY2F0aW9uLmhyZWYucmVwbGFjZSgiYmV0YS5odG1sIiwgInRlc3QuaHRtIik7CiAgICBpZiAobmV3TG9jYXRpb24uaW5kZXhPZigiZGV2PXRydWUiKSA9PSAtMSkgewogICAgICAgIG5ld0xvY2F0aW9uICs9ICImZGV2PWZhbHNlIjsKICAgIH0KICAgIGRvY3VtZW50LmxvY2F0aW9uLmhyZWYgPSBuZXdMb2NhdGlvbjsKPC9zY3JpcHQ+PC9oZWFkPjwvaHRtbD4K",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 09:33:57 GMT",
+                    "Content-Length": "345",
+                    "Date": "Thu, 06 Nov 2014 09:34:04 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

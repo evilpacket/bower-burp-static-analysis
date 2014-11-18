@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/tmpvar/jsdom/test/browser-main.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "HTML5 web message manipulation (DOM-based)",
+    "issueType": 5246464,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based HTML5 web message manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and sends this data within a web message to another document within the browser. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause the user's browser to send a web message containing data that is under the attacker's control.<br><br>The potential impact of the vulnerability depends on the destination document's handling of the incoming message. If the destination document trusts the sender not to transmit malicious data in the message, and handles the data in an unsafe manner, then the joint behavior of the two documents may allow an attacker to compromise the application user.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based HTML5 web message manipulation vulnerabilities is not to send a web message containing data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from compromising the user. This validation can be carried out by the document that sends the message, or by the document that receives the message, or both, depending on the trust relationship between the two documents.",
+    "issueDetail": "The application may be vulnerable to HTML5 web message manipulation. Data is read from <b>location.search</b> and written to <b>the 'postMessage()' function of an iframe element</b> via the following statement:<ul><li>worker.postMessage(location.search.slice(1));</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/tmpvar/jsdom/test/browser-main.js",
+                "path": "/tmpvar/jsdom/test/browser-main.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC90bXB2YXIvanNkb20vdGVzdC9icm93c2VyLW1haW4uanMgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNzgzDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qYXZhc2NyaXB0DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDA3OjMyOjQ5IEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAwNzozMjo0OCBHTVQNCg0Kd2luZG93Ll9icm93c2VyUnVubmVyID0gewogIGV2ZW50czogW10KfTsKCnZhciB3b3JrZXIgPSBuZXcgV29ya2VyKCcuL3dvcmtlci1idW5kbGUuanMnKTsKdmFyIGNvbnNvbGVFbCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJy5jb25zb2xlJyk7CgpmdW5jdGlvbiBmaXJlKGV2ZW50LCBkZXRhaWwpIHsKICB3aW5kb3cuX2Jyb3dzZXJSdW5uZXIuZXZlbnRzLnB1c2goewogICAgZXZlbnQ6IGV2ZW50LAogICAgZGV0YWlsOiBkZXRhaWwKICB9KTsKfQoKd29ya2VyLm9ubWVzc2FnZSA9IGZ1bmN0aW9uIChlKSB7CiAgaWYgKGUuZGF0YS5tZXRob2QpIHsKICAgIHN3aXRjaCAoZS5kYXRhLm1ldGhvZCkgewogICAgICBjYXNlICdmaXJlJzoKICAgICAgICBmaXJlKGUuZGF0YS5wYXJhbXMuZXZlbnQsIGUuZGF0YS5wYXJhbXMuZGF0YSk7CiAgICAgICAgYnJlYWs7CiAgICAgIGNhc2UgJ2NvbnNvbGUnOgogICAgICAgIGZpcmUoJ2NvbnNvbGUnLCBlLmRhdGEucGFyYW1zKTsKICAgICAgICBjb25zb2xlW2UuZGF0YS5wYXJhbXMubGV2ZWxdLmFwcGx5KGNvbnNvbGUsIGUuZGF0YS5wYXJhbXMubWVzc2FnZSk7CiAgICAgICAgYnJlYWs7CiAgICAgIGNhc2UgJ3JlYWR5JzoKICAgICAgICBmaXJlKCdyZWFkeScpOwogICAgICAgIHdvcmtlci5wb3N0TWVzc2FnZShsb2NhdGlvbi5zZWFyY2guc2xpY2UoMSkpOwogICAgICAgIGJyZWFrOwogICAgICBkZWZhdWx0OgogICAgICAgIGNvbnNvbGUuZXJyb3IoJ1Vua25vd24gbWV0aG9kJywgZS5kYXRhLm1ldGhvZCk7CiAgICB9CiAgfQp9OwoK",
+                "body": "d2luZG93Ll9icm93c2VyUnVubmVyID0gewogIGV2ZW50czogW10KfTsKCnZhciB3b3JrZXIgPSBuZXcgV29ya2VyKCcuL3dvcmtlci1idW5kbGUuanMnKTsKdmFyIGNvbnNvbGVFbCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJy5jb25zb2xlJyk7CgpmdW5jdGlvbiBmaXJlKGV2ZW50LCBkZXRhaWwpIHsKICB3aW5kb3cuX2Jyb3dzZXJSdW5uZXIuZXZlbnRzLnB1c2goewogICAgZXZlbnQ6IGV2ZW50LAogICAgZGV0YWlsOiBkZXRhaWwKICB9KTsKfQoKd29ya2VyLm9ubWVzc2FnZSA9IGZ1bmN0aW9uIChlKSB7CiAgaWYgKGUuZGF0YS5tZXRob2QpIHsKICAgIHN3aXRjaCAoZS5kYXRhLm1ldGhvZCkgewogICAgICBjYXNlICdmaXJlJzoKICAgICAgICBmaXJlKGUuZGF0YS5wYXJhbXMuZXZlbnQsIGUuZGF0YS5wYXJhbXMuZGF0YSk7CiAgICAgICAgYnJlYWs7CiAgICAgIGNhc2UgJ2NvbnNvbGUnOgogICAgICAgIGZpcmUoJ2NvbnNvbGUnLCBlLmRhdGEucGFyYW1zKTsKICAgICAgICBjb25zb2xlW2UuZGF0YS5wYXJhbXMubGV2ZWxdLmFwcGx5KGNvbnNvbGUsIGUuZGF0YS5wYXJhbXMubWVzc2FnZSk7CiAgICAgICAgYnJlYWs7CiAgICAgIGNhc2UgJ3JlYWR5JzoKICAgICAgICBmaXJlKCdyZWFkeScpOwogICAgICAgIHdvcmtlci5wb3N0TWVzc2FnZShsb2NhdGlvbi5zZWFyY2guc2xpY2UoMSkpOwogICAgICAgIGJyZWFrOwogICAgICBkZWZhdWx0OgogICAgICAgIGNvbnNvbGUuZXJyb3IoJ1Vua25vd24gbWV0aG9kJywgZS5kYXRhLm1ldGhvZCk7CiAgICB9CiAgfQp9OwoK",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 07:32:48 GMT",
+                    "Content-Length": "783",
+                    "Date": "Fri, 07 Nov 2014 07:32:49 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

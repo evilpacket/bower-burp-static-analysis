@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/remy/polyfills/sessionStorage.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Client-side JSON injection (DOM-based)",
+    "issueType": 2098032,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based JSON injection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and incorporates this into a string that is parsed as a JSON data structure and then processed by the application. An attacker may be able to use this behavior to construct a URL which, if visited by another application user, will cause arbitrary JSON data to be processed. Depending on the purpose for which this data is used, it may be possible to subvert the application's logic, or cause unintended actions on behalf of the user.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based JSON injection vulnerabilities is not to parse as JSON any string containing data that originated from an untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from modifying the JSON structure in inappropriate ways. This may involve strict validation of specific items to ensure they do not contain any characters that may interfere with the structure of the JSON when it is parsed.",
+    "issueDetail": "The application may be vulnerable to DOM-based client-side JSON injection. Data is read from <b>window.name</b> and written to <b>JSON.parse()</b> via the following statement:<ul><li>var data = window.name ? JSON.parse(window.name) : {};</li></ul><b>Note:</b> The name of the current window is a valid attack vector for DOM-based vulnerabilities. An attacker can directly control the name of the targeted application's window by using code on their own domain to load the targeted page using either window.open() or an iframe tag, and specifying the desired window name. ",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/remy/polyfills/sessionStorage.js",
+                "path": "/remy/polyfills/sessionStorage.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9yZW15L3BvbHlmaWxscy9zZXNzaW9uU3RvcmFnZS5qcyBIVFRQLzEuMQ0KSG9zdDogbG9jYWxob3N0Ojk5OTkNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNTY4DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qYXZhc2NyaXB0DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDAzOjI0OjU4IEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAwMzoyNDo1OCBHTVQNCg0KaWYgKCFzZXNzaW9uU3RvcmFnZSAmJiBKU09OKSB7CiAgc2Vzc2lvblN0b3JhZ2UgPSAoZnVuY3Rpb24gKCkgewogICAgdmFyIGRhdGEgPSB3aW5kb3cubmFtZSA/IEpTT04ucGFyc2Uod2luZG93Lm5hbWUpIDoge307CgogICAgcmV0dXJuIHsKICAgICAgY2xlYXI6IGZ1bmN0aW9uICgpIHsKICAgICAgICBkYXRhID0ge307CiAgICAgICAgd2luZG93Lm5hbWUgPSAnJzsKICAgICAgfSwKICAgICAgZ2V0SXRlbTogZnVuY3Rpb24gKGtleSkgewogICAgICAgIHJldHVybiBkYXRhW2tleV0gPT09IHVuZGVmaW5lZCA/IG51bGwgOiBkYXRhW2tleV07CiAgICAgIH0sCiAgICAgIHJlbW92ZUl0ZW06IGZ1bmN0aW9uIChrZXkpIHsKICAgICAgICBkZWxldGUgZGF0YVtrZXldOwogICAgICAgIHdpbmRvdy5uYW1lID0gSlNPTi5zdHJpbmdpZnkoZGF0YSk7CiAgICAgIH0sCiAgICAgIHNldEl0ZW06IGZ1bmN0aW9uIChrZXksIHZhbHVlKSB7CiAgICAgICAgZGF0YVtrZXldID0gdmFsdWU7CiAgICAgICAgd2luZG93Lm5hbWUgPSBKU09OLnN0cmluZ2lmeShkYXRhKTsKICAgICAgfQogICAgfTsKICB9KSgpOwp9Cg==",
+                "body": "aWYgKCFzZXNzaW9uU3RvcmFnZSAmJiBKU09OKSB7CiAgc2Vzc2lvblN0b3JhZ2UgPSAoZnVuY3Rpb24gKCkgewogICAgdmFyIGRhdGEgPSB3aW5kb3cubmFtZSA/IEpTT04ucGFyc2Uod2luZG93Lm5hbWUpIDoge307CgogICAgcmV0dXJuIHsKICAgICAgY2xlYXI6IGZ1bmN0aW9uICgpIHsKICAgICAgICBkYXRhID0ge307CiAgICAgICAgd2luZG93Lm5hbWUgPSAnJzsKICAgICAgfSwKICAgICAgZ2V0SXRlbTogZnVuY3Rpb24gKGtleSkgewogICAgICAgIHJldHVybiBkYXRhW2tleV0gPT09IHVuZGVmaW5lZCA/IG51bGwgOiBkYXRhW2tleV07CiAgICAgIH0sCiAgICAgIHJlbW92ZUl0ZW06IGZ1bmN0aW9uIChrZXkpIHsKICAgICAgICBkZWxldGUgZGF0YVtrZXldOwogICAgICAgIHdpbmRvdy5uYW1lID0gSlNPTi5zdHJpbmdpZnkoZGF0YSk7CiAgICAgIH0sCiAgICAgIHNldEl0ZW06IGZ1bmN0aW9uIChrZXksIHZhbHVlKSB7CiAgICAgICAgZGF0YVtrZXldID0gdmFsdWU7CiAgICAgICAgd2luZG93Lm5hbWUgPSBKU09OLnN0cmluZ2lmeShkYXRhKTsKICAgICAgfQogICAgfTsKICB9KSgpOwp9Cg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 03:24:58 GMT",
+                    "Content-Length": "568",
+                    "Date": "Fri, 07 Nov 2014 03:24:58 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

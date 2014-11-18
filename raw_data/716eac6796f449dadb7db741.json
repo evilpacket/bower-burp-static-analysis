@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/ksundmyhr/bootstrap-wireframes/app/bower_components/jquery/test/jquery.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cross-site scripting (DOM-based)",
+    "issueType": 2097936,
+    "severity": "High",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cross-site scripting vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the HTML document in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.<br><br>The attacker-supplied code can perform a wide variety of actions, such as stealing the victim's session token or login credentials, performing arbitrary actions on the victim's behalf, and logging their keystrokes.<br><br>Users can be induced to visit the attacker's crafted URL in various ways, similar to the usual attack delivery vectors for reflected cross-site scripting vulnerabilities. ",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cross-site scripting vulnerabilities is not to dynamically write data into the HTML document that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing script code into the document. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe. In other cases, it will be necessary to sanitize or encode the data. This can be a complex task, and depending on the context that the data is to be inserted may need to involve a combination of JavaScript escaping, HTML encoding, and URL encoding, in the appropriate sequence.",
+    "issueDetail": "The application may be vulnerable to DOM-based cross-site scripting. Data is read from <b>parent.location.pathname</b> and written to <b>document.write()</b> via the following statement:<ul><li>document.write(\"&lt;scr ... + \"'&gt;&lt;\\x2Fsc...\" ) </li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/ksundmyhr/bootstrap-wireframes/app/bower_components/jquery/test/jquery.js",
+                "path": "/ksundmyhr/bootstrap-wireframes/app/bower_components/jquery/test/jquery.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9rc3VuZG15aHIvYm9vdHN0cmFwLXdpcmVmcmFtZXMvYXBwL2Jvd2VyX2NvbXBvbmVudHMvanF1ZXJ5L3Rlc3QvanF1ZXJ5LmpzIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjUwDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qYXZhc2NyaXB0DQpEYXRlOiBUaHUsIDA2IE5vdiAyMDE0IDEzOjQ0OjEzIEdNVA0KTGFzdC1Nb2RpZmllZDogVGh1LCAwNiBOb3YgMjAxNCAxMzo0NDowNiBHTVQNCg0KLy8gVXNlIHRoZSByaWdodCBqUXVlcnkgc291cmNlIGluIGlmcmFtZSB0ZXN0cwpkb2N1bWVudC53cml0ZSggIjxzY3JpcHQgaWQ9J2pxdWVyeS1qcycgc3JjPSciICsKCXBhcmVudC5kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgianF1ZXJ5LWpzIikuc3JjLnJlcGxhY2UoIC9eKD8hW15cLz8jXSs6KS8sCgkJcGFyZW50LmxvY2F0aW9uLnBhdGhuYW1lLnJlcGxhY2UoIC9bXlwvXSQvLCAiJDAvIiApICkgKwoiJz48XHgyRnNjcmlwdD4iICk7Cg==",
+                "body": "Ly8gVXNlIHRoZSByaWdodCBqUXVlcnkgc291cmNlIGluIGlmcmFtZSB0ZXN0cwpkb2N1bWVudC53cml0ZSggIjxzY3JpcHQgaWQ9J2pxdWVyeS1qcycgc3JjPSciICsKCXBhcmVudC5kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgianF1ZXJ5LWpzIikuc3JjLnJlcGxhY2UoIC9eKD8hW15cLz8jXSs6KS8sCgkJcGFyZW50LmxvY2F0aW9uLnBhdGhuYW1lLnJlcGxhY2UoIC9bXlwvXSQvLCAiJDAvIiApICkgKwoiJz48XHgyRnNjcmlwdD4iICk7Cg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 13:44:06 GMT",
+                    "Content-Length": "250",
+                    "Date": "Thu, 06 Nov 2014 13:44:13 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

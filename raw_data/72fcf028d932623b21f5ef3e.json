@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/ibm-js/deliteful/tests/resources/formAction.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "DOM data manipulation (DOM-based)",
+    "issueType": 5247488,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based DOM data manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a data field within the DOM that is used within the visible UI or client-side application logic. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the appearance or behavior of the client-side UI. An attacker may be able to leverage this to perform virtual defacement of the application, or possibly to induce the user to perform unintended actions.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based DOM data manipulation vulnerabilities is not to dynamically write to DOM data fields any data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from being stored. In general, this is best achieved by using a whitelist of permitted values.",
+    "issueDetail": "The application may be vulnerable to DOM-based DOM data manipulation. Data is read from <b>window.location.search</b> and written to <b>the 'values' property of a DOM element</b> via the following statements:<ul><li>var str = window.location.search.substr(1).replace(/[%]0D/g, \"\").replace(/[+]/g, \" \").split(/&amp;/);</li><li>var split = str[i].split(/=/),      key = decodeURIComponent(split[0] || ''),      value = decodeURIComponent(split[1] || '');</li><li>values[key] = value;</li><li>frameElement.values = values;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/ibm-js/deliteful/tests/resources/formAction.html",
+                "path": "/ibm-js/deliteful/tests/resources/formAction.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9pYm0tanMvZGVsaXRlZnVsL3Rlc3RzL3Jlc291cmNlcy9mb3JtQWN0aW9uLmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogOTUxDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFRodSwgMDYgTm92IDIwMTQgMjE6MjA6MDggR01UDQpMYXN0LU1vZGlmaWVkOiBUaHUsIDA2IE5vdiAyMDE0IDIxOjIwOjA1IEdNVA0KDQo8aHRtbD4KPCEtLSBmb3JtIHN1Ym1pdCBwYWdlIHRoYXQgZ3JhYnMgdGhlIHBhcmFtZXRlcnMgZnJvbSB0aGUgVVJMIGFuZCBjYWxscyBqYXZhc2NyaXB0IHdpdGggYW4gYXJyYXkgLS0+CjxoZWFkPgoJPHNjcmlwdCB0eXBlPSd0ZXh0L2phdmFzY3JpcHQnPgoJCXZhciB2YWx1ZXMgPSB7fTsKCQl2YXIgd2luID0gZnJhbWVFbGVtZW50Lm93bmVyRG9jdW1lbnQuZGVmYXVsdFZpZXcgfHwgZnJhbWVFbGVtZW50LmRvY3VtZW50LnBhcmVudFdpbmRvdzsKCQl2YXIgc3RyID0gd2luZG93LmxvY2F0aW9uLnNlYXJjaC5zdWJzdHIoMSkucmVwbGFjZSgvWyVdMEQvZywgIiIpLnJlcGxhY2UoL1srXS9nLCAiICIpLnNwbGl0KC8mLyk7CgkJZm9yICh2YXIgaSA9IDA7IGkgPCBzdHIubGVuZ3RoOyBpKyspIHsKCQkJdmFyIHNwbGl0ID0gc3RyW2ldLnNwbGl0KC89LyksCgkJCQkJa2V5ID0gZGVjb2RlVVJJQ29tcG9uZW50KHNwbGl0WzBdIHx8ICcnKSwKCQkJCQl2YWx1ZSA9IGRlY29kZVVSSUNvbXBvbmVudChzcGxpdFsxXSB8fCAnJyk7CgkJCWlmICh2YWx1ZXNba2V5XSA9PT0gdW5kZWZpbmVkKSB7CgkJCQl2YWx1ZXNba2V5XSA9IHZhbHVlOwoJCQl9IGVsc2UgaWYgKHZhbHVlc1trZXldIGluc3RhbmNlb2YgQXJyYXkgfHwgdHlwZW9mIHZhbHVlc1trZXldID09ICJhcnJheSIpIHsKCQkJCXZhbHVlc1trZXldLnB1c2godmFsdWUpOwoJCQl9IGVsc2UgewoJCQkJdmFyIG9sZCA9IHZhbHVlc1trZXldOwoJCQkJdmFsdWVzW2tleV0gPSBbb2xkLCB2YWx1ZV07CgkJCX0KCQl9CgkJZnJhbWVFbGVtZW50LnZhbHVlcyA9IHZhbHVlczsKCTwvc2NyaXB0Pgo8L2hlYWQ+Cjxib2R5IG9ubG9hZD0ic2V0VGltZW91dChmdW5jdGlvbigpeyBmcmFtZUVsZW1lbnQudmFsdWVzID0gbnVsbDsgd2luZG93LmxvY2F0aW9uLmhyZWY9J2Fib3V0OmJsYW5rJyB9LCAwKSI+CjwvYm9keT4KPC9odG1sPgo=",
+                "body": "PGh0bWw+CjwhLS0gZm9ybSBzdWJtaXQgcGFnZSB0aGF0IGdyYWJzIHRoZSBwYXJhbWV0ZXJzIGZyb20gdGhlIFVSTCBhbmQgY2FsbHMgamF2YXNjcmlwdCB3aXRoIGFuIGFycmF5IC0tPgo8aGVhZD4KCTxzY3JpcHQgdHlwZT0ndGV4dC9qYXZhc2NyaXB0Jz4KCQl2YXIgdmFsdWVzID0ge307CgkJdmFyIHdpbiA9IGZyYW1lRWxlbWVudC5vd25lckRvY3VtZW50LmRlZmF1bHRWaWV3IHx8IGZyYW1lRWxlbWVudC5kb2N1bWVudC5wYXJlbnRXaW5kb3c7CgkJdmFyIHN0ciA9IHdpbmRvdy5sb2NhdGlvbi5zZWFyY2guc3Vic3RyKDEpLnJlcGxhY2UoL1slXTBEL2csICIiKS5yZXBsYWNlKC9bK10vZywgIiAiKS5zcGxpdCgvJi8pOwoJCWZvciAodmFyIGkgPSAwOyBpIDwgc3RyLmxlbmd0aDsgaSsrKSB7CgkJCXZhciBzcGxpdCA9IHN0cltpXS5zcGxpdCgvPS8pLAoJCQkJCWtleSA9IGRlY29kZVVSSUNvbXBvbmVudChzcGxpdFswXSB8fCAnJyksCgkJCQkJdmFsdWUgPSBkZWNvZGVVUklDb21wb25lbnQoc3BsaXRbMV0gfHwgJycpOwoJCQlpZiAodmFsdWVzW2tleV0gPT09IHVuZGVmaW5lZCkgewoJCQkJdmFsdWVzW2tleV0gPSB2YWx1ZTsKCQkJfSBlbHNlIGlmICh2YWx1ZXNba2V5XSBpbnN0YW5jZW9mIEFycmF5IHx8IHR5cGVvZiB2YWx1ZXNba2V5XSA9PSAiYXJyYXkiKSB7CgkJCQl2YWx1ZXNba2V5XS5wdXNoKHZhbHVlKTsKCQkJfSBlbHNlIHsKCQkJCXZhciBvbGQgPSB2YWx1ZXNba2V5XTsKCQkJCXZhbHVlc1trZXldID0gW29sZCwgdmFsdWVdOwoJCQl9CgkJfQoJCWZyYW1lRWxlbWVudC52YWx1ZXMgPSB2YWx1ZXM7Cgk8L3NjcmlwdD4KPC9oZWFkPgo8Ym9keSBvbmxvYWQ9InNldFRpbWVvdXQoZnVuY3Rpb24oKXsgZnJhbWVFbGVtZW50LnZhbHVlcyA9IG51bGw7IHdpbmRvdy5sb2NhdGlvbi5ocmVmPSdhYm91dDpibGFuaycgfSwgMCkiPgo8L2JvZHk+CjwvaHRtbD4K",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 21:20:05 GMT",
+                    "Content-Length": "951",
+                    "Date": "Thu, 06 Nov 2014 21:20:08 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

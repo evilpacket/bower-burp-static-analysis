@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/zjhiphop/blitz/testCase/private_detect/test.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Link manipulation (DOM-based)",
+    "issueType": 5246976,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based link manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a navigation target within the current page, such as a clickable link or the submission URL of a form. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the target of links within the response. An attacker may be able to leverage this to perform various attacks, including:<ul><li>Causing the user to redirect to an arbitrary external URL, to facilitate a phishing attack.</li><li>Causing the user to submit sensitive form data to a server controlled by the attacker.</li><li>Causing the user to perform an unintended action within the application, by changing the file or query string associated with a link.</li><li>Bypassing browser anti-XSS defenses by injecting on-site links containing XSS exploits, since browser anti-XSS defenses typically do not operate on on-site links.</li></ul>",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based link manipulation vulnerabilities is not to dynamically set the target URLs of links or forms using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a link target. In general, this is best achieved by using a whitelist of URLs that are permitted link targets, and strictly validating the target against this list before setting the link target.",
+    "issueDetail": "The application may be vulnerable to DOM-based link manipulation. Data is read from <b>location</b> and written to <b>the 'href' property of a DOM element</b> via the following statement:<ul><li>a.href = location;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/zjhiphop/blitz/testCase/private_detect/test.html",
+                "path": "/zjhiphop/blitz/testCase/private_detect/test.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC96amhpcGhvcC9ibGl0ei90ZXN0Q2FzZS9wcml2YXRlX2RldGVjdC90ZXN0Lmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjY1DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFRodSwgMDYgTm92IDIwMTQgMTI6NTE6MDMgR01UDQpMYXN0LU1vZGlmaWVkOiBUaHUsIDA2IE5vdiAyMDE0IDEyOjUwOjM2IEdNVA0KDQo8c3R5bGU+CiAgIGE6bGluayB7IGNvbG9yOiAjMzM2Njk5OyB9CiAgIGE6dmlzaXRlZCB7IGNvbG9yOiAjMzM2NkEwOyB9Cjwvc3R5bGU+CjxzY3JpcHQ+CnNldFRpbWVvdXQoZnVuY3Rpb24oKSB7CiAgdmFyIGEgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdhJyk7CiAgYS5ocmVmID0gbG9jYXRpb247CiAgYS5pZCA9ICd0ZXN0JzsKICBkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGEpOwogIHBhcmVudC5jaGVja1Jlc3VsdCgpOwp9LCAxMDApOwo8L3NjcmlwdD4K",
+                "body": "PHN0eWxlPgogICBhOmxpbmsgeyBjb2xvcjogIzMzNjY5OTsgfQogICBhOnZpc2l0ZWQgeyBjb2xvcjogIzMzNjZBMDsgfQo8L3N0eWxlPgo8c2NyaXB0PgpzZXRUaW1lb3V0KGZ1bmN0aW9uKCkgewogIHZhciBhID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnYScpOwogIGEuaHJlZiA9IGxvY2F0aW9uOwogIGEuaWQgPSAndGVzdCc7CiAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChhKTsKICBwYXJlbnQuY2hlY2tSZXN1bHQoKTsKfSwgMTAwKTsKPC9zY3JpcHQ+Cg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 12:50:36 GMT",
+                    "Content-Length": "265",
+                    "Date": "Thu, 06 Nov 2014 12:51:03 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

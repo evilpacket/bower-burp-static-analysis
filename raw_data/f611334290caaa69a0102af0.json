@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/ryanmurakami/nosebugjs/nosebug.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Open redirection (DOM-based)",
+    "issueType": 5243152,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based open redirection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the target of a redirection in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a redirection to an arbitrary external domain. This behavior can be leveraged to facilitate phishing attacks against users of the application. The ability to use an authentic application URL, targeting the correct domain with a valid SSL certificate (if SSL is used) lends credibility to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain.<br><br><b>Note:</b> If an attacker is able to control the start of the string that is passed to the redirection API, then it may be possible to escalate this vulnerability into a JavaScript injection attack, by using a URL with the javascript: pseudo-protocol to execute arbitrary script code when the URL is processed by the browser.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based open redirection vulnerabilities is not to dynamically set redirection targets using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a redirection target. In general, this is best achieved by using a whitelist of URLs that are permitted redirection targets, and strictly validating the target against this list before performing the redirection.",
+    "issueDetail": "The application may be vulnerable to DOM-based open redirection. Data is read from <b>window.location.pathname</b> and written to <b>the 'open()' function of an XMLHttpRequest object</b> via the following statements:<ul><li>var path = window.location.pathname;</li><li>var ext = path.substring(path.lastIndexOf('/')+1);</li><li>var templ = ext.substring(0, ext.lastIndexOf('.')) + 'Template.hbs';</li><li>req.open('GET', 'Template/' + templ, true);</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/ryanmurakami/nosebugjs/nosebug.js",
+                "path": "/ryanmurakami/nosebugjs/nosebug.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9yeWFubXVyYWthbWkvbm9zZWJ1Z2pzL25vc2VidWcuanMgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNTIwDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qYXZhc2NyaXB0DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDE5OjQyOjQwIEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAxOTo0MjozOSBHTVQNCg0KKGZ1bmN0aW9uKCkgewoJLy9nZXQgdGVtcGxhdGUgcHJlZml4Cgl2YXIgcGF0aCA9IHdpbmRvdy5sb2NhdGlvbi5wYXRobmFtZTsKCXZhciBleHQgPSBwYXRoLnN1YnN0cmluZyhwYXRoLmxhc3RJbmRleE9mKCcvJykrMSk7Cgl2YXIgdGVtcGwgPSBleHQuc3Vic3RyaW5nKDAsIGV4dC5sYXN0SW5kZXhPZignLicpKSArICdUZW1wbGF0ZS5oYnMnOwoKCS8vZ2V0IGZpbGUKCXZhciByZXEgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXJlcS5vcGVuKCdHRVQnLCAnVGVtcGxhdGUvJyArIHRlbXBsLCB0cnVlKTsKCXJlcS5vbnJlYWR5c3RhdGVjaGFuZ2UgPSBmdW5jdGlvbigpIHsKCSAgICAgICAgaWYgKHJlcS5yZWFkeVN0YXRlID09IDQpIHsKCSAgICAgICAgICAgIGlmKHJlcS5zdGF0dXMgPT0gMjAwKQoJICAgICAgICAgICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCdib2R5JylbMF0uaW5uZXJIVE1MICs9IHJlcS5yZXNwb25zZVRleHQ7CgkgICAgICAgIH0KCX0KCXJlcS5zZW5kKCk7Cn0pKCk7Cg==",
+                "body": "KGZ1bmN0aW9uKCkgewoJLy9nZXQgdGVtcGxhdGUgcHJlZml4Cgl2YXIgcGF0aCA9IHdpbmRvdy5sb2NhdGlvbi5wYXRobmFtZTsKCXZhciBleHQgPSBwYXRoLnN1YnN0cmluZyhwYXRoLmxhc3RJbmRleE9mKCcvJykrMSk7Cgl2YXIgdGVtcGwgPSBleHQuc3Vic3RyaW5nKDAsIGV4dC5sYXN0SW5kZXhPZignLicpKSArICdUZW1wbGF0ZS5oYnMnOwoKCS8vZ2V0IGZpbGUKCXZhciByZXEgPSBuZXcgWE1MSHR0cFJlcXVlc3QoKTsKCXJlcS5vcGVuKCdHRVQnLCAnVGVtcGxhdGUvJyArIHRlbXBsLCB0cnVlKTsKCXJlcS5vbnJlYWR5c3RhdGVjaGFuZ2UgPSBmdW5jdGlvbigpIHsKCSAgICAgICAgaWYgKHJlcS5yZWFkeVN0YXRlID09IDQpIHsKCSAgICAgICAgICAgIGlmKHJlcS5zdGF0dXMgPT0gMjAwKQoJICAgICAgICAgICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCdib2R5JylbMF0uaW5uZXJIVE1MICs9IHJlcS5yZXNwb25zZVRleHQ7CgkgICAgICAgIH0KCX0KCXJlcS5zZW5kKCk7Cn0pKCk7Cg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 19:42:39 GMT",
+                    "Content-Length": "520",
+                    "Date": "Fri, 07 Nov 2014 19:42:40 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

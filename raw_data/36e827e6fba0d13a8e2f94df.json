@@ -1,0 +1,60 @@
+{
+    "url": "http://localhost:9999/fusion-events/fusion-framework/demo/",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Open redirection (DOM-based)",
+    "issueType": 5243152,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based open redirection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the target of a redirection in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a redirection to an arbitrary external domain. This behavior can be leveraged to facilitate phishing attacks against users of the application. The ability to use an authentic application URL, targeting the correct domain with a valid SSL certificate (if SSL is used) lends credibility to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain.<br><br><b>Note:</b> If an attacker is able to control the start of the string that is passed to the redirection API, then it may be possible to escalate this vulnerability into a JavaScript injection attack, by using a URL with the javascript: pseudo-protocol to execute arbitrary script code when the URL is processed by the browser.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based open redirection vulnerabilities is not to dynamically set redirection targets using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a redirection target. In general, this is best achieved by using a whitelist of URLs that are permitted redirection targets, and strictly validating the target against this list before performing the redirection.",
+    "issueDetail": "The application may be vulnerable to DOM-based open redirection. Data is read from <b>window.location.href</b> and written to <b>window.location.href</b> via the following statement:<ul><li>window.location.href = window.location.href.split( '#' )[ 0 ] + '#';</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/fusion-events/fusion-framework/demo/",
+                "path": "/fusion-events/fusion-framework/demo/",
+                "httpVersion": "HTTP/0.0",
+                "method": "GET",
+                "headers": {
+                    "Referer": "http://localhost:9999/fusion-events/fusion-framework/demo",
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9mdXNpb24tZXZlbnRzL2Z1c2lvbi1mcmFtZXdvcmsvZGVtby8gSFRUUC8wLjANCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQpSZWZlcmVyOiBodHRwOi8vbG9jYWxob3N0Ojk5OTkvZnVzaW9uLWV2ZW50cy9mdXNpb24tZnJhbWV3b3JrL2RlbW8NCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogODgwDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IEZyaSwgMDcgTm92IDIwMTQgMDI6MDE6NTcgR01UDQpMYXN0LU1vZGlmaWVkOiBGcmksIDA3IE5vdiAyMDE0IDAyOjAxOjU3IEdNVA0KDQo8IURPQ1RZUEUgaHRtbD4KPGh0bWw+Cgk8aGVhZD4KCQk8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCIgc3JjPSJodHRwOi8vYWpheC5nb29nbGVhcGlzLmNvbS9hamF4L2xpYnMvanF1ZXJ5LzIuMC4zL2pxdWVyeS5taW4uanMiPjwvc2NyaXB0PgoJCTwhLS1zY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0IiBzcmM9Ii4uL2Z1c2lvbi5taW4uanMiPjwvc2NyaXB0LS0+CgkJPHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIHNyYz0iLi4vZnVzaW9uLmpzIj48L3NjcmlwdD4KCTwvaGVhZD4KCTxib2R5PgoJCTxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij4KCQkJd2luZG93LmxvY2F0aW9uLmhyZWYgPSB3aW5kb3cubG9jYXRpb24uaHJlZi5zcGxpdCggJyMnIClbIDAgXSArICcjJzsKICAgICAgICAgJGYuZnVzZSggJ0RPQ1VNRU5UX0xPQUQnLCBmdW5jdGlvbiggZXZlbnQgKSB7CiAgICAgICAgICAgIGV2ZW50LmdldERhdGEoICd3aW5kb3cnICkubG9jYXRpb24uaHJlZiArPSAiJnRlc3QiOwogICAgICAgICB9LCAxMCApOwogICAgICAgICAkZi5mdXNlKCAnRE9DVU1FTlRfTE9BRCcsIGZ1bmN0aW9uKCBldmVudCApIHsKICAgICAgICAgICAgZXZlbnQuZ2V0RGF0YSggJ3dpbmRvdycgKS5sb2NhdGlvbi5ocmVmICs9ICImbG93ZXJ0ZXN0IjsKICAgICAgICAgfSwgNTAgKTsKICAgICAgICAgJGYuZnVzZSggJ0RPQ1VNRU5UX0xPQUQnLCBmdW5jdGlvbiggZXZlbnQgKSB7CiAgICAgICAgICAgIGV2ZW50LmdldERhdGEoICd3aW5kb3cnICkubG9jYXRpb24uaHJlZiArPSAiP2hpZ2hlc3R0ZXN0IjsKICAgICAgICAgfSwgNSApOwoJCTwvc2NyaXB0PgoJCTxidXR0b24+Q2xpY2sgTWUhPC9idXR0b24+Cgk8L2JvZHk+CjwvaHRtbD4K",
+                "body": "PCFET0NUWVBFIGh0bWw+CjxodG1sPgoJPGhlYWQ+CgkJPHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIHNyYz0iaHR0cDovL2FqYXguZ29vZ2xlYXBpcy5jb20vYWpheC9saWJzL2pxdWVyeS8yLjAuMy9qcXVlcnkubWluLmpzIj48L3NjcmlwdD4KCQk8IS0tc2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCIgc3JjPSIuLi9mdXNpb24ubWluLmpzIj48L3NjcmlwdC0tPgoJCTxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0IiBzcmM9Ii4uL2Z1c2lvbi5qcyI+PC9zY3JpcHQ+Cgk8L2hlYWQ+Cgk8Ym9keT4KCQk8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+CgkJCXdpbmRvdy5sb2NhdGlvbi5ocmVmID0gd2luZG93LmxvY2F0aW9uLmhyZWYuc3BsaXQoICcjJyApWyAwIF0gKyAnIyc7CiAgICAgICAgICRmLmZ1c2UoICdET0NVTUVOVF9MT0FEJywgZnVuY3Rpb24oIGV2ZW50ICkgewogICAgICAgICAgICBldmVudC5nZXREYXRhKCAnd2luZG93JyApLmxvY2F0aW9uLmhyZWYgKz0gIiZ0ZXN0IjsKICAgICAgICAgfSwgMTAgKTsKICAgICAgICAgJGYuZnVzZSggJ0RPQ1VNRU5UX0xPQUQnLCBmdW5jdGlvbiggZXZlbnQgKSB7CiAgICAgICAgICAgIGV2ZW50LmdldERhdGEoICd3aW5kb3cnICkubG9jYXRpb24uaHJlZiArPSAiJmxvd2VydGVzdCI7CiAgICAgICAgIH0sIDUwICk7CiAgICAgICAgICRmLmZ1c2UoICdET0NVTUVOVF9MT0FEJywgZnVuY3Rpb24oIGV2ZW50ICkgewogICAgICAgICAgICBldmVudC5nZXREYXRhKCAnd2luZG93JyApLmxvY2F0aW9uLmhyZWYgKz0gIj9oaWdoZXN0dGVzdCI7CiAgICAgICAgIH0sIDUgKTsKCQk8L3NjcmlwdD4KCQk8YnV0dG9uPkNsaWNrIE1lITwvYnV0dG9uPgoJPC9ib2R5Pgo8L2h0bWw+Cg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 02:01:57 GMT",
+                    "Content-Length": "880",
+                    "Date": "Fri, 07 Nov 2014 02:01:57 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

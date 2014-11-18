@@ -1,0 +1,60 @@
+{
+    "url": "http://localhost:9999/gre/glsl.js/examples/canvas-text/",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "DOM data manipulation (DOM-based)",
+    "issueType": 5247488,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based DOM data manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a data field within the DOM that is used within the visible UI or client-side application logic. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the appearance or behavior of the client-side UI. An attacker may be able to leverage this to perform virtual defacement of the application, or possibly to induce the user to perform unintended actions.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based DOM data manipulation vulnerabilities is not to dynamically write to DOM data fields any data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from being stored. In general, this is best achieved by using a whitelist of permitted values.",
+    "issueDetail": "The application may be vulnerable to DOM-based DOM data manipulation. Data is read from <b>location.hash</b> and written to <b>the 'value' property of a DOM element</b> via the following statement:<ul><li>text.value = location.hash.substring(1);</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/gre/glsl.js/examples/canvas-text/",
+                "path": "/gre/glsl.js/examples/canvas-text/",
+                "httpVersion": "HTTP/0.0",
+                "method": "GET",
+                "headers": {
+                    "Referer": "http://localhost:9999/gre/glsl.js/examples/canvas-text",
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9ncmUvZ2xzbC5qcy9leGFtcGxlcy9jYW52YXMtdGV4dC8gSFRUUC8wLjANCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQpSZWZlcmVyOiBodHRwOi8vbG9jYWxob3N0Ojk5OTkvZ3JlL2dsc2wuanMvZXhhbXBsZXMvY2FudmFzLXRleHQNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjcxNQ0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDAyOjI1OjU3IEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAwMjoyNTo1NiBHTVQNCg0KPCFET0NUWVBFIGh0bWw+Cgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgogIGNhbnZhcyB7CiAgICBiYWNrZ3JvdW5kOiB1cmwoImFscGhhX21hc2sucG5nIikgcmVwZWF0OwogIH0KPC9zdHlsZT4KCjxoMj5XZWJHTCB0ZXh0IGRlbW88L2gyPgoKPHA+CiAgPGlucHV0IGlkPSJ0ZXh0IiB0eXBlPSJ0ZXh0IiB2YWx1ZT0iSGVsbG8gd29ybGQhIiBhdXRvZm9jdXMgc3R5bGU9IndpZHRoOiA1OTBweDsgYm9yZGVyOiAycHggc29saWQgIzAwMDsgcGFkZGluZzogMnB4IDNweDsgZm9udC1zaXplOiAyZW07IHRleHQtYWxpZ246IGNlbnRlciIgLz4KPC9wPgoKPGNhbnZhcyBpZD0idmlld3BvcnQiIHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIj48L2NhbnZhcz4KCjxoMj51c2luZyBhIENhbnZhcyAyRDwvaDI+Cgo8Y2FudmFzIGlkPSJ0ZXh0Q2FudmFzIiB3aWR0aD0iMTIwMCIgaGVpZ2h0PSIyNTAiIHN0eWxlPSJ3aWR0aDogNjAwcHgiPjwvY2FudmFzPgoKPHNjcmlwdCBpZD0iZnJhZ21lbnQiIHR5cGU9Ingtc2hhZGVyL3gtZnJhZ21lbnQiPgogIHByZWNpc2lvbiBtZWRpdW1wIGZsb2F0OwogIHVuaWZvcm0gdmVjMiByZXNvbHV0aW9uOwogIHVuaWZvcm0gZmxvYXQgdGltZTsKICB1bmlmb3JtIHNhbXBsZXIyRCB0ZXh0OwoKICB2b2lkIG1haW4gKCkgewogICAgdmVjMiBwID0gZ2xfRnJhZ0Nvb3JkLnh5IC8gcmVzb2x1dGlvbi54eTsKCiAgICB2ZWMzIGJnID0gdmVjMyhwLngqMC41LCBwLnkqMC41LCAwLjIpOwogICAgdmVjMyB0ZXh0Q29sb3IgPSB2ZWMzKHAueCwgMC43KzAuMypjb3MoMC4wMSp0aW1lKSwgMC43KzAuMypzaW4oMC4wMSp0aW1lKSk7CgogICAgLy8gU29tZSB3YXZlIGVmZmVjdCBvbiB0aGUgY29vcmRpbmF0ZSB0byBsb29rdXAgaW4gdGhlIHRleHQgdGV4dHVyZQogICAgZmxvYXQgd2F2ZUFtcCA9IDAuMDErMC4xMCooMS4wICsgc2luKHRpbWUqMC4wMDEpKTsKICAgIGZsb2F0IHdhdmVTcGVlZCA9IHRpbWUqMC4wMTsKICAgIGZsb2F0IHdhdmVNYWcgPSAyMC4wICsgMTUuKmNvcygzLit0aW1lKjAuMDAwMTExKTsKICAgIHZlYzIgY29vcmQgPSBwKnZlYzIoMS4wLCAyLiktdmVjMigwLjAsIDAuNSkrdmVjMigwLiwgd2F2ZUFtcCpzaW4od2F2ZVNwZWVkK3AueCp3YXZlTWFnKSk7CiAgICB2ZWM0IHQgPSB0ZXh0dXJlMkQodGV4dCwgY29vcmQpOwoKICAgIC8vIFVzZSB0aGUgdGV4dHVyZSBhbHBoYSB0byBkZXRlcm1pbmUgd2hlcmUgdGhlIHRleHQgaXMKICAgIC8vIE11bHRpcGx5IG91ciB0ZXh0IGNvbG9yIHdpdGggdGhlIHRleHR1cmUgY29sb3IgdG8gdXNlIGFzIGEgY29sb3IgaW50ZW5zaXR5IChvcmlnaW5hbCB0ZXh0IHVzZXMgYSBncmV5c2NhbGUpCiAgICB2ZWMzIGMgPSBtaXgoYmcsIHRleHRDb2xvcip0LnJnYiwgdC5hKTsKICAgIGdsX0ZyYWdDb2xvciA9IHZlYzQoYywgMS4wKTsKICB9Cjwvc2NyaXB0PgoKPHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIHNyYz0iLi4vLi4vZ2xzbC5qcyI+PC9zY3JpcHQ+Cgo8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+CiAgaWYgKCFHbHNsLnN1cHBvcnRlZCgpKSBhbGVydCgiV2ViR0wgaXMgbm90IHN1cHBvcnRlZC4iKTsKCiAgdmFyIHRleHRDYW52YXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidGV4dENhbnZhcyIpOwogIHZhciB0ZXh0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInRleHQiKTsKCiAgaWYgKGxvY2F0aW9uLmhhc2ggJiYgbG9jYXRpb24uaGFzaC5sZW5ndGg+MSkKICAgIHRleHQudmFsdWUgPSBsb2NhdGlvbi5oYXNoLnN1YnN0cmluZygxKTsKCiAgdmFyIHJlbmRlclRleHQgPSAoZnVuY3Rpb24gKGN0eCkgewogICAgcmV0dXJuIGZ1bmN0aW9uKCkgewogICAgICBjdHguY2xlYXJSZWN0KDAsMCxjdHguY2FudmFzLndpZHRoLGN0eC5jYW52YXMuaGVpZ2h0KTsKICAgICAgY3R4LmZvbnQgPSAiYm9sZCAxNjBweCBIZWx2ZXRpY2EiOwogICAgICBjdHgudGV4dEFsaWduID0gImNlbnRlciI7CiAgICAgIGN0eC50ZXh0QmFzZWxpbmUgPSAibWlkZGxlIjsKICAgICAgY3R4LmZpbGxTdHlsZSA9ICIjZmZmIjsKICAgICAgY3R4LmZpbGxUZXh0KHRleHQudmFsdWUsIGN0eC5jYW52YXMud2lkdGgvMiwgY3R4LmNhbnZhcy5oZWlnaHQvMik7CiAgICAgIGN0eC5zdHJva2VTdHlsZSA9ICIjMDAwIjsKICAgICAgY3R4LmxpbmVXaWR0aCA9IDM7CiAgICAgIGN0eC5zdHJva2VUZXh0KHRleHQudmFsdWUsIGN0eC5jYW52YXMud2lkdGgvMiwgY3R4LmNhbnZhcy5oZWlnaHQvMik7CiAgICB9CiAgfSkodGV4dENhbnZhcy5nZXRDb250ZXh0KCIyZCIpKTsKCiAgcmVuZGVyVGV4dCgpOwoKICB2YXIgZ2xzbCA9IEdsc2woewogICAgY2FudmFzOiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidmlld3BvcnQiKSwKICAgIGZyYWdtZW50OiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZnJhZ21lbnQiKS50ZXh0Q29udGVudCwKICAgIHZhcmlhYmxlczogewogICAgICB0aW1lOiAwLAogICAgICB0ZXh0OiB0ZXh0Q2FudmFzCiAgICB9LAogICAgdXBkYXRlOiBmdW5jdGlvbiAodGltZSwgZGVsdGEpIHsKICAgICAgdGhpcy5zZXQoInRpbWUiLCB0aW1lKTsKICAgIH0KICB9KTsKCiAgdGV4dC5hZGRFdmVudExpc3RlbmVyKCJrZXl1cCIsIGZ1bmN0aW9uICgpIHsKICAgIHJlbmRlclRleHQoKTsKICAgIGdsc2wuc3luYygidGV4dCIpOwogIH0sIGZhbHNlKTsKICAKICBnbHNsLnN0YXJ0KCk7Cgo8L3NjcmlwdD4K",
+                "body": "PCFET0NUWVBFIGh0bWw+Cgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgogIGNhbnZhcyB7CiAgICBiYWNrZ3JvdW5kOiB1cmwoImFscGhhX21hc2sucG5nIikgcmVwZWF0OwogIH0KPC9zdHlsZT4KCjxoMj5XZWJHTCB0ZXh0IGRlbW88L2gyPgoKPHA+CiAgPGlucHV0IGlkPSJ0ZXh0IiB0eXBlPSJ0ZXh0IiB2YWx1ZT0iSGVsbG8gd29ybGQhIiBhdXRvZm9jdXMgc3R5bGU9IndpZHRoOiA1OTBweDsgYm9yZGVyOiAycHggc29saWQgIzAwMDsgcGFkZGluZzogMnB4IDNweDsgZm9udC1zaXplOiAyZW07IHRleHQtYWxpZ246IGNlbnRlciIgLz4KPC9wPgoKPGNhbnZhcyBpZD0idmlld3BvcnQiIHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIj48L2NhbnZhcz4KCjxoMj51c2luZyBhIENhbnZhcyAyRDwvaDI+Cgo8Y2FudmFzIGlkPSJ0ZXh0Q2FudmFzIiB3aWR0aD0iMTIwMCIgaGVpZ2h0PSIyNTAiIHN0eWxlPSJ3aWR0aDogNjAwcHgiPjwvY2FudmFzPgoKPHNjcmlwdCBpZD0iZnJhZ21lbnQiIHR5cGU9Ingtc2hhZGVyL3gtZnJhZ21lbnQiPgogIHByZWNpc2lvbiBtZWRpdW1wIGZsb2F0OwogIHVuaWZvcm0gdmVjMiByZXNvbHV0aW9uOwogIHVuaWZvcm0gZmxvYXQgdGltZTsKICB1bmlmb3JtIHNhbXBsZXIyRCB0ZXh0OwoKICB2b2lkIG1haW4gKCkgewogICAgdmVjMiBwID0gZ2xfRnJhZ0Nvb3JkLnh5IC8gcmVzb2x1dGlvbi54eTsKCiAgICB2ZWMzIGJnID0gdmVjMyhwLngqMC41LCBwLnkqMC41LCAwLjIpOwogICAgdmVjMyB0ZXh0Q29sb3IgPSB2ZWMzKHAueCwgMC43KzAuMypjb3MoMC4wMSp0aW1lKSwgMC43KzAuMypzaW4oMC4wMSp0aW1lKSk7CgogICAgLy8gU29tZSB3YXZlIGVmZmVjdCBvbiB0aGUgY29vcmRpbmF0ZSB0byBsb29rdXAgaW4gdGhlIHRleHQgdGV4dHVyZQogICAgZmxvYXQgd2F2ZUFtcCA9IDAuMDErMC4xMCooMS4wICsgc2luKHRpbWUqMC4wMDEpKTsKICAgIGZsb2F0IHdhdmVTcGVlZCA9IHRpbWUqMC4wMTsKICAgIGZsb2F0IHdhdmVNYWcgPSAyMC4wICsgMTUuKmNvcygzLit0aW1lKjAuMDAwMTExKTsKICAgIHZlYzIgY29vcmQgPSBwKnZlYzIoMS4wLCAyLiktdmVjMigwLjAsIDAuNSkrdmVjMigwLiwgd2F2ZUFtcCpzaW4od2F2ZVNwZWVkK3AueCp3YXZlTWFnKSk7CiAgICB2ZWM0IHQgPSB0ZXh0dXJlMkQodGV4dCwgY29vcmQpOwoKICAgIC8vIFVzZSB0aGUgdGV4dHVyZSBhbHBoYSB0byBkZXRlcm1pbmUgd2hlcmUgdGhlIHRleHQgaXMKICAgIC8vIE11bHRpcGx5IG91ciB0ZXh0IGNvbG9yIHdpdGggdGhlIHRleHR1cmUgY29sb3IgdG8gdXNlIGFzIGEgY29sb3IgaW50ZW5zaXR5IChvcmlnaW5hbCB0ZXh0IHVzZXMgYSBncmV5c2NhbGUpCiAgICB2ZWMzIGMgPSBtaXgoYmcsIHRleHRDb2xvcip0LnJnYiwgdC5hKTsKICAgIGdsX0ZyYWdDb2xvciA9IHZlYzQoYywgMS4wKTsKICB9Cjwvc2NyaXB0PgoKPHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIHNyYz0iLi4vLi4vZ2xzbC5qcyI+PC9zY3JpcHQ+Cgo8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+CiAgaWYgKCFHbHNsLnN1cHBvcnRlZCgpKSBhbGVydCgiV2ViR0wgaXMgbm90IHN1cHBvcnRlZC4iKTsKCiAgdmFyIHRleHRDYW52YXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidGV4dENhbnZhcyIpOwogIHZhciB0ZXh0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInRleHQiKTsKCiAgaWYgKGxvY2F0aW9uLmhhc2ggJiYgbG9jYXRpb24uaGFzaC5sZW5ndGg+MSkKICAgIHRleHQudmFsdWUgPSBsb2NhdGlvbi5oYXNoLnN1YnN0cmluZygxKTsKCiAgdmFyIHJlbmRlclRleHQgPSAoZnVuY3Rpb24gKGN0eCkgewogICAgcmV0dXJuIGZ1bmN0aW9uKCkgewogICAgICBjdHguY2xlYXJSZWN0KDAsMCxjdHguY2FudmFzLndpZHRoLGN0eC5jYW52YXMuaGVpZ2h0KTsKICAgICAgY3R4LmZvbnQgPSAiYm9sZCAxNjBweCBIZWx2ZXRpY2EiOwogICAgICBjdHgudGV4dEFsaWduID0gImNlbnRlciI7CiAgICAgIGN0eC50ZXh0QmFzZWxpbmUgPSAibWlkZGxlIjsKICAgICAgY3R4LmZpbGxTdHlsZSA9ICIjZmZmIjsKICAgICAgY3R4LmZpbGxUZXh0KHRleHQudmFsdWUsIGN0eC5jYW52YXMud2lkdGgvMiwgY3R4LmNhbnZhcy5oZWlnaHQvMik7CiAgICAgIGN0eC5zdHJva2VTdHlsZSA9ICIjMDAwIjsKICAgICAgY3R4LmxpbmVXaWR0aCA9IDM7CiAgICAgIGN0eC5zdHJva2VUZXh0KHRleHQudmFsdWUsIGN0eC5jYW52YXMud2lkdGgvMiwgY3R4LmNhbnZhcy5oZWlnaHQvMik7CiAgICB9CiAgfSkodGV4dENhbnZhcy5nZXRDb250ZXh0KCIyZCIpKTsKCiAgcmVuZGVyVGV4dCgpOwoKICB2YXIgZ2xzbCA9IEdsc2woewogICAgY2FudmFzOiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidmlld3BvcnQiKSwKICAgIGZyYWdtZW50OiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZnJhZ21lbnQiKS50ZXh0Q29udGVudCwKICAgIHZhcmlhYmxlczogewogICAgICB0aW1lOiAwLAogICAgICB0ZXh0OiB0ZXh0Q2FudmFzCiAgICB9LAogICAgdXBkYXRlOiBmdW5jdGlvbiAodGltZSwgZGVsdGEpIHsKICAgICAgdGhpcy5zZXQoInRpbWUiLCB0aW1lKTsKICAgIH0KICB9KTsKCiAgdGV4dC5hZGRFdmVudExpc3RlbmVyKCJrZXl1cCIsIGZ1bmN0aW9uICgpIHsKICAgIHJlbmRlclRleHQoKTsKICAgIGdsc2wuc3luYygidGV4dCIpOwogIH0sIGZhbHNlKTsKICAKICBnbHNsLnN0YXJ0KCk7Cgo8L3NjcmlwdD4K",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 02:25:56 GMT",
+                    "Content-Length": "2715",
+                    "Date": "Fri, 07 Nov 2014 02:25:57 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

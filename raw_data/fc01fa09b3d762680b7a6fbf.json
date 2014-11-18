@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/StrictlySkyler/TimelineJS/website/templates/error.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "DOM data manipulation (DOM-based)",
+    "issueType": 5247488,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based DOM data manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a data field within the DOM that is used within the visible UI or client-side application logic. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the appearance or behavior of the client-side UI. An attacker may be able to leverage this to perform virtual defacement of the application, or possibly to induce the user to perform unintended actions.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based DOM data manipulation vulnerabilities is not to dynamically write to DOM data fields any data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from being stored. In general, this is best achieved by using a whitelist of permitted values.",
+    "issueDetail": "The application may be vulnerable to DOM-based DOM data manipulation. Data is read from <b>window.location.pathname</b> and written to <b>the 'text()' function of JQuery</b> via the following statement:<ul><li>$(\"#url\").text(window.location.pathname);</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/StrictlySkyler/TimelineJS/website/templates/error.html",
+                "path": "/StrictlySkyler/TimelineJS/website/templates/error.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9TdHJpY3RseVNreWxlci9UaW1lbGluZUpTL3dlYnNpdGUvdGVtcGxhdGVzL2Vycm9yLmh0bWwgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogODA4DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFNhdCwgMDggTm92IDIwMTQgMjA6MDk6MDIgR01UDQpMYXN0LU1vZGlmaWVkOiBTYXQsIDA4IE5vdiAyMDE0IDIwOjA5OjAwIEdNVA0KDQp7JSBleHRlbmRzICJiYXNlLmh0bWwiICV9CnslIGJsb2NrIGNvbnRlbnQgJX0KPHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIGNoYXJzZXQ9InV0Zi04IiBzcmM9Imh0dHBzOi8vYWpheC5nb29nbGVhcGlzLmNvbS9hamF4L2xpYnMvanF1ZXJ5LzEuNC40L2pxdWVyeS5taW4uanMiPjwvc2NyaXB0PgoKPHNjcmlwdCB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIGNoYXJzZXQ9InV0Zi04Ij4KCSQoZG9jdW1lbnQpLnJlYWR5KGZ1bmN0aW9uKCkgewoJCQoJCS8vIEFkZCB0aGUgbWlzc2luZyB1cmwgdG8gdGhlIHRleHQKCQkkKCIjdXJsIikudGV4dCh3aW5kb3cubG9jYXRpb24ucGF0aG5hbWUpOwoJCQoJCS8vIEZpeCB0aGUgY3NzIGxvY2F0aW9ucyBkeW5hbWljYWxseQoJCSQoImhlYWQgbGluayIpLmVhY2goZnVuY3Rpb24oKSB7CgkJCWZvciAodmFyIGk9MDsgaTx3aW5kb3cubG9jYXRpb24ucGF0aG5hbWUuc3BsaXQoL1wvL2cpLmxlbmd0aC0yOyBpKyspCgkJCQkkKHRoaXMpLmF0dHIoImhyZWYiLCAiLi4vIiArICQodGhpcykuYXR0cigiaHJlZiIpKTsKCQl9KTsKCQkKCX0pCjwvc2NyaXB0Pgo8c2VjdGlvbiBpZD0iZXJyb3IiIGNsYXNzPSJiYWNrZ3JvdW5kLXdoaXRlIj4KCTxkaXYgY2xhc3M9ImNvbnRhaW5lciI+CgkJPGRpdiBjbGFzcz0icm93Ij4KCQkJPHAgY2xhc3M9InNwYW4xMiBlcnJvciI+CgkJCQlTb3JyeSB0aGUgcGFnZSA8YiBpZD0idXJsIj48L2I+IGNvdWxkIG5vdCBiZSBmb3VuZCBvbiB0aGlzIHNlcnZlci4KCQkJPC9wPgoJCTwvZGl2PgoJPC9kaXY+Cjwvc2VjdGlvbj4KeyUgZW5kYmxvY2sgJX0K",
+                "body": "eyUgZXh0ZW5kcyAiYmFzZS5odG1sIiAlfQp7JSBibG9jayBjb250ZW50ICV9CjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0IiBjaGFyc2V0PSJ1dGYtOCIgc3JjPSJodHRwczovL2FqYXguZ29vZ2xlYXBpcy5jb20vYWpheC9saWJzL2pxdWVyeS8xLjQuNC9qcXVlcnkubWluLmpzIj48L3NjcmlwdD4KCjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0IiBjaGFyc2V0PSJ1dGYtOCI+CgkkKGRvY3VtZW50KS5yZWFkeShmdW5jdGlvbigpIHsKCQkKCQkvLyBBZGQgdGhlIG1pc3NpbmcgdXJsIHRvIHRoZSB0ZXh0CgkJJCgiI3VybCIpLnRleHQod2luZG93LmxvY2F0aW9uLnBhdGhuYW1lKTsKCQkKCQkvLyBGaXggdGhlIGNzcyBsb2NhdGlvbnMgZHluYW1pY2FsbHkKCQkkKCJoZWFkIGxpbmsiKS5lYWNoKGZ1bmN0aW9uKCkgewoJCQlmb3IgKHZhciBpPTA7IGk8d2luZG93LmxvY2F0aW9uLnBhdGhuYW1lLnNwbGl0KC9cLy9nKS5sZW5ndGgtMjsgaSsrKQoJCQkJJCh0aGlzKS5hdHRyKCJocmVmIiwgIi4uLyIgKyAkKHRoaXMpLmF0dHIoImhyZWYiKSk7CgkJfSk7CgkJCgl9KQo8L3NjcmlwdD4KPHNlY3Rpb24gaWQ9ImVycm9yIiBjbGFzcz0iYmFja2dyb3VuZC13aGl0ZSI+Cgk8ZGl2IGNsYXNzPSJjb250YWluZXIiPgoJCTxkaXYgY2xhc3M9InJvdyI+CgkJCTxwIGNsYXNzPSJzcGFuMTIgZXJyb3IiPgoJCQkJU29ycnkgdGhlIHBhZ2UgPGIgaWQ9InVybCI+PC9iPiBjb3VsZCBub3QgYmUgZm91bmQgb24gdGhpcyBzZXJ2ZXIuCgkJCTwvcD4KCQk8L2Rpdj4KCTwvZGl2Pgo8L3NlY3Rpb24+CnslIGVuZGJsb2NrICV9Cg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Sat, 08 Nov 2014 20:09:00 GMT",
+                    "Content-Length": "808",
+                    "Date": "Sat, 08 Nov 2014 20:09:02 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

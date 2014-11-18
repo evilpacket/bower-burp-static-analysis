@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/fronteed/iCheck/demo/js/custom.min.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cross-site scripting (DOM-based)",
+    "issueType": 2097936,
+    "severity": "High",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cross-site scripting vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the HTML document in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.<br><br>The attacker-supplied code can perform a wide variety of actions, such as stealing the victim's session token or login credentials, performing arbitrary actions on the victim's behalf, and logging their keystrokes.<br><br>Users can be induced to visit the attacker's crafted URL in various ways, similar to the usual attack delivery vectors for reflected cross-site scripting vulnerabilities. ",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cross-site scripting vulnerabilities is not to dynamically write data into the HTML document that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing script code into the document. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe. In other cases, it will be necessary to sanitize or encode the data. This can be a complex task, and depending on the context that the data is to be inserted may need to involve a combination of JavaScript escaping, HTML encoding, and URL encoding, in the appropriate sequence.",
+    "issueDetail": "The application may be vulnerable to DOM-based cross-site scripting. Data is read from <b>window.location.hash</b> and written to <b>$()</b> via the following statements:<ul><li>var h=window.location.hash.replace(\"#\",\"\");</li><li>var k=$(\".\"+h).offset().top-40;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/fronteed/iCheck/demo/js/custom.min.js",
+                "path": "/fronteed/iCheck/demo/js/custom.min.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9mcm9udGVlZC9pQ2hlY2svZGVtby9qcy9jdXN0b20ubWluLmpzIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMjEzMg0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vamF2YXNjcmlwdA0KRGF0ZTogRnJpLCAwNyBOb3YgMjAxNCAwNjozMzoxNCBHTVQNCkxhc3QtTW9kaWZpZWQ6IEZyaSwgMDcgTm92IDIwMTQgMDY6MzM6MTQgR01UDQoNCiQoZG9jdW1lbnQpLnJlYWR5KGZ1bmN0aW9uKCl7dmFyIGg9d2luZG93LmxvY2F0aW9uLmhhc2gucmVwbGFjZSgiIyIsIiIpO2lmKGgmJiQoIi4iK2gpLmxlbmd0aCl7dmFyIGs9JCgiLiIraCkub2Zmc2V0KCkudG9wLTQwO3dpbmRvdy5aZXB0bz93aW5kb3cuc2Nyb2xsVG8oMCxrKTokKHdpbmRvdykuc2Nyb2xsVG9wKCQoIi4iK2gpLm9mZnNldCgpLnRvcC00MCl9JCgiLnNraW4gZHQiKS5jbGljayhmdW5jdGlvbigpeyQodGhpcykuc2libGluZ3MoKS5yZW1vdmVDbGFzcygic2VsZWN0ZWQiKS5lbmQoKS5wcmV2KCJkZCIpLmFuZFNlbGYoKS5hZGRDbGFzcygic2VsZWN0ZWQiKX0pOyQoIi5hcnJvd3MgLnRvcCwgLmFycm93cyAuYm90dG9tLCAuZmVhdHVyZXMgLnNlbGYsIC5za2lucy1pbmZvIC5zZWxmLCAudXNhZ2UgLnNlbGYiKS5jbGljayhmdW5jdGlvbihiKXt2YXIgYT0kKHRoaXMpLmRhdGEoInRvIiksZD0kKCIuIithKS5vZmZzZXQoKS50b3A7Yi5wcmV2ZW50RGVmYXVsdCgpOwp3aW5kb3cubG9jYXRpb24uaGFzaD1hO3dpbmRvdy5aZXB0bz93aW5kb3cuc2Nyb2xsVG8oMCxkLTQwKTokKCJodG1sLCBib2R5Iikuc3RvcCgpLmFuaW1hdGUoe3Njcm9sbFRvcDpkLTQwfSw2MDApfSk7JCgiLmNvbG9ycyBsaSIpLmNsaWNrKGZ1bmN0aW9uKCl7dmFyIGI9JCh0aGlzKTtpZighYi5oYXNDbGFzcygiYWN0aXZlIikpe2Iuc2libGluZ3MoKS5yZW1vdmVDbGFzcygiYWN0aXZlIik7dmFyIGE9Yi5jbG9zZXN0KCIuc2tpbiIpLGQ9Yi5hdHRyKCJjbGFzcyIpPyItIitiLmF0dHIoImNsYXNzIik6IiIsYz1hLmRhdGEoImljaGVja2JveCIpLGc9YS5kYXRhKCJpcmFkaW8iKSxlPSJpY2hlY2tib3hfbWluaW1hbCIsZj0iaXJhZGlvX21pbmltYWwiO2EuaGFzQ2xhc3MoInNraW4tc3F1YXJlIikmJihlPSJpY2hlY2tib3hfc3F1YXJlIixmPSJpcmFkaW9fc3F1YXJlIix2b2lkIDA9PWMmJihjPSJpY2hlY2tib3hfc3F1YXJlLWdyZWVuIixnPSJpcmFkaW9fc3F1YXJlLWdyZWVuIikpOwphLmhhc0NsYXNzKCJza2luLWZsYXQiKSYmKGU9ImljaGVja2JveF9mbGF0IixmPSJpcmFkaW9fZmxhdCIsdm9pZCAwPT1jJiYoYz0iaWNoZWNrYm94X2ZsYXQtcmVkIixnPSJpcmFkaW9fZmxhdC1yZWQiKSk7YS5oYXNDbGFzcygic2tpbi1saW5lIikmJihlPSJpY2hlY2tib3hfbGluZSIsZj0iaXJhZGlvX2xpbmUiLHZvaWQgMD09YyYmKGM9ImljaGVja2JveF9saW5lLWJsdWUiLGc9ImlyYWRpb19saW5lLWJsdWUiKSk7dm9pZCAwPT1jJiYoYz1lLGc9Zik7YS5maW5kKCJpbnB1dCwgLnNraW4tc3RhdGVzIC5zdGF0ZSIpLmVhY2goZnVuY3Rpb24oKXt2YXIgYT0kKHRoaXMpLmhhc0NsYXNzKCJzdGF0ZSIpPyQodGhpcyk6JCh0aGlzKS5wYXJlbnQoKSxiPWEuYXR0cigiY2xhc3MiKS5yZXBsYWNlKGMsZStkKS5yZXBsYWNlKGcsZitkKTthLmF0dHIoImNsYXNzIixiKX0pO2EuZGF0YSgiaWNoZWNrYm94IixlK2QpO2EuZGF0YSgiaXJhZGlvIixmK2QpO2IuYWRkQ2xhc3MoImFjdGl2ZSIpfX0pOwokKCIuZGVtby1tZXRob2RzIGR0IC5zZWxmIikuY2xpY2soZnVuY3Rpb24oKXt2YXIgYj0kKHRoaXMpO3N3aXRjaChiLmF0dHIoImNsYXNzIikucmVwbGFjZSgic2VsZiAiLCIiKSl7Y2FzZSAiZG8tY2hlY2siOiQoIiNpbnB1dC0xLCAjaW5wdXQtMyIpLmlDaGVjaygiY2hlY2siKTticmVhaztjYXNlICJkby11bmNoZWNrIjokKCIjaW5wdXQtMSwgI2lucHV0LTMiKS5pQ2hlY2soInVuY2hlY2siKTticmVhaztjYXNlICJkby1kaXNhYmxlIjokKCIjaW5wdXQtMiwgI2lucHV0LTQiKS5pQ2hlY2soImRpc2FibGUiKTticmVhaztjYXNlICJkby1lbmFibGUiOiQoIiNpbnB1dC0yLCAjaW5wdXQtNCIpLmlDaGVjaygiZW5hYmxlIik7YnJlYWs7Y2FzZSAiZG8tZGVzdHJveSI6JCgiLmRlbW8tbGlzdCBpbnB1dCIpLmlDaGVjaygiZGVzdHJveSIpO2JyZWFrO2RlZmF1bHQ6dmFyIGE9Yi5oYXNDbGFzcygiYWN0aXZlIik/InNob3cgY29kZSI6ImhpZGUgY29kZSI7Yi50b2dnbGVDbGFzcygiYWN0aXZlIikudGV4dChhKTsKd2luZG93LlplcHRvPyQodGhpcykuY2xvc2VzdCgiZHQiKS5uZXh0KCkudG9nZ2xlKCk6JCh0aGlzKS5jbG9zZXN0KCJkdCIpLm5leHQoKS5zbGlkZVRvZ2dsZSgyMDApfX0pfSk7",
+                "body": "JChkb2N1bWVudCkucmVhZHkoZnVuY3Rpb24oKXt2YXIgaD13aW5kb3cubG9jYXRpb24uaGFzaC5yZXBsYWNlKCIjIiwiIik7aWYoaCYmJCgiLiIraCkubGVuZ3RoKXt2YXIgaz0kKCIuIitoKS5vZmZzZXQoKS50b3AtNDA7d2luZG93LlplcHRvP3dpbmRvdy5zY3JvbGxUbygwLGspOiQod2luZG93KS5zY3JvbGxUb3AoJCgiLiIraCkub2Zmc2V0KCkudG9wLTQwKX0kKCIuc2tpbiBkdCIpLmNsaWNrKGZ1bmN0aW9uKCl7JCh0aGlzKS5zaWJsaW5ncygpLnJlbW92ZUNsYXNzKCJzZWxlY3RlZCIpLmVuZCgpLnByZXYoImRkIikuYW5kU2VsZigpLmFkZENsYXNzKCJzZWxlY3RlZCIpfSk7JCgiLmFycm93cyAudG9wLCAuYXJyb3dzIC5ib3R0b20sIC5mZWF0dXJlcyAuc2VsZiwgLnNraW5zLWluZm8gLnNlbGYsIC51c2FnZSAuc2VsZiIpLmNsaWNrKGZ1bmN0aW9uKGIpe3ZhciBhPSQodGhpcykuZGF0YSgidG8iKSxkPSQoIi4iK2EpLm9mZnNldCgpLnRvcDtiLnByZXZlbnREZWZhdWx0KCk7CndpbmRvdy5sb2NhdGlvbi5oYXNoPWE7d2luZG93LlplcHRvP3dpbmRvdy5zY3JvbGxUbygwLGQtNDApOiQoImh0bWwsIGJvZHkiKS5zdG9wKCkuYW5pbWF0ZSh7c2Nyb2xsVG9wOmQtNDB9LDYwMCl9KTskKCIuY29sb3JzIGxpIikuY2xpY2soZnVuY3Rpb24oKXt2YXIgYj0kKHRoaXMpO2lmKCFiLmhhc0NsYXNzKCJhY3RpdmUiKSl7Yi5zaWJsaW5ncygpLnJlbW92ZUNsYXNzKCJhY3RpdmUiKTt2YXIgYT1iLmNsb3Nlc3QoIi5za2luIiksZD1iLmF0dHIoImNsYXNzIik/Ii0iK2IuYXR0cigiY2xhc3MiKToiIixjPWEuZGF0YSgiaWNoZWNrYm94IiksZz1hLmRhdGEoImlyYWRpbyIpLGU9ImljaGVja2JveF9taW5pbWFsIixmPSJpcmFkaW9fbWluaW1hbCI7YS5oYXNDbGFzcygic2tpbi1zcXVhcmUiKSYmKGU9ImljaGVja2JveF9zcXVhcmUiLGY9ImlyYWRpb19zcXVhcmUiLHZvaWQgMD09YyYmKGM9ImljaGVja2JveF9zcXVhcmUtZ3JlZW4iLGc9ImlyYWRpb19zcXVhcmUtZ3JlZW4iKSk7CmEuaGFzQ2xhc3MoInNraW4tZmxhdCIpJiYoZT0iaWNoZWNrYm94X2ZsYXQiLGY9ImlyYWRpb19mbGF0Iix2b2lkIDA9PWMmJihjPSJpY2hlY2tib3hfZmxhdC1yZWQiLGc9ImlyYWRpb19mbGF0LXJlZCIpKTthLmhhc0NsYXNzKCJza2luLWxpbmUiKSYmKGU9ImljaGVja2JveF9saW5lIixmPSJpcmFkaW9fbGluZSIsdm9pZCAwPT1jJiYoYz0iaWNoZWNrYm94X2xpbmUtYmx1ZSIsZz0iaXJhZGlvX2xpbmUtYmx1ZSIpKTt2b2lkIDA9PWMmJihjPWUsZz1mKTthLmZpbmQoImlucHV0LCAuc2tpbi1zdGF0ZXMgLnN0YXRlIikuZWFjaChmdW5jdGlvbigpe3ZhciBhPSQodGhpcykuaGFzQ2xhc3MoInN0YXRlIik/JCh0aGlzKTokKHRoaXMpLnBhcmVudCgpLGI9YS5hdHRyKCJjbGFzcyIpLnJlcGxhY2UoYyxlK2QpLnJlcGxhY2UoZyxmK2QpO2EuYXR0cigiY2xhc3MiLGIpfSk7YS5kYXRhKCJpY2hlY2tib3giLGUrZCk7YS5kYXRhKCJpcmFkaW8iLGYrZCk7Yi5hZGRDbGFzcygiYWN0aXZlIil9fSk7CiQoIi5kZW1vLW1ldGhvZHMgZHQgLnNlbGYiKS5jbGljayhmdW5jdGlvbigpe3ZhciBiPSQodGhpcyk7c3dpdGNoKGIuYXR0cigiY2xhc3MiKS5yZXBsYWNlKCJzZWxmICIsIiIpKXtjYXNlICJkby1jaGVjayI6JCgiI2lucHV0LTEsICNpbnB1dC0zIikuaUNoZWNrKCJjaGVjayIpO2JyZWFrO2Nhc2UgImRvLXVuY2hlY2siOiQoIiNpbnB1dC0xLCAjaW5wdXQtMyIpLmlDaGVjaygidW5jaGVjayIpO2JyZWFrO2Nhc2UgImRvLWRpc2FibGUiOiQoIiNpbnB1dC0yLCAjaW5wdXQtNCIpLmlDaGVjaygiZGlzYWJsZSIpO2JyZWFrO2Nhc2UgImRvLWVuYWJsZSI6JCgiI2lucHV0LTIsICNpbnB1dC00IikuaUNoZWNrKCJlbmFibGUiKTticmVhaztjYXNlICJkby1kZXN0cm95IjokKCIuZGVtby1saXN0IGlucHV0IikuaUNoZWNrKCJkZXN0cm95Iik7YnJlYWs7ZGVmYXVsdDp2YXIgYT1iLmhhc0NsYXNzKCJhY3RpdmUiKT8ic2hvdyBjb2RlIjoiaGlkZSBjb2RlIjtiLnRvZ2dsZUNsYXNzKCJhY3RpdmUiKS50ZXh0KGEpOwp3aW5kb3cuWmVwdG8/JCh0aGlzKS5jbG9zZXN0KCJkdCIpLm5leHQoKS50b2dnbGUoKTokKHRoaXMpLmNsb3Nlc3QoImR0IikubmV4dCgpLnNsaWRlVG9nZ2xlKDIwMCl9fSl9KTs=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 06:33:14 GMT",
+                    "Content-Length": "2132",
+                    "Date": "Fri, 07 Nov 2014 06:33:14 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

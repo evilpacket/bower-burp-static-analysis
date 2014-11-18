@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/foam-framework/foam/apps/qbcapture/redirected.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "DOM data manipulation (DOM-based)",
+    "issueType": 5247488,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based DOM data manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a data field within the DOM that is used within the visible UI or client-side application logic. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the appearance or behavior of the client-side UI. An attacker may be able to leverage this to perform virtual defacement of the application, or possibly to induce the user to perform unintended actions.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based DOM data manipulation vulnerabilities is not to dynamically write to DOM data fields any data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from being stored. In general, this is best achieved by using a whitelist of permitted values.",
+    "issueDetail": "The application may be vulnerable to DOM-based DOM data manipulation. Data is read from <b>window.location.search</b> and written to <b>the 'textContent' property of a DOM element</b> via the following statements:<ul><li>var url = window.location.search;</li><li>url = decodeURIComponent(url.substring(5));</li><li>url = url.substring(0, question) + '?no_qbug=1&amp;' + url.substring(question+1);</li><li>document.getElementById('link').textContent = url;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/foam-framework/foam/apps/qbcapture/redirected.js",
+                "path": "/foam-framework/foam/apps/qbcapture/redirected.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9mb2FtLWZyYW1ld29yay9mb2FtL2FwcHMvcWJjYXB0dXJlL3JlZGlyZWN0ZWQuanMgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNDc1DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qYXZhc2NyaXB0DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDAwOjM2OjU3IEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAwMDozNjo1NiBHTVQNCg0KCmRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ0RPTUNvbnRlbnRMb2FkZWQnLCBmdW5jdGlvbihlKSB7CiAgdmFyIHVybCA9IHdpbmRvdy5sb2NhdGlvbi5zZWFyY2g7IC8vIFRha2VzIHRoZSBmb3JtID91cmw9JFVSTCwgYnV0IGVuY29kZWQuCiAgdXJsID0gZGVjb2RlVVJJQ29tcG9uZW50KHVybC5zdWJzdHJpbmcoNSkpOwogIHZhciBxdWVzdGlvbiA9IHVybC5pbmRleE9mKCc/Jyk7CiAgaWYgKCBxdWVzdGlvbiA8IDAgKSB7CiAgICB1cmwgPSB1cmwgKyAnP25vX3FidWc9MSc7CiAgfSBlbHNlIHsKICAgIHVybCA9IHVybC5zdWJzdHJpbmcoMCwgcXVlc3Rpb24pICsgJz9ub19xYnVnPTEmJyArIHVybC5zdWJzdHJpbmcocXVlc3Rpb24rMSk7CiAgfQogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdsaW5rJykudGV4dENvbnRlbnQgPSB1cmw7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2xpbmsnKS5ocmVmID0gdXJsOwp9KTsKCg==",
+                "body": "CmRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ0RPTUNvbnRlbnRMb2FkZWQnLCBmdW5jdGlvbihlKSB7CiAgdmFyIHVybCA9IHdpbmRvdy5sb2NhdGlvbi5zZWFyY2g7IC8vIFRha2VzIHRoZSBmb3JtID91cmw9JFVSTCwgYnV0IGVuY29kZWQuCiAgdXJsID0gZGVjb2RlVVJJQ29tcG9uZW50KHVybC5zdWJzdHJpbmcoNSkpOwogIHZhciBxdWVzdGlvbiA9IHVybC5pbmRleE9mKCc/Jyk7CiAgaWYgKCBxdWVzdGlvbiA8IDAgKSB7CiAgICB1cmwgPSB1cmwgKyAnP25vX3FidWc9MSc7CiAgfSBlbHNlIHsKICAgIHVybCA9IHVybC5zdWJzdHJpbmcoMCwgcXVlc3Rpb24pICsgJz9ub19xYnVnPTEmJyArIHVybC5zdWJzdHJpbmcocXVlc3Rpb24rMSk7CiAgfQogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdsaW5rJykudGV4dENvbnRlbnQgPSB1cmw7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2xpbmsnKS5ocmVmID0gdXJsOwp9KTsKCg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 00:36:56 GMT",
+                    "Content-Length": "475",
+                    "Date": "Fri, 07 Nov 2014 00:36:57 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

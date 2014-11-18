@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/jcoglan/jsclass/source/console/browser.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Denial of service (DOM-based)",
+    "issueType": 5246208,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based denial of service vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and passes this data to a problematic platform API in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a denial of service condition on the user's computer when the relevant API is invoked. Depending on the nature of the API, the invocation may cause the user's computer to consume excessive amounts of CPU or disk space.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based denial of service vulnerabilities is not to dynamically pass data into problematic platform APIs that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from causing a denial of service condition. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe.",
+    "issueDetail": "The application may be vulnerable to DOM-based denial of service. Data is read from <b>window.location.href</b> and written to <b>the RegExp() constructor</b> via the following statement:<ul><li>return new RegExp(window.location.href.replace(/(\\/[^\\/]+)/g, '($1)?') + '/?', 'g');</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/jcoglan/jsclass/source/console/browser.js",
+                "path": "/jcoglan/jsclass/source/console/browser.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9qY29nbGFuL2pzY2xhc3Mvc291cmNlL2NvbnNvbGUvYnJvd3Nlci5qcyBIVFRQLzEuMQ0KSG9zdDogbG9jYWxob3N0Ojk5OTkNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNjczDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qYXZhc2NyaXB0DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDA3OjMxOjA2IEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAwNzozMTowNiBHTVQNCg0KQ29uc29sZS5leHRlbmQoewogIEJyb3dzZXI6IG5ldyBKUy5DbGFzcyhDb25zb2xlLkJhc2UsIHsKICAgIGJhY2t0cmFjZUZpbHRlcjogZnVuY3Rpb24oKSB7CiAgICAgIHJldHVybiBuZXcgUmVnRXhwKHdpbmRvdy5sb2NhdGlvbi5ocmVmLnJlcGxhY2UoLyhcL1teXC9dKykvZywgJygkMSk/JykgKyAnLz8nLCAnZycpOwogICAgfSwKCiAgICBjb2xvcmluZzogZnVuY3Rpb24oKSB7CiAgICAgIGlmICh0aGlzLmVudnZhcihDb25zb2xlLk5PX0NPTE9SKSkgcmV0dXJuIGZhbHNlOwogICAgICByZXR1cm4gQ29uc29sZS5BSVI7CiAgICB9LAoKICAgIGVjaG86IGZ1bmN0aW9uKHN0cmluZykgewogICAgICBpZiAod2luZG93LnJ1bnRpbWUpIHJldHVybiB3aW5kb3cucnVudGltZS50cmFjZShzdHJpbmcpOwogICAgICBpZiAod2luZG93LmNvbnNvbGUpIHJldHVybiBjb25zb2xlLmxvZyhzdHJpbmcpOwogICAgICBhbGVydChzdHJpbmcpOwogICAgfSwKCiAgICBlbnZ2YXI6IGZ1bmN0aW9uKG5hbWUpIHsKICAgICAgcmV0dXJuIHdpbmRvd1tuYW1lXSB8fCBudWxsOwogICAgfSwKCiAgICBnZXREaW1lbnNpb25zOiBmdW5jdGlvbigpIHsKICAgICAgaWYgKENvbnNvbGUuQUlSKSByZXR1cm4gdGhpcy5jYWxsU3VwZXIoKTsKICAgICAgcmV0dXJuIFsxMDI0LCAxXTsKICAgIH0KICB9KQp9KTsKCg==",
+                "body": "Q29uc29sZS5leHRlbmQoewogIEJyb3dzZXI6IG5ldyBKUy5DbGFzcyhDb25zb2xlLkJhc2UsIHsKICAgIGJhY2t0cmFjZUZpbHRlcjogZnVuY3Rpb24oKSB7CiAgICAgIHJldHVybiBuZXcgUmVnRXhwKHdpbmRvdy5sb2NhdGlvbi5ocmVmLnJlcGxhY2UoLyhcL1teXC9dKykvZywgJygkMSk/JykgKyAnLz8nLCAnZycpOwogICAgfSwKCiAgICBjb2xvcmluZzogZnVuY3Rpb24oKSB7CiAgICAgIGlmICh0aGlzLmVudnZhcihDb25zb2xlLk5PX0NPTE9SKSkgcmV0dXJuIGZhbHNlOwogICAgICByZXR1cm4gQ29uc29sZS5BSVI7CiAgICB9LAoKICAgIGVjaG86IGZ1bmN0aW9uKHN0cmluZykgewogICAgICBpZiAod2luZG93LnJ1bnRpbWUpIHJldHVybiB3aW5kb3cucnVudGltZS50cmFjZShzdHJpbmcpOwogICAgICBpZiAod2luZG93LmNvbnNvbGUpIHJldHVybiBjb25zb2xlLmxvZyhzdHJpbmcpOwogICAgICBhbGVydChzdHJpbmcpOwogICAgfSwKCiAgICBlbnZ2YXI6IGZ1bmN0aW9uKG5hbWUpIHsKICAgICAgcmV0dXJuIHdpbmRvd1tuYW1lXSB8fCBudWxsOwogICAgfSwKCiAgICBnZXREaW1lbnNpb25zOiBmdW5jdGlvbigpIHsKICAgICAgaWYgKENvbnNvbGUuQUlSKSByZXR1cm4gdGhpcy5jYWxsU3VwZXIoKTsKICAgICAgcmV0dXJuIFsxMDI0LCAxXTsKICAgIH0KICB9KQp9KTsKCg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 07:31:06 GMT",
+                    "Content-Length": "673",
+                    "Date": "Fri, 07 Nov 2014 07:31:06 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

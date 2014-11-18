@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/teambition/jquery-ui-amd/jquery-ui-1.10.0/tests/jquery.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cross-site scripting (DOM-based)",
+    "issueType": 2097936,
+    "severity": "High",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cross-site scripting vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the HTML document in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.<br><br>The attacker-supplied code can perform a wide variety of actions, such as stealing the victim's session token or login credentials, performing arbitrary actions on the victim's behalf, and logging their keystrokes.<br><br>Users can be induced to visit the attacker's crafted URL in various ways, similar to the usual attack delivery vectors for reflected cross-site scripting vulnerabilities. ",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cross-site scripting vulnerabilities is not to dynamically write data into the HTML document that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing script code into the document. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe. In other cases, it will be necessary to sanitize or encode the data. This can be a complex task, and depending on the context that the data is to be inserted may need to involve a combination of JavaScript escaping, HTML encoding, and URL encoding, in the appropriate sequence.",
+    "issueDetail": "The application may be vulnerable to DOM-based cross-site scripting. Data is read from <b>document.location.search</b> and written to <b>document.write()</b> via the following statements:<ul><li>var parts = document.location.search.slice( 1 ).split( \"&amp;\" ),  length = parts.length,  i = 0,  current,  version,  url;</li><li>current = parts[ i ].split( \"=\" );</li><li>version = current[ 1 ];</li><li>url = \"../../jquery-\" + ( version || \"1.9.0\" ) + \".js\";</li><li>document.write( \"&lt;script src='\" + url + \"'&gt;&lt;/script&gt;\" );</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/teambition/jquery-ui-amd/jquery-ui-1.10.0/tests/jquery.js",
+                "path": "/teambition/jquery-ui-amd/jquery-ui-1.10.0/tests/jquery.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC90ZWFtYml0aW9uL2pxdWVyeS11aS1hbWQvanF1ZXJ5LXVpLTEuMTAuMC90ZXN0cy9qcXVlcnkuanMgSFRUUC8xLjENCkhvc3Q6IGxvY2FsaG9zdDo5OTk5DQoNCg==",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNDg1DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qYXZhc2NyaXB0DQpEYXRlOiBGcmksIDA3IE5vdiAyMDE0IDA3OjIwOjU4IEdNVA0KTGFzdC1Nb2RpZmllZDogRnJpLCAwNyBOb3YgMjAxNCAwNzoyMDo1NiBHTVQNCg0KKGZ1bmN0aW9uKCkgewoKdmFyIHBhcnRzID0gZG9jdW1lbnQubG9jYXRpb24uc2VhcmNoLnNsaWNlKCAxICkuc3BsaXQoICImIiApLAoJbGVuZ3RoID0gcGFydHMubGVuZ3RoLAoJaSA9IDAsCgljdXJyZW50LAoJdmVyc2lvbiwKCXVybDsKCmZvciAoIDsgaSA8IGxlbmd0aDsgaSsrICkgewoJY3VycmVudCA9IHBhcnRzWyBpIF0uc3BsaXQoICI9IiApOwoJaWYgKCBjdXJyZW50WyAwIF0gPT09ICJqcXVlcnkiICkgewoJCXZlcnNpb24gPSBjdXJyZW50WyAxIF07CgkJYnJlYWs7Cgl9Cn0KCmlmICggdmVyc2lvbiA9PT0gImdpdCIgKSB7Cgl1cmwgPSAiaHR0cDovL2NvZGUuanF1ZXJ5LmNvbS9qcXVlcnktZ2l0LmpzIjsKfSBlbHNlIHsKCXVybCA9ICIuLi8uLi9qcXVlcnktIiArICggdmVyc2lvbiB8fCAiMS45LjAiICkgKyAiLmpzIjsKfQoKZG9jdW1lbnQud3JpdGUoICI8c2NyaXB0IHNyYz0nIiArIHVybCArICInPjwvc2NyaXB0PiIgKTsKCn0oKSApOwo=",
+                "body": "KGZ1bmN0aW9uKCkgewoKdmFyIHBhcnRzID0gZG9jdW1lbnQubG9jYXRpb24uc2VhcmNoLnNsaWNlKCAxICkuc3BsaXQoICImIiApLAoJbGVuZ3RoID0gcGFydHMubGVuZ3RoLAoJaSA9IDAsCgljdXJyZW50LAoJdmVyc2lvbiwKCXVybDsKCmZvciAoIDsgaSA8IGxlbmd0aDsgaSsrICkgewoJY3VycmVudCA9IHBhcnRzWyBpIF0uc3BsaXQoICI9IiApOwoJaWYgKCBjdXJyZW50WyAwIF0gPT09ICJqcXVlcnkiICkgewoJCXZlcnNpb24gPSBjdXJyZW50WyAxIF07CgkJYnJlYWs7Cgl9Cn0KCmlmICggdmVyc2lvbiA9PT0gImdpdCIgKSB7Cgl1cmwgPSAiaHR0cDovL2NvZGUuanF1ZXJ5LmNvbS9qcXVlcnktZ2l0LmpzIjsKfSBlbHNlIHsKCXVybCA9ICIuLi8uLi9qcXVlcnktIiArICggdmVyc2lvbiB8fCAiMS45LjAiICkgKyAiLmpzIjsKfQoKZG9jdW1lbnQud3JpdGUoICI8c2NyaXB0IHNyYz0nIiArIHVybCArICInPjwvc2NyaXB0PiIgKTsKCn0oKSApOwo=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 07:20:56 GMT",
+                    "Content-Length": "485",
+                    "Date": "Fri, 07 Nov 2014 07:20:58 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

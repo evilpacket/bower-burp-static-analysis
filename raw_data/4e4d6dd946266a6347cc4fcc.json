@@ -1,0 +1,60 @@
+{
+    "url": "http://localhost:9999/wenzhixin/bootstrap-table/",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Open redirection (DOM-based)",
+    "issueType": 5243152,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based open redirection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the target of a redirection in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause a redirection to an arbitrary external domain. This behavior can be leveraged to facilitate phishing attacks against users of the application. The ability to use an authentic application URL, targeting the correct domain with a valid SSL certificate (if SSL is used) lends credibility to the phishing attack because many users, even if they verify these features, will not notice the subsequent redirection to a different domain.<br><br><b>Note:</b> If an attacker is able to control the start of the string that is passed to the redirection API, then it may be possible to escalate this vulnerability into a JavaScript injection attack, by using a URL with the javascript: pseudo-protocol to execute arbitrary script code when the URL is processed by the browser.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based open redirection vulnerabilities is not to dynamically set redirection targets using data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing an arbitrary URL as a redirection target. In general, this is best achieved by using a whitelist of URLs that are permitted redirection targets, and strictly validating the target against this list before performing the redirection.",
+    "issueDetail": "The application may be vulnerable to DOM-based open redirection. Data is read from <b>location.hash</b> and written to <b>location.replace()</b> via the following statement:<ul><li>location.replace('docs' + location.hash);</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/wenzhixin/bootstrap-table/",
+                "path": "/wenzhixin/bootstrap-table/",
+                "httpVersion": "HTTP/0.0",
+                "method": "GET",
+                "headers": {
+                    "Referer": "http://localhost:9999/wenzhixin/bootstrap-table/index.html",
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC93ZW56aGl4aW4vYm9vdHN0cmFwLXRhYmxlLyBIVFRQLzAuMA0KSG9zdDogbG9jYWxob3N0Ojk5OTkNClJlZmVyZXI6IGh0dHA6Ly9sb2NhbGhvc3Q6OTk5OS93ZW56aGl4aW4vYm9vdHN0cmFwLXRhYmxlL2luZGV4Lmh0bWwNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMTcyDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFRodSwgMDYgTm92IDIwMTQgMTM6Mzc6MTkgR01UDQpMYXN0LU1vZGlmaWVkOiBUaHUsIDA2IE5vdiAyMDE0IDEzOjM3OjE2IEdNVA0KDQo8IURPQ1RZUEUgaHRtbD4KPGh0bWw+CjxoZWFkPgogICAgPHRpdGxlPjwvdGl0bGU+CjwvaGVhZD4KPGJvZHk+CjxzY3JpcHQ+CiAgICBsb2NhdGlvbi5yZXBsYWNlKCdkb2NzJyArIGxvY2F0aW9uLmhhc2gpOwo8L3NjcmlwdD4KPGlucHV0IGNoZWNrZWQ9ImRpc2FibGVkIj4KPC9ib2R5Pgo8L2h0bWw+",
+                "body": "PCFET0NUWVBFIGh0bWw+CjxodG1sPgo8aGVhZD4KICAgIDx0aXRsZT48L3RpdGxlPgo8L2hlYWQ+Cjxib2R5Pgo8c2NyaXB0PgogICAgbG9jYXRpb24ucmVwbGFjZSgnZG9jcycgKyBsb2NhdGlvbi5oYXNoKTsKPC9zY3JpcHQ+CjxpbnB1dCBjaGVja2VkPSJkaXNhYmxlZCI+CjwvYm9keT4KPC9odG1sPg==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 13:37:16 GMT",
+                    "Content-Length": "172",
+                    "Date": "Thu, 06 Nov 2014 13:37:19 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

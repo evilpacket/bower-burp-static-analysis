@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/blueimp/jQuery-File-Upload/cors/result.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "DOM data manipulation (DOM-based)",
+    "issueType": 5247488,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based DOM data manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a data field within the DOM that is used within the visible UI or client-side application logic. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the appearance or behavior of the client-side UI. An attacker may be able to leverage this to perform virtual defacement of the application, or possibly to induce the user to perform unintended actions.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based DOM data manipulation vulnerabilities is not to dynamically write to DOM data fields any data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from being stored. In general, this is best achieved by using a whitelist of permitted values.",
+    "issueDetail": "The application may be vulnerable to DOM-based DOM data manipulation. Data is read from <b>window.location.search</b> and written to <b>the 'textContent' property of a DOM element</b> via the following statement:<ul><li>document.body.innerText=document.body.textContent=decodeURIComponent(window.location.search.slice(1));</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/blueimp/jQuery-File-Upload/cors/result.html",
+                "path": "/blueimp/jQuery-File-Upload/cors/result.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9ibHVlaW1wL2pRdWVyeS1GaWxlLVVwbG9hZC9jb3JzL3Jlc3VsdC5odG1sIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogNTM3DQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFRodSwgMDYgTm92IDIwMTQgMTI6NTQ6MjIgR01UDQpMYXN0LU1vZGlmaWVkOiBUaHUsIDA2IE5vdiAyMDE0IDEyOjU0OjIwIEdNVA0KDQo8IURPQ1RZUEUgSFRNTD4KPCEtLQovKgogKiBqUXVlcnkgSWZyYW1lIFRyYW5zcG9ydCBQbHVnaW4gUmVkaXJlY3QgUGFnZSAyLjAuMQogKiBodHRwczovL2dpdGh1Yi5jb20vYmx1ZWltcC9qUXVlcnktRmlsZS1VcGxvYWQKICoKICogQ29weXJpZ2h0IDIwMTAsIFNlYmFzdGlhbiBUc2NoYW4KICogaHR0cHM6Ly9ibHVlaW1wLm5ldAogKgogKiBMaWNlbnNlZCB1bmRlciB0aGUgTUlUIGxpY2Vuc2U6CiAqIGh0dHA6Ly93d3cub3BlbnNvdXJjZS5vcmcvbGljZW5zZXMvTUlUCiAqLwotLT4KPGh0bWwgbGFuZz0iZW4iPgo8aGVhZD4KPG1ldGEgY2hhcnNldD0idXRmLTgiPgo8dGl0bGU+alF1ZXJ5IElmcmFtZSBUcmFuc3BvcnQgUGx1Z2luIFJlZGlyZWN0IFBhZ2U8L3RpdGxlPgo8L2hlYWQ+Cjxib2R5Pgo8c2NyaXB0Pgpkb2N1bWVudC5ib2R5LmlubmVyVGV4dD1kb2N1bWVudC5ib2R5LnRleHRDb250ZW50PWRlY29kZVVSSUNvbXBvbmVudCh3aW5kb3cubG9jYXRpb24uc2VhcmNoLnNsaWNlKDEpKTsKPC9zY3JpcHQ+CjwvYm9keT4KPC9odG1sPgo=",
+                "body": "PCFET0NUWVBFIEhUTUw+CjwhLS0KLyoKICogalF1ZXJ5IElmcmFtZSBUcmFuc3BvcnQgUGx1Z2luIFJlZGlyZWN0IFBhZ2UgMi4wLjEKICogaHR0cHM6Ly9naXRodWIuY29tL2JsdWVpbXAvalF1ZXJ5LUZpbGUtVXBsb2FkCiAqCiAqIENvcHlyaWdodCAyMDEwLCBTZWJhc3RpYW4gVHNjaGFuCiAqIGh0dHBzOi8vYmx1ZWltcC5uZXQKICoKICogTGljZW5zZWQgdW5kZXIgdGhlIE1JVCBsaWNlbnNlOgogKiBodHRwOi8vd3d3Lm9wZW5zb3VyY2Uub3JnL2xpY2Vuc2VzL01JVAogKi8KLS0+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij4KPHRpdGxlPmpRdWVyeSBJZnJhbWUgVHJhbnNwb3J0IFBsdWdpbiBSZWRpcmVjdCBQYWdlPC90aXRsZT4KPC9oZWFkPgo8Ym9keT4KPHNjcmlwdD4KZG9jdW1lbnQuYm9keS5pbm5lclRleHQ9ZG9jdW1lbnQuYm9keS50ZXh0Q29udGVudD1kZWNvZGVVUklDb21wb25lbnQod2luZG93LmxvY2F0aW9uLnNlYXJjaC5zbGljZSgxKSk7Cjwvc2NyaXB0Pgo8L2JvZHk+CjwvaHRtbD4K",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 12:54:20 GMT",
+                    "Content-Length": "537",
+                    "Date": "Thu, 06 Nov 2014 12:54:22 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

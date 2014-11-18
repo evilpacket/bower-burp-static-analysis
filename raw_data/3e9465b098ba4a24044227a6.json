@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/mmwtsn/site-chrome/src/js/nav.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Cross-site scripting (DOM-based)",
+    "issueType": 2097936,
+    "severity": "Medium",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based cross-site scripting vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this data into the HTML document in an unsafe way. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.<br><br>The attacker-supplied code can perform a wide variety of actions, such as stealing the victim's session token or login credentials, performing arbitrary actions on the victim's behalf, and logging their keystrokes.<br><br>Users can be induced to visit the attacker's crafted URL in various ways, similar to the usual attack delivery vectors for reflected cross-site scripting vulnerabilities. ",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based cross-site scripting vulnerabilities is not to dynamically write data into the HTML document that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from introducing script code into the document. In many cases, the relevant data can be validated on a whitelist basis, to allow only content that is known to be safe. In other cases, it will be necessary to sanitize or encode the data. This can be a complex task, and depending on the context that the data is to be inserted may need to involve a combination of JavaScript escaping, HTML encoding, and URL encoding, in the appropriate sequence.",
+    "issueDetail": "The application may be vulnerable to DOM-based cross-site scripting. Data is read from <b>document.cookie</b> and written to <b>$()</b> via the following statements:<ul><li>var ibmcloudnavcookie = document.cookie.replace(regex, \"$1\");</li><li>var ele_str = \"a[href^=\\\"\"+ibmcloudnavcookie+\"\\\"]\";</li><li>var li = $(ele_str).parent();</li></ul>Because the data originates from a cookie, the application's behavior is not trivial to exploit in an attack against another user. Typically, you will need to find a means of setting an arbitrary cookie value in the victim's browser in order to exploit the vulnerability. Applications often contain \"cookie-forcing\" conditions which make this possible, and such a condition in any related domain or subdomain can potentially be used for this purpose. Nonetheless, this limitation somewhat mitigates the impact of the vulnerability. ",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/mmwtsn/site-chrome/src/js/nav.js",
+                "path": "/mmwtsn/site-chrome/src/js/nav.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9tbXd0c24vc2l0ZS1jaHJvbWUvc3JjL2pzL25hdi5qcyBIVFRQLzEuMQ0KSG9zdDogbG9jYWxob3N0Ojk5OTkNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMTMyOQ0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vamF2YXNjcmlwdA0KRGF0ZTogRnJpLCAwNyBOb3YgMjAxNCAwNDoxNzo0MSBHTVQNCkxhc3QtTW9kaWZpZWQ6IEZyaSwgMDcgTm92IDIwMTQgMDQ6MTc6NDEgR01UDQoNCiQoZG9jdW1lbnQpLnJlYWR5KGZ1bmN0aW9uKCkgewogIHZhciByZWdleCA9IG5ldyBSZWdFeHAoIig/Oig/Ol58Lio7ICopaWJtY2xvdWRuYXYgKj0gKihbXjtdKikuKiQpfF4uKiQiKTsKICB2YXIgaWJtY2xvdWRuYXZjb29raWUgPSBkb2N1bWVudC5jb29raWUucmVwbGFjZShyZWdleCwgIiQxIik7CiAgdmFyIGVsZV9zdHIgPSAiYVtocmVmXj1cIiIraWJtY2xvdWRuYXZjb29raWUrIlwiXSI7CiAgdmFyIGxpID0gJChlbGVfc3RyKS5wYXJlbnQoKTsKICB2YXIgbmVzdGVkTW9iaWxlTGluayA9ICQobGkpLnBhcmVudCgpLnBhcmVudCgpOwogIHZhciBtb2JpbGVMaW5rID0gJChuZXN0ZWRNb2JpbGVMaW5rKS5wYXJlbnQoKS5wYXJlbnQoKTsKICAkKG1vYmlsZUxpbmspLmFkZENsYXNzKCdhY3RpdmUnKTsKICAkKG5lc3RlZE1vYmlsZUxpbmspLmFkZENsYXNzKCdhY3RpdmUnKTsKCiAgaWYoJCh3aW5kb3cpLndpZHRoKCkgPDY0MCl7CiAgICAkKCcubW9iaWxlLWxpbmsubG9jYWwnKS5hZGRDbGFzcygnYWN0aXZlJyk7CiAgfQoKICAkKCcubW9iaWxlLW5hdi10b2dnbGUnKS5vbignY2xpY2snLCBmdW5jdGlvbihlKSB7CiAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICAkKCdib2R5JykudG9nZ2xlQ2xhc3MoJ21vYmlsZS1uYXYtb3BlbicpOwogIH0pOwogICQoJy5tb2JpbGUtbGluayA+IGEnKS5vbignY2xpY2snLCBmdW5jdGlvbihlKSB7CiAgICBlLnByZXZlbnREZWZhdWx0KCk7CgogICAgJCgnLm1vYmlsZS1saW5rJykucmVtb3ZlQ2xhc3MoJ2FjdGl2ZScpOwogICAgJCh0aGlzKS5wYXJlbnQoKS5hZGRDbGFzcygnYWN0aXZlJyk7CiAgfSk7CiAgJCgnLm5lc3RlZC1tb2JpbGUtbGluayA+IGEnKS5vbignY2xpY2snLCBmdW5jdGlvbihlKSB7CiAgICBlLnByZXZlbnREZWZhdWx0KCk7CgogICAgdmFyICR0aGlzID0gJCh0aGlzKS5wYXJlbnQoKTsKCiAgICBpZigkdGhpcy5oYXNDbGFzcygnYWN0aXZlJykpIHsKICAgICAgJHRoaXMudG9nZ2xlQ2xhc3MoJ2FjdGl2ZScpOwogICAgfQogICAgZWxzZSB7CiAgICAgICQoJy5uZXN0ZWQtbW9iaWxlLWxpbmsnKS5yZW1vdmVDbGFzcygnYWN0aXZlJyk7CiAgICAgICR0aGlzLmFkZENsYXNzKCdhY3RpdmUnKTsKICAgIH0KICB9KTsKCiAgJCgnLm5lc3RlZC1tb2JpbGUtbGluayA+IHVsID4gbGkgPiBhJykub24oJ2NsaWNrJywgZnVuY3Rpb24oZSl7CiAgICBjbmFtZSA9ICJpYm1jbG91ZG5hdiI7CiAgICB2YWx1ZSA9ICQoZS50YXJnZXQpLmF0dHIoJ2hyZWYnKTsKICAgIGRvY3VtZW50LmNvb2tpZT1jbmFtZSsiPSIrdmFsdWUrIjsiKyJtYXgtYWdlPSIrKDI0KjYwKjYwKTsKICB9KTsKfSk7Cg==",
+                "body": "JChkb2N1bWVudCkucmVhZHkoZnVuY3Rpb24oKSB7CiAgdmFyIHJlZ2V4ID0gbmV3IFJlZ0V4cCgiKD86KD86XnwuKjsgKilpYm1jbG91ZG5hdiAqPSAqKFteO10qKS4qJCl8Xi4qJCIpOwogIHZhciBpYm1jbG91ZG5hdmNvb2tpZSA9IGRvY3VtZW50LmNvb2tpZS5yZXBsYWNlKHJlZ2V4LCAiJDEiKTsKICB2YXIgZWxlX3N0ciA9ICJhW2hyZWZePVwiIitpYm1jbG91ZG5hdmNvb2tpZSsiXCJdIjsKICB2YXIgbGkgPSAkKGVsZV9zdHIpLnBhcmVudCgpOwogIHZhciBuZXN0ZWRNb2JpbGVMaW5rID0gJChsaSkucGFyZW50KCkucGFyZW50KCk7CiAgdmFyIG1vYmlsZUxpbmsgPSAkKG5lc3RlZE1vYmlsZUxpbmspLnBhcmVudCgpLnBhcmVudCgpOwogICQobW9iaWxlTGluaykuYWRkQ2xhc3MoJ2FjdGl2ZScpOwogICQobmVzdGVkTW9iaWxlTGluaykuYWRkQ2xhc3MoJ2FjdGl2ZScpOwoKICBpZigkKHdpbmRvdykud2lkdGgoKSA8NjQwKXsKICAgICQoJy5tb2JpbGUtbGluay5sb2NhbCcpLmFkZENsYXNzKCdhY3RpdmUnKTsKICB9CgogICQoJy5tb2JpbGUtbmF2LXRvZ2dsZScpLm9uKCdjbGljaycsIGZ1bmN0aW9uKGUpIHsKICAgIGUucHJldmVudERlZmF1bHQoKTsKICAgICQoJ2JvZHknKS50b2dnbGVDbGFzcygnbW9iaWxlLW5hdi1vcGVuJyk7CiAgfSk7CiAgJCgnLm1vYmlsZS1saW5rID4gYScpLm9uKCdjbGljaycsIGZ1bmN0aW9uKGUpIHsKICAgIGUucHJldmVudERlZmF1bHQoKTsKCiAgICAkKCcubW9iaWxlLWxpbmsnKS5yZW1vdmVDbGFzcygnYWN0aXZlJyk7CiAgICAkKHRoaXMpLnBhcmVudCgpLmFkZENsYXNzKCdhY3RpdmUnKTsKICB9KTsKICAkKCcubmVzdGVkLW1vYmlsZS1saW5rID4gYScpLm9uKCdjbGljaycsIGZ1bmN0aW9uKGUpIHsKICAgIGUucHJldmVudERlZmF1bHQoKTsKCiAgICB2YXIgJHRoaXMgPSAkKHRoaXMpLnBhcmVudCgpOwoKICAgIGlmKCR0aGlzLmhhc0NsYXNzKCdhY3RpdmUnKSkgewogICAgICAkdGhpcy50b2dnbGVDbGFzcygnYWN0aXZlJyk7CiAgICB9CiAgICBlbHNlIHsKICAgICAgJCgnLm5lc3RlZC1tb2JpbGUtbGluaycpLnJlbW92ZUNsYXNzKCdhY3RpdmUnKTsKICAgICAgJHRoaXMuYWRkQ2xhc3MoJ2FjdGl2ZScpOwogICAgfQogIH0pOwoKICAkKCcubmVzdGVkLW1vYmlsZS1saW5rID4gdWwgPiBsaSA+IGEnKS5vbignY2xpY2snLCBmdW5jdGlvbihlKXsKICAgIGNuYW1lID0gImlibWNsb3VkbmF2IjsKICAgIHZhbHVlID0gJChlLnRhcmdldCkuYXR0cignaHJlZicpOwogICAgZG9jdW1lbnQuY29va2llPWNuYW1lKyI9Iit2YWx1ZSsiOyIrIm1heC1hZ2U9IisoMjQqNjAqNjApOwogIH0pOwp9KTsK",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Fri, 07 Nov 2014 04:17:41 GMT",
+                    "Content-Length": "1329",
+                    "Date": "Fri, 07 Nov 2014 04:17:41 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

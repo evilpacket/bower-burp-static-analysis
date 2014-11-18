@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/jgallen23/dice-roll/dist/dice-roll.full.min.js",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "Client-side JSON injection (DOM-based)",
+    "issueType": 2098032,
+    "severity": "Low",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based JSON injection vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and incorporates this into a string that is parsed as a JSON data structure and then processed by the application. An attacker may be able to use this behavior to construct a URL which, if visited by another application user, will cause arbitrary JSON data to be processed. Depending on the purpose for which this data is used, it may be possible to subvert the application's logic, or cause unintended actions on behalf of the user.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based JSON injection vulnerabilities is not to parse as JSON any string containing data that originated from an untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from modifying the JSON structure in inappropriate ways. This may involve strict validation of specific items to ensure they do not contain any characters that may interfere with the structure of the JSON when it is parsed.",
+    "issueDetail": "The application may be vulnerable to DOM-based client-side JSON injection. Data is read from <b>document.cookie</b> and written to <b>JSON.parse()</b> via the following statements:<ul><li>var b=a+\"=\",c=document.cookie.split(\";\"),d=\"\",e=\"\",f={},g=0</li><li>var h=c[g]</li><li>return d=h.substring(b.length,h.length),e=d.substring(0,1),\"{\"==e&amp;&amp;(f=JSON.parse(d),\"v\"in f)?f.v:\"undefined\"==d?void 0:decodeURIComponent(d)</li></ul>Because the data originates from a cookie, the application's behavior is not trivial to exploit in an attack against another user. Typically, you will need to find a means of setting an arbitrary cookie value in the victim's browser in order to exploit the vulnerability. Applications often contain \"cookie-forcing\" conditions which make this possible, and such a condition in any related domain or subdomain can potentially be used for this purpose. Nonetheless, this limitation somewhat mitigates the impact of the vulnerability. ",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/jgallen23/dice-roll/dist/dice-roll.full.min.js",
+                "path": "/jgallen23/dice-roll/dist/dice-roll.full.min.js",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9qZ2FsbGVuMjMvZGljZS1yb2xsL2Rpc3QvZGljZS1yb2xsLmZ1bGwubWluLmpzIEhUVFAvMS4xDQpIb3N0OiBsb2NhbGhvc3Q6OTk5OQ0KDQo=",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogMTgyOA0KQWNjZXB0LVJhbmdlczogYnl0ZXMNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vamF2YXNjcmlwdA0KRGF0ZTogVGh1LCAwNiBOb3YgMjAxNCAyMTo0MTo0OCBHTVQNCkxhc3QtTW9kaWZpZWQ6IFRodSwgMDYgTm92IDIwMTQgMjE6NDE6NDcgR01UDQoNCi8qIQogKiBkaWNlLXJvbGwgLSBBIGJhc2ljIEEvQiB0ZXN0IGxpYnJhcnkKICogdjAuMS4xCiAqIGh0dHBzOi8vZ2l0aHViLmNvbS9qZ2FsbGVuMjMvZGljZS1yb2xsCiAqIGNvcHlyaWdodCBHcmVnIEFsbGVuIDIwMTMKICogTUlUIExpY2Vuc2UKKi8KdmFyIG1vbnN0ZXI9e3NldDpmdW5jdGlvbihhLGIsYyxkKXt2YXIgZT1uZXcgRGF0ZSxmPSIiLGc9dHlwZW9mIGIsaD0iIjtpZihkPWR8fCIvIixjJiYoZS5zZXRUaW1lKGUuZ2V0VGltZSgpKzFlMyo2MCo2MCoyNCpjKSxmPSI7IGV4cGlyZXM9IitlLnRvVVRDU3RyaW5nKCkpLCJvYmplY3QiPT09ZyYmInVuZGVmaW5lZCIhPT1nKXtpZighKCJKU09OImluIHdpbmRvdykpdGhyb3ciQnVtbWVyLCB5b3VyIGJyb3dzZXIgZG9lc24ndCBzdXBwb3J0IEpTT04gcGFyc2luZy4iO2g9SlNPTi5zdHJpbmdpZnkoe3Y6Yn0pfWVsc2UgaD1lbmNvZGVVUklDb21wb25lbnQoYik7ZG9jdW1lbnQuY29va2llPWErIj0iK2grZisiOyBwYXRoPSIrZH0sZ2V0OmZ1bmN0aW9uKGEpe2Zvcih2YXIgYj1hKyI9IixjPWRvY3VtZW50LmNvb2tpZS5zcGxpdCgiOyIpLGQ9IiIsZT0iIixmPXt9LGc9MDtnPGMubGVuZ3RoO2crKyl7Zm9yKHZhciBoPWNbZ107IiAiPT1oLmNoYXJBdCgwKTspaD1oLnN1YnN0cmluZygxLGgubGVuZ3RoKTtpZigwPT09aC5pbmRleE9mKGIpKXJldHVybiBkPWguc3Vic3RyaW5nKGIubGVuZ3RoLGgubGVuZ3RoKSxlPWQuc3Vic3RyaW5nKDAsMSksInsiPT1lJiYoZj1KU09OLnBhcnNlKGQpLCJ2ImluIGYpP2YudjoidW5kZWZpbmVkIj09ZD92b2lkIDA6ZGVjb2RlVVJJQ29tcG9uZW50KGQpfXJldHVybiBudWxsfSxyZW1vdmU6ZnVuY3Rpb24oYSl7dGhpcy5zZXQoYSwiIiwtMSl9LGluY3JlbWVudDpmdW5jdGlvbihhLGIpe3ZhciBjPXRoaXMuZ2V0KGEpfHwwO3RoaXMuc2V0KGEscGFyc2VJbnQoYywxMCkrMSxiKX0sZGVjcmVtZW50OmZ1bmN0aW9uKGEsYil7dmFyIGM9dGhpcy5nZXQoYSl8fDA7dGhpcy5zZXQoYSxwYXJzZUludChjLDEwKS0xLGIpfX07IWZ1bmN0aW9uKGEpe3ZhciBiPTFlMyxjPWEubW9uc3RlcixkPWZ1bmN0aW9uKGEsYil7dGhpcy5leHBpcmVzPWJ8fDcsdGhpcy5rZXk9ImRpY2Vyb2xsLSIrYSx0aGlzLmNvb2tpZVZhbHVlPWM/Yy5nZXQodGhpcy5rZXkpOiExLHRoaXMudGVzdHM9W119O2QucHJvdG90eXBlLnRlc3Q9ZnVuY3Rpb24oYSxiKXtyZXR1cm4gdGhpcy50ZXN0cy5wdXNoKHtwZXJjZW50YWdlOmEsY2FsbGJhY2s6Yn0pLHRoaXN9LGQucHJvdG90eXBlLm90aGVyd2lzZT1mdW5jdGlvbihhKXtyZXR1cm4gdGhpcy5lbHNlQ2FsbGJhY2s9YSx0aGlzfSxkLnByb3RvdHlwZS5ydW49ZnVuY3Rpb24oKXtmb3IodmFyIGEsZCxlLGY9TWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpKmIrMSksZz0wLGg9MCxpPXRoaXMudGVzdHMubGVuZ3RoO2k+aDtoKyspaWYoZD10aGlzLnRlc3RzW2hdLHRoaXMuY29va2llVmFsdWU/aC50b1N0cmluZygpPT10aGlzLmNvb2tpZVZhbHVlJiYoZT0hMCxkLmNhbGxiYWNrKGQucGVyY2VudGFnZSxoKSk6KGE9ZC5wZXJjZW50YWdlLzEwMCpiLGY+PWcmJmcrYT49Zj8oYyYmYy5zZXQodGhpcy5rZXksaC50b1N0cmluZygpLHRoaXMuZXhwaXJlcyksZC5jYWxsYmFjayhkLnBlcmNlbnRhZ2UsaCksZT0hMCk6ZT0hMSxnKz1hKzEpLGUpcmV0dXJuO3RoaXMuZWxzZUNhbGxiYWNrJiYoYyYmYy5zZXQodGhpcy5rZXksaC50b1N0cmluZygpLHRoaXMuZXhwaXJlcyksdGhpcy5lbHNlQ2FsbGJhY2soITEsaCkpfTt2YXIgZT1mdW5jdGlvbihhLGIpe3JldHVybiBuZXcgZChhLGIpfTt3aW5kb3cuZGljZVJvbGw9ZX0od2luZG93KTs=",
+                "body": "LyohCiAqIGRpY2Utcm9sbCAtIEEgYmFzaWMgQS9CIHRlc3QgbGlicmFyeQogKiB2MC4xLjEKICogaHR0cHM6Ly9naXRodWIuY29tL2pnYWxsZW4yMy9kaWNlLXJvbGwKICogY29weXJpZ2h0IEdyZWcgQWxsZW4gMjAxMwogKiBNSVQgTGljZW5zZQoqLwp2YXIgbW9uc3Rlcj17c2V0OmZ1bmN0aW9uKGEsYixjLGQpe3ZhciBlPW5ldyBEYXRlLGY9IiIsZz10eXBlb2YgYixoPSIiO2lmKGQ9ZHx8Ii8iLGMmJihlLnNldFRpbWUoZS5nZXRUaW1lKCkrMWUzKjYwKjYwKjI0KmMpLGY9IjsgZXhwaXJlcz0iK2UudG9VVENTdHJpbmcoKSksIm9iamVjdCI9PT1nJiYidW5kZWZpbmVkIiE9PWcpe2lmKCEoIkpTT04iaW4gd2luZG93KSl0aHJvdyJCdW1tZXIsIHlvdXIgYnJvd3NlciBkb2Vzbid0IHN1cHBvcnQgSlNPTiBwYXJzaW5nLiI7aD1KU09OLnN0cmluZ2lmeSh7djpifSl9ZWxzZSBoPWVuY29kZVVSSUNvbXBvbmVudChiKTtkb2N1bWVudC5jb29raWU9YSsiPSIraCtmKyI7IHBhdGg9IitkfSxnZXQ6ZnVuY3Rpb24oYSl7Zm9yKHZhciBiPWErIj0iLGM9ZG9jdW1lbnQuY29va2llLnNwbGl0KCI7IiksZD0iIixlPSIiLGY9e30sZz0wO2c8Yy5sZW5ndGg7ZysrKXtmb3IodmFyIGg9Y1tnXTsiICI9PWguY2hhckF0KDApOyloPWguc3Vic3RyaW5nKDEsaC5sZW5ndGgpO2lmKDA9PT1oLmluZGV4T2YoYikpcmV0dXJuIGQ9aC5zdWJzdHJpbmcoYi5sZW5ndGgsaC5sZW5ndGgpLGU9ZC5zdWJzdHJpbmcoMCwxKSwieyI9PWUmJihmPUpTT04ucGFyc2UoZCksInYiaW4gZik/Zi52OiJ1bmRlZmluZWQiPT1kP3ZvaWQgMDpkZWNvZGVVUklDb21wb25lbnQoZCl9cmV0dXJuIG51bGx9LHJlbW92ZTpmdW5jdGlvbihhKXt0aGlzLnNldChhLCIiLC0xKX0saW5jcmVtZW50OmZ1bmN0aW9uKGEsYil7dmFyIGM9dGhpcy5nZXQoYSl8fDA7dGhpcy5zZXQoYSxwYXJzZUludChjLDEwKSsxLGIpfSxkZWNyZW1lbnQ6ZnVuY3Rpb24oYSxiKXt2YXIgYz10aGlzLmdldChhKXx8MDt0aGlzLnNldChhLHBhcnNlSW50KGMsMTApLTEsYil9fTshZnVuY3Rpb24oYSl7dmFyIGI9MWUzLGM9YS5tb25zdGVyLGQ9ZnVuY3Rpb24oYSxiKXt0aGlzLmV4cGlyZXM9Ynx8Nyx0aGlzLmtleT0iZGljZXJvbGwtIithLHRoaXMuY29va2llVmFsdWU9Yz9jLmdldCh0aGlzLmtleSk6ITEsdGhpcy50ZXN0cz1bXX07ZC5wcm90b3R5cGUudGVzdD1mdW5jdGlvbihhLGIpe3JldHVybiB0aGlzLnRlc3RzLnB1c2goe3BlcmNlbnRhZ2U6YSxjYWxsYmFjazpifSksdGhpc30sZC5wcm90b3R5cGUub3RoZXJ3aXNlPWZ1bmN0aW9uKGEpe3JldHVybiB0aGlzLmVsc2VDYWxsYmFjaz1hLHRoaXN9LGQucHJvdG90eXBlLnJ1bj1mdW5jdGlvbigpe2Zvcih2YXIgYSxkLGUsZj1NYXRoLmZsb29yKE1hdGgucmFuZG9tKCkqYisxKSxnPTAsaD0wLGk9dGhpcy50ZXN0cy5sZW5ndGg7aT5oO2grKylpZihkPXRoaXMudGVzdHNbaF0sdGhpcy5jb29raWVWYWx1ZT9oLnRvU3RyaW5nKCk9PXRoaXMuY29va2llVmFsdWUmJihlPSEwLGQuY2FsbGJhY2soZC5wZXJjZW50YWdlLGgpKTooYT1kLnBlcmNlbnRhZ2UvMTAwKmIsZj49ZyYmZythPj1mPyhjJiZjLnNldCh0aGlzLmtleSxoLnRvU3RyaW5nKCksdGhpcy5leHBpcmVzKSxkLmNhbGxiYWNrKGQucGVyY2VudGFnZSxoKSxlPSEwKTplPSExLGcrPWErMSksZSlyZXR1cm47dGhpcy5lbHNlQ2FsbGJhY2smJihjJiZjLnNldCh0aGlzLmtleSxoLnRvU3RyaW5nKCksdGhpcy5leHBpcmVzKSx0aGlzLmVsc2VDYWxsYmFjayghMSxoKSl9O3ZhciBlPWZ1bmN0aW9uKGEsYil7cmV0dXJuIG5ldyBkKGEsYil9O3dpbmRvdy5kaWNlUm9sbD1lfSh3aW5kb3cpOw==",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 21:41:47 GMT",
+                    "Content-Length": "1828",
+                    "Date": "Thu, 06 Nov 2014 21:41:48 GMT",
+                    "Content-Type": "application/javascript"
+                },
+                "cookies": [],
+                "mimeType": "script",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}

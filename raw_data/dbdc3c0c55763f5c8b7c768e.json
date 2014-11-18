@@ -1,0 +1,59 @@
+{
+    "url": "http://localhost:9999/dojo/dijit/tests/formAction.html",
+    "host": "localhost",
+    "port": 9999,
+    "protocol": "http",
+    "name": "DOM data manipulation (DOM-based)",
+    "issueType": 5247488,
+    "severity": "Information",
+    "confidence": "Firm",
+    "issueBackground": "DOM-based DOM data manipulation vulnerabilities arise when a client-side script within an application's response reads data from a controllable part of the DOM (for example, the URL), and writes this to a data field within the DOM that is used within the visible UI or client-side application logic. An attacker may be able to use the vulnerability to construct a URL which, if visited by another application user, will modify the appearance or behavior of the client-side UI. An attacker may be able to leverage this to perform virtual defacement of the application, or possibly to induce the user to perform unintended actions.",
+    "remediationBackground": "Static analysis of code to identify vulnerabilities of this kind may lead to false positives that are not actually exploitable. You should review the highlighted code and related execution paths to determine whether the application is indeed vulnerable, or whether mitigations are in place that would prevent exploitation.<br><br>The most effective way to avoid DOM-based DOM data manipulation vulnerabilities is not to dynamically write to DOM data fields any data that originated from any untrusted source. If the desired functionality of the application means that this behavior is unavoidable, then defenses must be implemented within the client-side code to prevent malicious data from being stored. In general, this is best achieved by using a whitelist of permitted values.",
+    "issueDetail": "The application may be vulnerable to DOM-based DOM data manipulation. Data is read from <b>window.location.search</b> and written to <b>the 'values' property of a DOM element</b> via the following statements:<ul><li>var str = window.location.search.substr(1).replace(/[%]0D/g, \"\").replace(/[+]/g, \" \").split(/&amp;/);</li><li>var split = str[i] .split(/=/ ) , key = decodeURIComponent(s...(split[0 ] || '' ) , value = decodeURIComponent(s...(split[1 ] || '' );</li><li>values[key] = value;</li><li>frameElement.values = values;</li></ul>",
+    "requestResponses": [
+        {
+            "request": {
+                "host": "localhost",
+                "port": 9999,
+                "protocol": "http",
+                "url": "http://localhost:9999/dojo/dijit/tests/formAction.html",
+                "path": "/dojo/dijit/tests/formAction.html",
+                "httpVersion": "HTTP/1.1",
+                "method": "GET",
+                "headers": {
+                    "Host": "localhost:9999"
+                },
+                "body": "",
+                "raw": "R0VUIC9kb2pvL2Rpaml0L3Rlc3RzL2Zvcm1BY3Rpb24uaHRtbCBIVFRQLzEuMQ0KSG9zdDogbG9jYWxob3N0Ojk5OTkNCg0K",
+                "inScope": true,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "request"
+            },
+            "response": {
+                "statusCode": 200,
+                "raw": "SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LUxlbmd0aDogOTkyDQpBY2NlcHQtUmFuZ2VzOiBieXRlcw0KQ29udGVudC1UeXBlOiB0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgNCkRhdGU6IFRodSwgMDYgTm92IDIwMTQgMjE6NDI6MzcgR01UDQpMYXN0LU1vZGlmaWVkOiBUaHUsIDA2IE5vdiAyMDE0IDIxOjQyOjM0IEdNVA0KDQo8aHRtbD4KPCEtLSBmb3JtIHN1Ym1pdCBwYWdlIHRoYXQgZ3JhYnMgdGhlIHBhcmFtZXRlcnMgZnJvbSB0aGUgVVJMIGFuZCBjYWxscyBqYXZhc2NyaXB0IHdpdGggYW4gYXJyYXkgLS0+CjxoZWFkPgo8c2NyaXB0IHR5cGU9J3RleHQvamF2YXNjcmlwdCc+Cgl2YXIgdmFsdWVzID0ge307Cgl2YXIgd2luID0gZnJhbWVFbGVtZW50Lm93bmVyRG9jdW1lbnQuZGVmYXVsdFZpZXd8fGZyYW1lRWxlbWVudC5kb2N1bWVudC5wYXJlbnRXaW5kb3c7CiAgICAgICAgdmFyIHN0ciA9IHdpbmRvdy5sb2NhdGlvbi5zZWFyY2guc3Vic3RyKDEpLnJlcGxhY2UoL1slXTBEL2csICIiKS5yZXBsYWNlKC9bK10vZywgIiAiKS5zcGxpdCgvJi8pOwogICAgICAgIGZvcih2YXIgaT0wOyBpPHN0ci5sZW5ndGg7IGkrKyl7CiAgICAgICAgICAgICAgICB2YXIgc3BsaXQgPSBzdHJbaV0uc3BsaXQoLz0vKSwKICAgICAgICAgICAgICAgICAgICAgICAga2V5ID0gZGVjb2RlVVJJQ29tcG9uZW50KHNwbGl0WzBdIHx8ICcnKSwKICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWUgPSBkZWNvZGVVUklDb21wb25lbnQoc3BsaXRbMV0gfHwgJycpOwoJCWlmKHZhbHVlc1trZXldID09PSB1bmRlZmluZWQpewoJCQl2YWx1ZXNba2V5XSA9IHZhbHVlOwoJCX1lbHNlIGlmKHZhbHVlc1trZXldIGluc3RhbmNlb2YgQXJyYXkgfHwgdHlwZW9mIHZhbHVlc1trZXldID09ICJhcnJheSIpewoJCQl2YWx1ZXNba2V5XS5wdXNoKHZhbHVlKTsKCQl9ZWxzZXsKCQkJdmFyIG9sZCA9IHZhbHVlc1trZXldOwoJCQl2YWx1ZXNba2V5XSA9IFtvbGQsIHZhbHVlXTsKCQl9CiAgICAgICAgfQoJZnJhbWVFbGVtZW50LnZhbHVlcyA9IHZhbHVlczsKPC9zY3JpcHQ+CjwvaGVhZD4KPGJvZHkgb25sb2FkPSJzZXRUaW1lb3V0KGZ1bmN0aW9uKCl7IGZyYW1lRWxlbWVudC52YWx1ZXMgPSBudWxsOyB3aW5kb3cubG9jYXRpb24uaHJlZj0nYWJvdXQ6YmxhbmsnIH0sIDApIj4KPC9ib2R5Pgo8L2h0bWw+Cg==",
+                "body": "PGh0bWw+CjwhLS0gZm9ybSBzdWJtaXQgcGFnZSB0aGF0IGdyYWJzIHRoZSBwYXJhbWV0ZXJzIGZyb20gdGhlIFVSTCBhbmQgY2FsbHMgamF2YXNjcmlwdCB3aXRoIGFuIGFycmF5IC0tPgo8aGVhZD4KPHNjcmlwdCB0eXBlPSd0ZXh0L2phdmFzY3JpcHQnPgoJdmFyIHZhbHVlcyA9IHt9OwoJdmFyIHdpbiA9IGZyYW1lRWxlbWVudC5vd25lckRvY3VtZW50LmRlZmF1bHRWaWV3fHxmcmFtZUVsZW1lbnQuZG9jdW1lbnQucGFyZW50V2luZG93OwogICAgICAgIHZhciBzdHIgPSB3aW5kb3cubG9jYXRpb24uc2VhcmNoLnN1YnN0cigxKS5yZXBsYWNlKC9bJV0wRC9nLCAiIikucmVwbGFjZSgvWytdL2csICIgIikuc3BsaXQoLyYvKTsKICAgICAgICBmb3IodmFyIGk9MDsgaTxzdHIubGVuZ3RoOyBpKyspewogICAgICAgICAgICAgICAgdmFyIHNwbGl0ID0gc3RyW2ldLnNwbGl0KC89LyksCiAgICAgICAgICAgICAgICAgICAgICAgIGtleSA9IGRlY29kZVVSSUNvbXBvbmVudChzcGxpdFswXSB8fCAnJyksCiAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlID0gZGVjb2RlVVJJQ29tcG9uZW50KHNwbGl0WzFdIHx8ICcnKTsKCQlpZih2YWx1ZXNba2V5XSA9PT0gdW5kZWZpbmVkKXsKCQkJdmFsdWVzW2tleV0gPSB2YWx1ZTsKCQl9ZWxzZSBpZih2YWx1ZXNba2V5XSBpbnN0YW5jZW9mIEFycmF5IHx8IHR5cGVvZiB2YWx1ZXNba2V5XSA9PSAiYXJyYXkiKXsKCQkJdmFsdWVzW2tleV0ucHVzaCh2YWx1ZSk7CgkJfWVsc2V7CgkJCXZhciBvbGQgPSB2YWx1ZXNba2V5XTsKCQkJdmFsdWVzW2tleV0gPSBbb2xkLCB2YWx1ZV07CgkJfQogICAgICAgIH0KCWZyYW1lRWxlbWVudC52YWx1ZXMgPSB2YWx1ZXM7Cjwvc2NyaXB0Pgo8L2hlYWQ+Cjxib2R5IG9ubG9hZD0ic2V0VGltZW91dChmdW5jdGlvbigpeyBmcmFtZUVsZW1lbnQudmFsdWVzID0gbnVsbDsgd2luZG93LmxvY2F0aW9uLmhyZWY9J2Fib3V0OmJsYW5rJyB9LCAwKSI+CjwvYm9keT4KPC9odG1sPgo=",
+                "headers": {
+                    "Accept-Ranges": "bytes",
+                    "Last-Modified": "Thu, 06 Nov 2014 21:42:34 GMT",
+                    "Content-Length": "992",
+                    "Date": "Thu, 06 Nov 2014 21:42:37 GMT",
+                    "Content-Type": "text/html; charset=utf-8"
+                },
+                "cookies": [],
+                "mimeType": "HTML",
+                "host": "localhost",
+                "protocol": "http",
+                "port": 9999,
+                "inScope": false,
+                "toolFlag": 16962,
+                "referenceID": 0,
+                "messageType": "response"
+            },
+            "messageType": "requestResponse"
+        }
+    ],
+    "inScope": true,
+    "messageType": "scanIssue"
+}
